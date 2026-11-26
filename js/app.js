@@ -284,10 +284,13 @@ function stopListening() {
 /* ---------- answer ---------- */
 
 function localAnswer(place, lang) {
-  const hours = place.hours || '';
+  const rawHours = place.hours || '';
+  // "Not confirmed yet" is carried only so the note layer has something to key on;
+  // the localized note below the answer says it better than a mixed-language fragment.
+  const hours = /^not confirmed/i.test(rawHours) ? '' : rawHours;
   const end = (s) => (/[.!?\u3002]$/.test(s) ? s : s + '.');
   if (lang === 'th') {
-    const bits = [end(place.th)];
+    const bits = [place.th.replace(/\s+$/, '')];
     if (hours) bits.push('เวลาเปิดทำการ ' + hours);
     return bits.join(' ');
   }
@@ -454,10 +457,15 @@ function showAnswer({ lang, main, secondary, secondaryLabel, place, source }) {
   const globallyVerified = state.campus && state.campus.meta && state.campus.meta.hoursVerified === true;
   const hoursUnverified = Boolean(place && place.hours && !globallyVerified && place.hoursVerified !== true);
   if (el.answerNote) {
+    const noteText = {
+      th: 'เวลาเปิดทำการยังไม่ยืนยัน — โปรดสอบถามที่เคาน์เตอร์',
+      en: 'Opening hours are not confirmed yet — please check at the counter.',
+      id: 'Jam buka belum dikonfirmasi — silakan tanyakan di konter.',
+      vi: 'Giờ mở cửa chưa được xác nhận — vui lòng hỏi tại quầy.',
+      zh: '开放时间尚未确认——请到柜台询问。'
+    }[shortLang(state.lang)] || 'Opening hours are not confirmed yet — please check at the counter.';
     el.answerNote.classList.toggle('show', Boolean(hoursUnverified));
-    el.answerNote.textContent = hoursUnverified
-      ? 'Opening hours are placeholders — confirm at the counter.'
-      : '';
+    el.answerNote.textContent = hoursUnverified ? noteText : '';
   }
   if (source) setStatus('Ready · ' + source, true);
   // On phones the answer sits below the map, so bring it into view.
