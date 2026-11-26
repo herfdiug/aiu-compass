@@ -121,11 +121,120 @@ export function createMap(canvas, campus) {
     groupOf.set(b.id, { group: g, body, height, roof, wing: Boolean(b.wing) });
     meshOf.set(b.id, b);
 
+    // Windows: a lit grid on each long face, so the blocks read as buildings
+    // rather than extruded rectangles. One InstancedMesh per building keeps the
+    // draw calls low enough to stay smooth on a phone.
+    const cols = Math.max(2, Math.round(b.w / 26));
+    const rows = Math.max(1, floors - 1) * 2;
+    const winW = Math.min(14, (b.w / cols) * 0.5);
+    const winH = Math.min(11, FLOOR_H * 0.34);
+    const winGeo = new THREE.PlaneGeometry(winW, winH);
+    const winMat = new THREE.MeshStandardMaterial({
+      color: 0xbfe8ff,
+      emissive: 0x2b6f8f,
+      emissiveIntensity: 0.75,
+      roughness: 0.35,
+      metalness: 0.1
+    });
+    const count = cols * rows * 2;
+    const winMesh = new THREE.InstancedMesh(winGeo, winMat, count);
+    winMesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+    const dummy = new THREE.Object3D();
+    let wi = 0;
+    for (const side of [1, -1]) {
+      for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < rows; r++) {
+          const x = -b.w / 2 + (b.w / cols) * (c + 0.5);
+          const y = FLOOR_H * 0.55 + (FLOOR_H * 1.06) * r;
+          if (y > height - winH) continue;
+          dummy.position.set(x, y, side * (b.h / 2 + 0.6));
+          dummy.rotation.set(0, side > 0 ? 0 : Math.PI, 0);
+          dummy.updateMatrix();
+          winMesh.setMatrixAt(wi++, dummy.matrix);
+        }
+      }
+    }
+    winMesh.count = wi;
+    winMesh.instanceMatrix.needsUpdate = true;
+    g.add(winMesh);
+
+    // A door on the side that faces the middle of campus.
+    const doorMat = new THREE.MeshStandardMaterial({ color: 0x0d2a3d, roughness: 0.5, metalness: 0.2 });
+    const door = new THREE.Mesh(new THREE.BoxGeometry(Math.min(22, b.w * 0.24), FLOOR_H * 0.72, 2), doorMat);
+    door.position.set(0, FLOOR_H * 0.36, b.h / 2 + 0.4);
+    g.add(door);
+
     const plate = document.createElement('span');
     plate.className = 'mapPlate';
     plate.textContent = shortName(b);
     labelLayer.appendChild(plate);
     plates.set(b.id, plate);
+  }
+
+  // ------------------------------------------------------------------ greenery
+  // Trees and hedges give the ground plane scale. Positions are derived from the
+  // building layout, so this stays in step with the data.
+  {
+    const trunkGeo = new THREE.CylinderGeometry(2.4, 3.2, 16, 6);
+    const leafGeo = new THREE.ConeGeometry(13, 34, 7);
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4a3a2a, roughness: 0.95 });
+    const leafMat = new THREE.MeshStandardMaterial({ color: 0x1f7a4d, roughness: 0.9 });
+    const spots = [];
+    for (const b of buildings) {
+      if (b.wing) continue;
+      // Two trees on the corners of each building plot, kept clear of the walls.
+      const ox = b.w / 2 + 34;
+      const oz = b.h / 2 + 34;
+      for (const [sx, sz] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+        spots.push([b.x + sx * ox, -(b.y + sz * oz)]);
+      }
+    }
+    // A tree-lined avenue down the middle of campus.
+    for (let i = -4; i <= 4; i++) {
+      spots.push([-70, -(i * 85)]);
+      spots.push([70, -(i * 85)]);
+    }
+    const trunks = new THREE.InstancedMesh(trunkGeo, trunkMat, spots.length);
+    const leaves = new THREE.InstancedMesh(leafGeo, leafMat, spots.length);
+    const d = new THREE.Object3D();
+    spots.forEach(([x, z], i) => {
+      d.position.set(x, 8, z);
+      d.rotation.set(0, (i * 1.7) % Math.PI, 0);
+      d.scale.setScalar(0.85 + ((i * 37) % 10) / 28);
+      d.updateMatrix();
+      trunks.setMatrixAt(i, d.matrix);
+      d.position.set(x, 34, z);
+      d.updateMatrix();
+      leaves.setMatrixAt(i, d.matrix);
+    });
+    trunks.castShadow = true;
+    leaves.castShadow = true;
+    trunks.instanceMatrix.needsUpdate = true;
+    leaves.instanceMatrix.needsUpdate = true;
+    scene.add(trunks, leaves);
+  }
+
+  // ------------------------------------------------------------------ pathways
+  // Walkways joining the building plots, drawn as thin slabs on the ground.
+  {
+    const pathMat = new THREE.MeshStandardMaterial({ color: 0x123c52, roughness: 0.9, metalness: 0.05 });
+    const addPath = (x1, z1, x2, z2, width) => {
+      const len = Math.hypot(x2 - x1, z2 - z1);
+      const geo = new THREE.PlaneGeometry(width, len);
+      const m = new THREE.Mesh(geo, pathMat);
+      m.rotation.x = -Math.PI / 2;
+      m.rotation.z = -Math.atan2(x2 - x1, z2 - z1);
+      m.position.set((x1 + x2) / 2, -0.4, (z1 + z2) / 2);
+      m.receiveShadow = true;
+      scene.add(m);
+    };
+    // East-west spine through the academic buildings, then north-south links.
+    addPath(-230, 0, 250, 0, 30);
+    addPath(0, 0, 0, -300, 26);
+    addPath(-190, 0, -190, -130, 22);
+    addPath(190, 0, 190, -130, 22);
+    addPath(-200, 130, 200, 130, 22);
+    addPath(0, -300, -283, -300, 18);
   }
 
   function shortName(b) {
