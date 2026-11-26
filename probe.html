@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AIU Compass — language probe</title>
+<style>
+  body { margin: 0; padding: 24px; font: 16px/1.5 "Segoe UI", system-ui, sans-serif;
+         background: #06182a; color: #eaf6ff; }
+  h1 { font-size: 20px; margin: 0 0 6px; }
+  p { color: #9db8cc; font-size: 14px; max-width: 46em; }
+  button { font-size: 17px; padding: 14px 22px; border-radius: 12px; border: 0;
+           background: #35e0a1; color: #04231a; font-weight: 700; margin: 6px 6px 6px 0; cursor: pointer; }
+  pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(120,220,255,0.2);
+        padding: 14px; border-radius: 12px; min-height: 180px; white-space: pre-wrap; font-size: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .note { border-left: 3px solid #4fc3f7; padding-left: 12px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<h1>AIU Compass — language probe</h1>
+<p>Run this on the actual demo phone. Tap <b>Speak</b> once per language, say one short sentence, and note which languages return text. This is the only test that decides what the pitch may claim.</p>
+
+<div class="row" id="row"></div>
+<pre id="out">voices: reading…</pre>
+
+<div class="note">
+  <b>Reading the result:</b> a line starting with <code>OK</code> means that language is usable for the demo.
+  <code>ERR network</code> means the browser has no route to its speech service. <code>ERR language-not-supported</code>
+  means the language must be dropped from the claim.
+</div>
+
+<script>
+const LANGS = [
+  ['th-TH', 'Thai'],
+  ['en-US', 'English'],
+  ['id-ID', 'Indonesian'],
+  ['vi-VN', 'Vietnamese'],
+  ['zh-CN', 'Chinese']
+];
+
+const out = document.getElementById('out');
+const row = document.getElementById('row');
+const log = (s) => { out.textContent += '\n' + s; };
+
+out.textContent = 'voices: ' + (window.speechSynthesis ? speechSynthesis.getVoices().map(v => v.lang).join(', ') : 'none');
+if (window.speechSynthesis) {
+  speechSynthesis.onvoiceschanged = () => {
+    out.textContent = 'voices: ' + speechSynthesis.getVoices().map(v => v.lang).join(', ');
+  };
+}
+
+for (const [code, label] of LANGS) {
+  const b = document.createElement('button');
+  b.textContent = label;
+  b.onclick = () => listen(code);
+  row.appendChild(b);
+}
+
+function listen(code) {
+  const R = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!R) { log(code + ' ERR no-speech-api'); return; }
+  const r = new R();
+  r.lang = code;
+  r.interimResults = true;
+  r.continuous = false;
+  let got = '';
+  log('--- listening ' + code);
+  r.onresult = (e) => {
+    got = Array.from(e.results).map(x => x[0].transcript).join(' ');
+    log(code + ' interim: ' + got);
+  };
+  r.onerror = (e) => log(code + ' ERR ' + e.error);
+  r.onend = () => log(got ? 'OK ' + code + ' -> ' + got : 'EMPTY ' + code);
+  r.start();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AIU Compass — self test</title>
+<style>
+  body { font: 15px/1.5 "Segoe UI", system-ui, sans-serif; background: #06182a; color: #eaf6ff; padding: 24px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { color: #9db8cc; margin: 0 0 18px; font-size: 13px; }
+  table { border-collapse: collapse; width: 100%; max-width: 900px; }
+  td, th { text-align: left; padding: 7px 10px; border-bottom: 1px solid rgba(120,220,255,0.14); vertical-align: top; }
+  th { color: #9db8cc; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  .pass { color: #35e0a1; font-weight: 700; }
+  .fail { color: #ff6b6b; font-weight: 700; }
+  .summary { margin-top: 18px; font-size: 17px; }
+  code { background: rgba(255,255,255,0.07); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>AIU Compass — self test</h1>
+<p class="sub">Runs the resolution layer against the live campus data in this browser. Same cases as <code>node --test</code>.</p>
+<table>
+  <thead><tr><th>#</th><th>Input</th><th>Expected</th><th>Got</th><th>Result</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+<div class="summary" id="summary">running…</div>
+
+<script type="module">
+import { resolve, buildIndex } from './js/correction.js';
+
+const cases = [
+  ['ห้อง IT208 อยู่ไหน', 't208'],
+  ['where is t 208', 't208'],
+  ['ที208', 't208'],
+  ['T-208?', 't208'],
+  ['ที สอง ศูนย์ แปด', 't208'],
+  ['ทะเบียนอยู่ไหน', 'registrar'],
+  ['where do I pay the dorm fee', 'finance'],
+  ['จ่ายค่าหอพักที่ไหน', 'finance'],
+  ['ห้องพยาบาล', 'clinic'],
+  ['ปวดหัวมาก', 'clinic'],
+  ['library close what time', 'library_desk'],
+  ['where is the IT building', 'it_building'],
+  ['cafeteria', 'cafeteria'],
+  ['T999', null],
+  ['hello', null],
+  ['where is the moon', null],
+  ['อาคารไอที ชั้นสอง ห้อง 208', 't208']
+];
+
+const tbody = document.getElementById('rows');
+const campus = await fetch('data/campus.json').then((r) => r.json());
+const index = buildIndex(campus.places);
+
+let pass = 0;
+cases.forEach(([input, expected], i) => {
+  const r = resolve(input, index);
+  const ok = r.id === expected;
+  if (ok) pass++;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${i + 1}</td><td>${input}</td><td><code>${expected}</code></td>` +
+    `<td><code>${r.id}</code> <span style="color:#6c8798">${r.method} ${r.confidence.toFixed(2)}</span></td>` +
+    `<td class="${ok ? 'pass' : 'fail'}">${ok ? 'PASS' : 'FAIL'}</td>`;
+  tbody.appendChild(tr);
+});
+
+const el = document.getElementById('summary');
+el.textContent = `${pass}/${cases.length} passed · ${campus.places.length} places · ${campus.buildings.length} buildings`;
+el.className = 'summary ' + (pass === cases.length ? 'pass' : 'fail');
+document.title = `${pass}/${cases.length} — AIU Compass self test`;
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AIU Compass — A0 poster</title>
+<style>
+  /* A0 portrait = 841 x 1189 mm. Print to PDF with "scale 100%" and A0 paper.
+     Printing A2/A3 works too: everything is in relative units. */
+  /* Chrome does not accept A0 as a keyword; give it explicit dimensions. */
+  @page { size: 841mm 1189mm; margin: 0; }
+  :root {
+    --navy: #06182a;
+    --navy2: #0b2740;
+    --green: #35e0a1;
+    --blue: #4fc3f7;
+    --ink: #0a1f33;
+    --muted: #5b7a90;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body { font-family: "Segoe UI", system-ui, sans-serif; color: var(--ink); }
+
+  .sheet {
+    width: 841mm; height: 1189mm; padding: 34mm 30mm 26mm;
+    background: #fff; display: flex; flex-direction: column; gap: 12mm;
+    position: relative; overflow: hidden;
+  }
+
+  /* header band */
+  .band {
+    background: linear-gradient(120deg, var(--navy) 0%, var(--navy2) 60%, #123f5e 100%);
+    color: #fff; border-radius: 10mm; padding: 20mm 22mm; position: relative; overflow: hidden;
+  }
+  .band::after {
+    content: ""; position: absolute; right: -40mm; top: -40mm; width: 180mm; height: 180mm;
+    background: radial-gradient(circle, rgba(53,224,161,0.35), transparent 65%);
+  }
+  .kicker { font-size: 9mm; letter-spacing: 3mm; text-transform: uppercase; color: var(--green); font-weight: 700; }
+  h1 { font-size: 34mm; line-height: 1.02; margin: 6mm 0 6mm; letter-spacing: -0.5mm; }
+  .claim { font-size: 12mm; line-height: 1.35; color: #cfe9f7; max-width: 210mm; }
+  .byline { margin-top: 10mm; font-size: 7.5mm; color: #9fc3d8; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .col { display: flex; flex-direction: column; gap: 9mm; }
+
+  .shot {
+    display: grid; grid-template-columns: 1.25fr 0.62fr 1fr; gap: 12mm; align-items: center;
+    border: 0.7mm solid #cfe0ea; border-radius: 8mm; padding: 10mm 12mm; background: #f6fbfe;
+  }
+  .shot figure { margin: 0; }
+  .shot img { width: 100%; border-radius: 5mm; border: 0.7mm solid #cfe0ea; display: block; }
+  .shot figcaption { font-size: 5mm; color: var(--muted); margin-top: 3mm; text-align: center; }
+  .shot h2 {
+    font-size: 8mm; text-transform: uppercase; letter-spacing: 1.6mm; color: #0f7a5a;
+    margin: 0 0 5mm; font-weight: 800;
+  }
+  .shot p { font-size: 7mm; line-height: 1.4; margin: 0; }
+  .shot .cap { font-size: 5.8mm; color: var(--muted); margin-top: 4mm; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8mm;
+    background: linear-gradient(120deg, #06182a, #0d3350); color: #fff;
+    border-radius: 8mm; padding: 12mm 14mm;
+  }
+  .stat .n { font-size: 26mm; font-weight: 800; line-height: 1; color: var(--green); }
+  .stat .l { font-size: 6.4mm; color: #bcd6e6; margin-top: 3mm; line-height: 1.3; }
+
+  .card { border: 0.7mm solid #cfe0ea; border-radius: 8mm; padding: 10mm 12mm; }
+  .card h2 {
+    font-size: 8mm; text-transform: uppercase; letter-spacing: 1.6mm; color: #0f7a5a;
+    margin: 0 0 6mm; font-weight: 800;
+  }
+  .card p { font-size: 7.2mm; line-height: 1.42; margin: 0 0 4mm; }
+  .card .big { font-size: 20mm; font-weight: 800; color: var(--navy); line-height: 1; }
+  .card .small { font-size: 6.2mm; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 6.8mm; }
+  th, td { text-align: left; padding: 3.2mm 3mm; border-bottom: 0.4mm solid #e1ecf3; vertical-align: top; }
+  th { color: var(--muted); font-size: 5.8mm; text-transform: uppercase; letter-spacing: 0.8mm; }
+  td.no { color: #b23a48; font-weight: 700; }
+  td.yes { color: #0f7a5a; font-weight: 700; }
+
+  .qrbox { display: flex; gap: 12mm; align-items: center; }
+  .qrbox img { width: 72mm; height: 72mm; border: 0.7mm solid #cfe0ea; border-radius: 6mm; padding: 3mm; }
+  .qrbox .txt { font-size: 7mm; line-height: 1.4; }
+  .qrbox .url { font-family: ui-monospace, Consolas, monospace; font-size: 6.4mm; color: var(--navy2); word-break: break-all; }
+
+  .langs { display: flex; gap: 4mm; flex-wrap: wrap; }
+  .lang {
+    border: 0.6mm solid #0f7a5a; color: #0f7a5a; border-radius: 30mm;
+    padding: 3mm 7mm; font-size: 7mm; font-weight: 700;
+  }
+
+  .foot { display: flex; justify-content: space-between; align-items: flex-end; font-size: 5.6mm; color: var(--muted); margin-top: auto; }
+  .foot b { color: var(--ink); }
+
+  .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; }
+  .step { border-top: 1.4mm solid var(--green); padding-top: 4mm; font-size: 6.4mm; }
+  .step b { display: block; font-size: 6.8mm; margin-bottom: 1.5mm; }
+
+  @media screen {
+    body { background: #4a5f6d; padding: 20px; }
+    .sheet { margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="band">
+    <div class="kicker">Invention &amp; Innovation Contest · Asia-Pacific International University · 27 November 2026</div>
+    <h1>AIU Compass</h1>
+    <div class="claim">Ask your campus anything, in your language — an answer in milliseconds from the cache, or a few seconds when the model writes it, plus the route on the map.</div>
+    <div class="byline">Raymond Shalom Kanast · B.Sc. Information Technology (International Program), Year 2 · Solo entry</div>
+  </div>
+
+  <div class="grid">
+    <div class="col">
+
+      <div class="card">
+        <h2>1 · The problem</h2>
+        <p>AIU hosts students from more than 40 countries. The same conversation fails every week at the registrar, the clinic, the dorm office and the cafeteria: a student knows what they need, but not the room, the office or the hours — and not in the language the counter speaks.</p>
+        <p class="small">Evidence being collected: a short class survey on translation trouble at the counters. Counts are recorded on the day, not asserted here.</p>
+      </div>
+
+      <div class="card">
+        <h2>2 · What it does</h2>
+        <div class="strip">
+          <div class="step"><b>Speak</b>Tap once and ask in Thai, English, Indonesian, Vietnamese or Chinese.</div>
+          <div class="step"><b>Understand</b>Campus vocabulary layer resolves IT208, “ทะเบียน”, “dorm fee” and misspellings.</div>
+          <div class="step"><b>Answer</b>One or two sentences in the same language, plus English, plus the hours.</div>
+          <div class="step"><b>Show</b>The map flies to the building and draws the route.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>3 · Why it is not just a translator</h2>
+        <table>
+          <thead><tr><th>Test on five campus questions</th><th>General translator</th><th>AIU Compass</th></tr></thead>
+          <tbody>
+            <tr><td>Room code (IT208)</td><td class="no">fails</td><td class="yes">resolves</td></tr>
+            <tr><td>Office name (Registrar / ทะเบียน)</td><td class="no">literal</td><td class="yes">resolves</td></tr>
+            <tr><td>Hours for that office</td><td class="no">no data</td><td class="yes">from campus record</td></tr>
+            <tr><td>Where to walk</td><td class="no">no map</td><td class="yes">routes on map</td></tr>
+            <tr><td>Works with no connection</td><td class="no">no</td><td class="yes">12-question pack</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:5mm">Evaluation protocol: five campus questions, scored for room, office, hours, route and offline availability. Results are recorded on the day and shown on the handout — no number is printed here until it is measured.</p>
+        <p class="small">Office hours were confirmed on 25 November and cafeteria, clinic and church hours on 26 November; library and gym hours remain placeholders, and the app labels any unverified hours.</p>
+      </div>
+
+    </div>
+
+    <div class="col">
+
+      <div class="card">
+        <h2>4 · Languages</h2>
+        <div class="langs">
+          <span class="lang">ไทย</span><span class="lang">English</span><span class="lang">Indonesia</span>
+          <span class="lang">Tiếng Việt</span><span class="lang">中文</span>
+        </div>
+        <p class="small" style="margin-top:6mm">All five languages are covered by the answer and offline layers, which are under automated test. Live speech input and the spoken voice depend on the device: the included probe page checks both in about a minute, and the result is recorded before the demo. Adding a sixth means one configuration entry plus twelve translated answers.</p>
+      </div>
+
+      <div class="card">
+        <h2>5 · Try it now</h2>
+        <div class="qrbox">
+          <img src="qr.png" alt="QR code to the live demo" />
+          <div class="txt">
+            Scan, tap the microphone, and ask in Thai.<br />
+            <span class="url">herfdiug.github.io/aiu-compass</span><br /><br />
+            <span class="small">Works on any phone. Nothing to install.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>6 · How it is built</h2>
+        <p><b>Browser only.</b> Speech recognition from the browser's own engine, a reasoning model for the sentence, on-device speech for the answer, and a hand-built campus record of 31 places across 13 buildings.</p>
+        <p><b>Cost:</b> 0 baht to run. A kiosk tablet is about 3,000 baht, one time.</p>
+        <p><b>Privacy:</b> no audio is stored, no faces, no accounts. In offline mode nothing leaves the device.</p>
+        <p class="small">Limitations, stated plainly: live answers need a connection; the offline pack covers 12 counter questions; the map is schematic, not survey-accurate.</p>
+        <p class="small"><b>Tested before printing:</b> 31 automated checks of the vocabulary layer and the campus data, 17 checks in the browser, the offline cache, and the fallback when the network or the microphone fails.</p>
+        <p class="small"><b>Not yet proven:</b> the five-question comparison and speech on the specific demo phone — each has a named check and a blank result.</p>
+      </div>
+
+      <div class="card">
+        <h2>7 · What happens next</h2>
+        <p><b>Four-week pilot</b> at one counter — the registrar or the clinic — measured by time-to-serve and repeat questions.</p>
+        <p><b>Then</b> IPITEx 2027, Class G (ICT), and the same campus record extended to every faculty building.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="shot">
+    <figure>
+      <img src="shots/desktop-answer3.png" alt="AIU Compass on a laptop: campus map beside the answer panel" />
+      <figcaption>Laptop, 1440 px — the map and the answer side by side</figcaption>
+    </figure>
+    <figure>
+      <img src="shots/phone-answer3.png" alt="AIU Compass on a phone answering a Thai question about room IT208" />
+      <figcaption>Phone, 390 px</figcaption>
+    </figure>
+    <div>
+      <h2>The 20-second proof</h2>
+      <p>Asked in Thai: “ห้อง IT208 อยู่ไหน”. Answered in Thai from the cached pack in single-digit milliseconds (median 6 ms over five runs), with the English line, the room code, the hours, and the IT Building highlighted on the map.</p>
+      <p class="cap">Same build, same URL, no app installed. Screenshots taken from the submitted version.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n">31</div><div class="l">places indexed across 13 buildings, with Thai and English names</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">languages in the answer and offline layers, all covered by automated tests</div></div>
+    <div class="stat"><div class="n">6 ms</div><div class="l">median click-to-answer from the cached pack, five runs in the browser</div></div>
+    <div class="stat"><div class="n">฿0</div><div class="l">to run. No server, no licence, no install</div></div>
+  </div>
+
+  <div class="foot">
+    <div><b>Raymond Shalom Kanast</b> · Student ID S202500222 · +62 821 2450 3690 · herfdiug24@gmail.com</div>
+    <div>Built solo in 48 hours · Tools and licences listed in the submitted abstract</div>
+  </div>
+
+</div>
+</body>
+</html>

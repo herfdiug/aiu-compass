@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AIU Compass — one page</title>
+<style>
+  @page { size: A4 portrait; margin: 12mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; color: #0a1f33; font-size: 9.5pt; line-height: 1.4; }
+  h1 { font-size: 21pt; margin: 0 0 1.5mm; letter-spacing: -0.3pt; }
+  .sub { color: #4a6a80; font-size: 9pt; margin-bottom: 4mm; }
+  h2 { font-size: 8pt; text-transform: uppercase; letter-spacing: 1.3pt; color: #0f7a5a; margin: 4.5mm 0 1.5mm; }
+  p { margin: 0 0 3mm; }
+  .top { display: flex; gap: 8mm; align-items: flex-start; }
+  .top .left { flex: 1; }
+  .qr { width: 34mm; text-align: center; }
+  .qr img { width: 34mm; height: 34mm; border: 0.3mm solid #cfe0ea; border-radius: 2mm; padding: 1mm; }
+  .qr div { font-size: 6.5pt; color: #6b8698; margin-top: 1.5mm; word-break: break-all; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 2mm; }
+  th, td { text-align: left; padding: 1.3mm 2mm; border-bottom: 0.2mm solid #e1ecf3; }
+  th { color: #6b8698; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.6pt; }
+  .no { color: #b23a48; font-weight: 700; }
+  .yes { color: #0f7a5a; font-weight: 700; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  ul { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin-bottom: 1.2mm; }
+  .foot { border-top: 0.3mm solid #cfe0ea; margin-top: 4mm; padding-top: 2.5mm; font-size: 8pt; color: #6b8698; display: flex; justify-content: space-between; }
+  .note { background: #f2f9fd; border-left: 1.2mm solid #4fc3f7; padding: 2.5mm 3.5mm; font-size: 8.8pt; }
+</style>
+</head>
+<body>
+
+<h1>AIU Compass</h1>
+<div class="sub">Ask your campus anything, in your language — an answer in milliseconds from the cache, or a few seconds when the model writes it, plus the route on the map.<br />
+Raymond Shalom Kanast · B.Sc. Information Technology (International Program), Year 2 · Solo entry · Invention &amp; Innovation Contest, 27 November 2026</div>
+
+<div class="top">
+  <div class="left">
+    <h2>The problem</h2>
+    <p>AIU hosts students from more than 40 countries. The same conversation fails every week at the registrar, the clinic, the dorm office and the cafeteria: the student knows what they need, but not the room, the office or the hours — and not in the language the counter speaks.</p>
+
+    <h2>What it does</h2>
+    <p>One tap, ask in Thai, English, Indonesian, Vietnamese or Chinese. It resolves campus vocabulary that general translators get wrong (IT208, “ทะเบียน”, “dorm fee”), answers in the same language with the hours, and flies a campus map to the building.</p>
+  </div>
+  <div class="qr">
+    <img src="qr.png" alt="QR code" />
+    <div>herfdiug.github.io/aiu-compass</div>
+  </div>
+</div>
+
+<h2>Why it is not just a translator</h2>
+<table>
+  <thead><tr><th>Five campus questions</th><th>General translator</th><th>AIU Compass</th></tr></thead>
+  <tbody>
+    <tr><td>Room code (IT208)</td><td class="no">fails</td><td class="yes">resolves</td></tr>
+    <tr><td>Office name (Registrar / ทะเบียน)</td><td class="no">literal</td><td class="yes">resolves</td></tr>
+    <tr><td>Hours for that office</td><td class="no">no data</td><td class="yes">from campus record *</td></tr>
+    <tr><td>Where to walk</td><td class="no">no map</td><td class="yes">routes on map</td></tr>
+    <tr><td>Works with no connection</td><td class="no">no</td><td class="yes">12-question pack</td></tr>
+  </tbody>
+</table>
+<p style="font-size:9pt;color:#4a6a80">Evaluation protocol: five questions, scored for room, office, hours, route and offline availability. Results are written in at the demo — no number is printed until it is measured. Office hours were confirmed on 25 November and cafeteria, clinic and church hours on 26 November; library and gym hours remain placeholders.</p>
+
+<div class="two">
+  <div>
+    <h2>How it is built</h2>
+    <ul>
+      <li>Runs entirely in the browser: no app, no server, no install.</li>
+      <li>31 places across 13 buildings, Thai and English names, hours, aliases.</li>
+      <li>Vocabulary layer: room-code regex, alias match, fuzzy match, Thai consonant skeleton.</li>
+      <li>Falls back to typed input, then to the cached pack, then to a recorded run.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Tested, and not yet tested</h2>
+    <ul>
+      <li><b>Tested:</b> 31 automated checks (vocabulary layer, campus data), 17 browser checks, the offline cache, and both fallbacks: network down, microphone denied or missing.</li>
+      <li><b>Not yet:</b> the five-question comparison, and speech on the demo phone — each has a named check and a blank result.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Next</h2>
+<p>A four-week pilot at one counter — registrar or clinic — measured by time-to-serve and repeat questions. Then IPITEx 2027, Class G (ICT), with the campus record extended to every faculty building.</p>
+
+<div class="note">
+  <b>Try it in ten seconds:</b> scan the code, tap the microphone, say “ห้อง IT208 อยู่ไหน”. Then try English: “where do I pay the dorm fee”.
+</div>
+
+<div class="foot">
+  <div>Raymond Shalom Kanast · Student ID S202500222 · +62 821 2450 3690 · herfdiug24@gmail.com</div>
+  <div>Built solo in 48 hours</div>
+</div>
+
+</body>
+</html>

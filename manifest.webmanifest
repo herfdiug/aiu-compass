@@ -1,0 +1,13 @@
+{
+  "name": "AIU Compass",
+  "short_name": "Compass",
+  "description": "Multilingual campus concierge with a schematic campus map.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#06182a",
+  "theme_color": "#06182a",
+  "lang": "en",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

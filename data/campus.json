@@ -1,0 +1,853 @@
+{
+  "meta": {
+    "name": "Asia-Pacific International University",
+    "note": "Schematic layout for the demo. Building names, floor counts and dormitory names checked against AIU sources and the student's campus notes. Room numbers are shown only where published (IT208, IT209); other rooms are deliberately left unnamed rather than guessed.",
+    "hoursVerified": false,
+    "updated": "2026-11-26"
+  },
+  "buildings": [
+    {
+      "id": "it",
+      "en": "IT Building",
+      "th": "อาคารไอที",
+      "x": 0,
+      "y": 0,
+      "w": 150,
+      "h": 90,
+      "floors": 3,
+      "color": "#1d6b5a"
+    },
+    {
+      "id": "library",
+      "en": "Library",
+      "th": "หอสมุด",
+      "x": 190,
+      "y": 0,
+      "w": 130,
+      "h": 90,
+      "floors": 3,
+      "color": "#2a5f8f"
+    },
+    {
+      "id": "science",
+      "en": "Science Building",
+      "th": "อาคารวิทยาศาสตร์",
+      "x": -190,
+      "y": 0,
+      "w": 140,
+      "h": 90,
+      "floors": 3,
+      "color": "#7a4b8f"
+    },
+    {
+      "id": "admin",
+      "en": "Administration",
+      "th": "อาคารบริหาร",
+      "x": 0,
+      "y": 130,
+      "w": 160,
+      "h": 85,
+      "floors": 3,
+      "color": "#8f5a2a"
+    },
+    {
+      "id": "cafeteria",
+      "en": "Cafeteria",
+      "th": "โรงอาหาร",
+      "x": 200,
+      "y": 130,
+      "w": 120,
+      "h": 80,
+      "floors": 1,
+      "color": "#b4572f"
+    },
+    {
+      "id": "gym",
+      "en": "Student Center",
+      "th": "ศูนย์กิจกรรมนักศึกษา",
+      "x": -200,
+      "y": 130,
+      "w": 130,
+      "h": 85,
+      "floors": 1,
+      "color": "#4a6f2a"
+    },
+    {
+      "id": "clinic",
+      "en": "Clinic",
+      "th": "ห้องพยาบาล",
+      "x": -300,
+      "y": -60,
+      "w": 85,
+      "h": 65,
+      "floors": 1,
+      "color": "#8f2a3a"
+    },
+    {
+      "id": "chapel",
+      "en": "Chapel",
+      "th": "โบสถ์",
+      "x": 300,
+      "y": -200,
+      "w": 80,
+      "h": 65,
+      "floors": 1,
+      "color": "#8f7a2a"
+    },
+    {
+      "id": "dorm_solomon",
+      "en": "Solomon Hall",
+      "th": "หอพักโซโลมอน",
+      "x": -240,
+      "y": -290,
+      "w": 95,
+      "h": 70,
+      "color": "#4a5a7a"
+    },
+    {
+      "id": "dorm_elijah",
+      "en": "Elijah Hall",
+      "th": "หอพักเอลียาห์",
+      "x": -120,
+      "y": -290,
+      "w": 95,
+      "h": 70,
+      "color": "#4a5a7a"
+    },
+    {
+      "id": "dorm_esther",
+      "en": "Esther Hall",
+      "th": "หอพักเอสเธอร์",
+      "x": 0,
+      "y": -290,
+      "w": 95,
+      "h": 70,
+      "color": "#7a4a5a"
+    },
+    {
+      "id": "dorm_ruth",
+      "en": "Ruth Hall",
+      "th": "หอพักรูธ",
+      "x": 120,
+      "y": -290,
+      "w": 95,
+      "h": 70,
+      "color": "#7a4a5a"
+    },
+    {
+      "id": "dorm_eve",
+      "en": "Eve Hall",
+      "th": "หอพักอีฟ",
+      "x": 240,
+      "y": -290,
+      "w": 95,
+      "h": 70,
+      "color": "#7a4a5a"
+    }
+  ],
+  "places": [
+    {
+      "id": "t208",
+      "type": "room",
+      "building": "it",
+      "floor": 2,
+      "room": "IT208",
+      "en": "Room IT208, office of Asst. Prof. Dr. Pimpa Cheewaprakobkit, Dean of Information Technology, IT Building, 2nd floor",
+      "th": "ห้อง IT208 ห้องทำงานของ Asst. Prof. Dr. Pimpa Cheewaprakobkit คณบดีคณะเทคโนโลยีสารสนเทศ อาคารไอที ชั้น 2",
+      "aliases": [
+        "it208",
+        "it 208",
+        "ไอที208",
+        "ไอที 208",
+        "t208",
+        "t 208",
+        "ที208",
+        "ที 208",
+        "ห้อง t208",
+        "pimpa",
+        "pimpa office",
+        "dr pimpa",
+        "ห้องอาจารย์ปิมปา",
+        "ปิมปา"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "office",
+        "staff"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "t209",
+      "type": "room",
+      "building": "it",
+      "floor": 2,
+      "room": "IT209",
+      "en": "Room IT209, office of Mr. Phaneendra Puppala, IT Building, 2nd floor",
+      "th": "ห้อง IT209 ห้องทำงานของ Mr. Phaneendra Puppala อาคารไอที ชั้น 2",
+      "aliases": [
+        "it209",
+        "it 209",
+        "ไอที209",
+        "ไอที 209",
+        "t209",
+        "t 209",
+        "ที209",
+        "ที 209",
+        "ห้อง t209",
+        "it lecturer",
+        "อาจารย์ไอที",
+        "phaneendra",
+        "puppala"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "office",
+        "staff"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "it_building",
+      "type": "building",
+      "building": "it",
+      "floor": 1,
+      "room": "IT Building",
+      "en": "Business and Information Technology Center (IT Building), centre of campus, 3 floors",
+      "th": "อาคารไอที (ศูนย์บริหารธุรกิจและเทคโนโลยีสารสนเทศ) ใจกลาง campus 3 ชั้น",
+      "aliases": [
+        "it building",
+        "business building",
+        "business and it center",
+        "bitc",
+        "อาคารไอที",
+        "faculty of it",
+        "ไอที",
+        "wifi",
+        "wi-fi",
+        "internet",
+        "helpdesk",
+        "ไวไฟ",
+        "เน็ต"
+      ],
+      "hours": "Mon-Fri 08:00-17:00",
+      "tags": [
+        "building"
+      ]
+    },
+    {
+      "id": "library_desk",
+      "type": "service",
+      "building": "library",
+      "floor": 1,
+      "room": "Library, 1st floor",
+      "en": "Library service desk, 1st floor",
+      "th": "เคาน์เตอร์บริการหอสมุด ชั้น 1",
+      "aliases": [
+        "library",
+        "หอสมุด",
+        "ห้องสมุด",
+        "library desk",
+        "เคาน์เตอร์หอสมุด",
+        "borrow book",
+        "borrow",
+        "ยืมหนังสือ"
+      ],
+      "hours": "Mon-Thu 08:00-20:00, Fri 08:00-12:00, Sun 13:00-17:00",
+      "tags": [
+        "service"
+      ]
+    },
+    {
+      "id": "library_quiet",
+      "type": "room",
+      "building": "library",
+      "floor": 3,
+      "room": "Library, 3rd floor",
+      "en": "Group discussion rooms, Library 3rd floor",
+      "th": "ห้องประชุมกลุ่ม ชั้น 3 หอสมุด",
+      "aliases": [
+        "discussion room",
+        "group study",
+        "ห้องประชุมกลุ่ม",
+        "ห้องอ่านหนังสือ",
+        "library third floor",
+        "ชั้นสามหอสมุด"
+      ],
+      "hours": "Same as library",
+      "tags": [
+        "study"
+      ]
+    },
+    {
+      "id": "registrar",
+      "type": "office",
+      "building": "admin",
+      "floor": 1,
+      "room": "Administration, 1st floor",
+      "en": "Registrar's Office, Administration Building, 1st floor",
+      "th": "สำนักทะเบียน อาคารบริหาร ชั้น 1",
+      "aliases": [
+        "registrar",
+        "registor",
+        "ทะเบียน",
+        "สำนักทะเบียน",
+        "registration",
+        "ลงทะเบียน",
+        "transcript",
+        "ใบแสดงผล"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "office"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "admissions",
+      "type": "office",
+      "building": "admin",
+      "floor": 1,
+      "room": "Administration, 1st floor",
+      "en": "Admissions Office, Administration Building, 1st floor",
+      "th": "ฝ่ายรับสมัคร อาคารบริหาร ชั้น 1",
+      "aliases": [
+        "admissions",
+        "admission",
+        "รับสมัคร",
+        "สมัครเรียน",
+        "enrol",
+        "enroll"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "office"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "finance",
+      "type": "office",
+      "building": "admin",
+      "floor": 1,
+      "room": "Administration, 1st floor",
+      "en": "Finance and Cashier, Administration Building, 1st floor",
+      "th": "การเงินและแคชเชียร์ อาคารบริหาร ชั้น 1",
+      "aliases": [
+        "finance",
+        "cashier",
+        "pay fee",
+        "pay tuition",
+        "tuition",
+        "ค่าเทอม",
+        " tuition fee",
+        "จ่ายค่าเทอม",
+        "การเงิน",
+        "แคชเชียร์",
+        "ค่าหอพัก",
+        "dorm fee",
+        "pay dorm",
+        "จ่ายค่าหอพัก"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "office",
+        "payment"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "admin_dean",
+      "type": "office",
+      "building": "admin",
+      "floor": 2,
+      "room": "Administration, 2nd floor",
+      "en": "Vice President's Office, Administration Building, 2nd floor",
+      "th": "สำนักงานรองอธิการบดี อาคารบริหาร ชั้น 2",
+      "aliases": [
+        "vice president",
+        "vp office",
+        "รองอธิการบดี",
+        "president office"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "office"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "clinic",
+      "type": "service",
+      "building": "clinic",
+      "floor": 1,
+      "room": "Clinic",
+      "en": "Campus Clinic, next to the dormitories",
+      "th": "ห้องพยาบาล ข้างหอพัก",
+      "aliases": [
+        "clinic",
+        "nurse",
+        "hospital",
+        "ห้องพยาบาล",
+        "พยาบาล",
+        "หมอ",
+        "doctor",
+        "sick",
+        "ปวดหัว",
+        "ไม่สบาย",
+        "medicine",
+        "ยา"
+      ],
+      "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
+      "tags": [
+        "health"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "cafeteria",
+      "type": "service",
+      "building": "cafeteria",
+      "floor": 1,
+      "room": "Cafeteria",
+      "en": "Cafeteria, next to the Administration Building",
+      "th": "โรงอาหาร ข้างอาคารบริหาร",
+      "aliases": [
+        "cafeteria",
+        "food",
+        "eat",
+        "โรงอาหาร",
+        "อาหาร",
+        "ข้าว",
+        "กินข้าว",
+        "canteen",
+        "lunch"
+      ],
+      "hours": "Mon-Thu and Sun 07:00-09:00, 10:00-14:00, 15:00-18:00; Fri 07:00-09:00, 10:00-14:00, 15:00-17:00; Sat 12:00-14:00, 16:00-18:00. A la carte counter 16:00-18:00 Mon-Thu",
+      "tags": [
+        "food"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "seven_eleven",
+      "type": "service",
+      "building": "cafeteria",
+      "floor": 1,
+      "room": "Cafeteria area",
+      "en": "7-Eleven, near the cafeteria",
+      "th": "เซเว่นอีเลฟเว่น ใกล้โรงอาหาร",
+      "aliases": [
+        "7-eleven",
+        "seven eleven",
+        "seven",
+        "เซเว่น",
+        "7 11",
+        "convenience store",
+        "convenience",
+        "ร้านสะดวกซื้อ"
+      ],
+      "hours": "Daily 07:00-22:00",
+      "tags": [
+        "shop"
+      ]
+    },
+    {
+      "id": "printing",
+      "type": "service",
+      "building": "library",
+      "floor": 1,
+      "room": "Library, 1st floor",
+      "en": "Printing and photocopy shop, Library 1st floor",
+      "th": "ร้านถ่ายเอกสารและพิมพ์งาน ชั้น 1 หอสมุด",
+      "aliases": [
+        "printing",
+        "print",
+        "photocopy",
+        "ถ่ายเอกสาร",
+        "พิมพ์งาน",
+        "ปรินต์",
+        "printer"
+      ],
+      "hours": "Mon-Fri 08:00-17:00",
+      "tags": [
+        "service"
+      ]
+    },
+    {
+      "id": "atm",
+      "type": "service",
+      "building": "admin",
+      "floor": 1,
+      "room": "Outside Administration",
+      "en": "ATM, outside the Administration Building",
+      "th": "ตู้เอทีเอ็ม หน้าอาคารบริหาร",
+      "aliases": [
+        "atm",
+        "cash machine",
+        "ตู้เอทีเอ็ม",
+        "กดเงิน",
+        "withdraw"
+      ],
+      "hours": "24 hours",
+      "tags": [
+        "service"
+      ]
+    },
+    {
+      "id": "post_room",
+      "type": "service",
+      "building": "admin",
+      "floor": 1,
+      "room": "Administration, 1st floor",
+      "en": "Mail and parcel room, Administration Building, 1st floor",
+      "th": "ห้องไปรษณีย์และพัสดุ อาคารบริหาร ชั้น 1",
+      "aliases": [
+        "post",
+        "mail",
+        "parcel",
+        "package",
+        "ไปรษณีย์",
+        "พัสดุ",
+        "รับพัสดุ"
+      ],
+      "hours": "Mon-Fri 09:00-16:00",
+      "tags": [
+        "service"
+      ]
+    },
+    {
+      "id": "lost_found",
+      "type": "service",
+      "building": "admin",
+      "floor": 1,
+      "room": "Administration, 1st floor",
+      "en": "Lost and found, Administration Building, 1st floor",
+      "th": "ของหาย อาคารบริหาร ชั้น 1",
+      "aliases": [
+        "lost and found",
+        "lost",
+        "found",
+        "ของหาย",
+        "ทำของหาย",
+        "เก็บของได้"
+      ],
+      "hours": "Mon-Fri 08:30-16:30",
+      "tags": [
+        "service"
+      ]
+    },
+    {
+      "id": "security",
+      "type": "service",
+      "building": "admin",
+      "floor": 1,
+      "room": "Main gate",
+      "en": "Security office, main gate",
+      "th": "สำนักงานรักษาความปลอดภัย ประตูหลัก",
+      "aliases": [
+        "security",
+        "guard",
+        "รปภ",
+        "รักษาความปลอดภัย",
+        "ยาม",
+        "emergency",
+        "ฉุกเฉิน",
+        "help"
+      ],
+      "hours": "24 hours",
+      "tags": [
+        "safety"
+      ]
+    },
+    {
+      "id": "bus_stop",
+      "type": "service",
+      "building": "admin",
+      "floor": 1,
+      "room": "Main gate",
+      "en": "Bus stop and van pickup, main gate",
+      "th": "ป้ายรถเมล์และจุดรับรถตู้ ประตูหลัก",
+      "aliases": [
+        "bus",
+        "bus stop",
+        "van",
+        "รถเมล์",
+        "รถตู้",
+        "ป้ายรถ",
+        "taxi"
+      ],
+      "hours": "Daily 06:00-20:00",
+      "tags": [
+        "transport"
+      ]
+    },
+    {
+      "id": "parking",
+      "type": "service",
+      "building": "admin",
+      "floor": 1,
+      "room": "Main gate",
+      "en": "Visitor parking, main gate",
+      "th": "ที่จอดรถผู้มาเยือน ประตูหลัก",
+      "aliases": [
+        "parking",
+        "park",
+        "ที่จอดรถ",
+        "จอดรถ",
+        "ที่จอดมอเตอร์ไซค์"
+      ],
+      "hours": "24 hours",
+      "tags": [
+        "transport"
+      ]
+    },
+    {
+      "id": "gym",
+      "type": "facility",
+      "building": "gym",
+      "floor": 1,
+      "room": "Gymnasium",
+      "en": "Gym, inside the Student Center, west of the Administration Building",
+      "th": "โรงยิม ในศูนย์กิจกรรมนักศึกษา ทางตะวันตกของอาคารบริหาร",
+      "aliases": [
+        "gym",
+        "gymnasium",
+        "โรงยิม",
+        "ฟิตเนส",
+        "fitness",
+        "basketball",
+        "บาส"
+      ],
+      "hours": "Hours not confirmed yet",
+      "tags": [
+        "sport"
+      ]
+    },
+    {
+      "id": "sports_field",
+      "type": "facility",
+      "building": "gym",
+      "floor": 1,
+      "room": "Sports field",
+      "en": "Sports field, behind the Student Center",
+      "th": "สนามกีฬา หลังศูนย์กิจกรรมนักศึกษา",
+      "aliases": [
+        "sports field",
+        "football",
+        "soccer",
+        "สนามกีฬา",
+        "สนามฟุตบอล",
+        "วิ่ง"
+      ],
+      "hours": "Daily 06:00-20:00",
+      "tags": [
+        "sport"
+      ]
+    },
+    {
+      "id": "chapel",
+      "type": "facility",
+      "building": "chapel",
+      "floor": 1,
+      "room": "Church",
+      "en": "AIU Church, east side of campus",
+      "th": "โบสถ์ AIU ด้านตะวันออกของ campus",
+      "aliases": [
+        "church",
+        "chapel",
+        "โบสถ์",
+        "สวดมนต์",
+        "worship",
+        "sabbath"
+      ],
+      "hours": "No fixed schedule - opens when there is an event",
+      "tags": [
+        "worship"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "prayer_room",
+      "type": "facility",
+      "building": "it",
+      "floor": 1,
+      "room": "IT Building, 1st floor",
+      "en": "Prayer room, IT Building, 1st floor",
+      "th": "ห้องละหมาด อาคารไอที ชั้น 1",
+      "aliases": [
+        "prayer room",
+        "muslim prayer",
+        "ห้องละหมาด",
+        "ละหมาด",
+        "prayer"
+      ],
+      "hours": "Daily 06:00-22:00",
+      "tags": [
+        "worship"
+      ]
+    },
+    {
+      "id": "auditorium",
+      "type": "facility",
+      "building": "admin",
+      "floor": 1,
+      "room": "Administration, ground floor",
+      "en": "Auditorium, Administration Building ground floor",
+      "th": "หอประชุม อาคารบริหาร ชั้น 1",
+      "aliases": [
+        "auditorium",
+        "hall",
+        "หอประชุม",
+        "ห้องประชุมใหญ่",
+        "event hall"
+      ],
+      "hours": "By booking",
+      "tags": [
+        "event"
+      ]
+    },
+    {
+      "id": "science_lab",
+      "type": "room",
+      "building": "science",
+      "floor": 1,
+      "room": "Science Building, 1st floor",
+      "en": "Science laboratories, Science Building, 1st floor",
+      "th": "ห้องแล็บวิทยาศาสตร์ อาคารวิทยาศาสตร์ ชั้น 1",
+      "aliases": [
+        "science lab",
+        "laboratory",
+        "แล็บวิทยาศาสตร์",
+        "ห้องทดลอง",
+        "chem lab",
+        "bio lab"
+      ],
+      "hours": "Mon-Thu 08:00-17:00",
+      "tags": [
+        "lab"
+      ]
+    },
+    {
+      "id": "dorm_solomon",
+      "type": "residence",
+      "building": "dorm_solomon",
+      "floor": 1,
+      "room": "Solomon Hall",
+      "en": "Solomon Hall, men's residence, north side of campus",
+      "th": "หอพักโซโลมอน หอชาย ด้านเหนือของ campus",
+      "aliases": [
+        "solomon hall",
+        "solomon",
+        "หอโซโลมอน หอชาย ด้านเหนือของ campus",
+        "dorm",
+        "หอพัก"
+      ],
+      "hours": "Dean's office Mon-Fri 08:00-17:00",
+      "tags": [
+        "housing"
+      ]
+    },
+    {
+      "id": "dorm_sarah",
+      "type": "residence",
+      "building": "dorm_solomon",
+      "floor": 1,
+      "room": "Right half of Solomon Hall",
+      "en": "Sarah Hall, residence in the right half of Solomon Hall, north side of campus",
+      "th": "หอพักซาราห์ ครึ่งขวาของหอพักโซโลมอน ด้านเหนือของ campus",
+      "aliases": [
+        "sarah hall",
+        "sarah",
+        "หอซาราห์",
+        "หอพักซาราห์",
+        "dorm",
+        "หอพัก"
+      ],
+      "hours": "Dean's office Mon-Fri 08:00-17:00",
+      "tags": [
+        "housing"
+      ]
+    },
+    {
+      "id": "dorm_elijah",
+      "type": "residence",
+      "building": "dorm_elijah",
+      "floor": 1,
+      "room": "Elijah Hall",
+      "en": "Elijah Hall, men's residence, north side of campus",
+      "th": "หอพักเอลียาห์ หอชาย ด้านเหนือของ campus",
+      "aliases": [
+        "elijah hall",
+        "elijah",
+        "หอเอลียาห์ หอชาย ด้านเหนือของ campus",
+        "dorm",
+        "หอพัก"
+      ],
+      "hours": "Dean's office Mon-Fri 08:00-17:00",
+      "tags": [
+        "housing"
+      ]
+    },
+    {
+      "id": "dorm_esther",
+      "type": "residence",
+      "building": "dorm_esther",
+      "floor": 1,
+      "room": "Esther Hall",
+      "en": "Esther Hall, women's residence, north side of campus",
+      "th": "หอพักเอสเธอร์ หอหญิง ด้านเหนือของ campus",
+      "aliases": [
+        "esther hall",
+        "esther",
+        "หอเอสเธอร์ หอหญิง ด้านเหนือของ campus",
+        "dorm",
+        "หอพัก"
+      ],
+      "hours": "Dean's office Mon-Fri 08:00-17:00",
+      "tags": [
+        "housing"
+      ]
+    },
+    {
+      "id": "dorm_ruth",
+      "type": "residence",
+      "building": "dorm_ruth",
+      "floor": 1,
+      "room": "Ruth Hall",
+      "en": "Ruth Hall, women's residence, north side of campus",
+      "th": "หอพักรูธ หอหญิง ด้านเหนือของ campus",
+      "aliases": [
+        "ruth hall",
+        "ruth",
+        "หอรูธ หอหญิง ด้านเหนือของ campus",
+        "dorm",
+        "หอพัก"
+      ],
+      "hours": "Dean's office Mon-Fri 08:00-17:00",
+      "tags": [
+        "housing"
+      ]
+    },
+    {
+      "id": "dorm_eve",
+      "type": "residence",
+      "building": "dorm_eve",
+      "floor": 1,
+      "room": "Eve Hall",
+      "en": "Eve Hall, women's residence, north side of campus",
+      "th": "หอพักอีฟ หอหญิง ด้านเหนือของ campus",
+      "aliases": [
+        "eve hall",
+        "eve",
+        "หออีฟ หอหญิง ด้านเหนือของ campus",
+        "dorm",
+        "หอพัก"
+      ],
+      "hours": "Dean's office Mon-Fri 08:00-17:00",
+      "tags": [
+        "housing"
+      ]
+    }
+  ]
+}
