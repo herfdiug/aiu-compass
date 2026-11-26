@@ -469,11 +469,20 @@ export function createMap(canvas, campus) {
       const step = ph + 3;
       let box = null;
       let py = 0;
-      for (const shift of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step, -4 * step, 4 * step, -5 * step, 5 * step]) {
-        const tryY = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy + shift));
-        const candidate = { x1: px - pw / 2, y1: tryY - ph, x2: px + pw / 2, y2: tryY };
+      let fx = px;
+      // Vertical rows first (a label stays over its own roof), then sideways, which
+      // is better than losing the name on a short phone stage.
+      const tries = [];
+      for (const dy of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step, -4 * step, 4 * step, -5 * step, 5 * step]) tries.push([0, dy]);
+      for (const dy of [0, -step, step, -2 * step, 2 * step]) {
+        for (const dx of [pw * 0.7, -pw * 0.7, pw * 1.3, -pw * 1.3]) tries.push([dx, dy]);
+      }
+      for (const [dx, dy] of tries) {
+        const tryX = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, px + dx));
+        const tryY = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy + dy));
+        const candidate = { x1: tryX - pw / 2, y1: tryY - ph, x2: tryX + pw / 2, y2: tryY };
         const hit = placed.some((p) => !(candidate.x2 < p.x1 || candidate.x1 > p.x2 || candidate.y2 < p.y1 || candidate.y1 > p.y2));
-        if (!hit) { box = candidate; py = tryY; break; }
+        if (!hit) { box = candidate; py = tryY; fx = tryX; break; }
       }
       if (!box) {
         // Every row near this roof is taken. The selected or hovered building keeps
@@ -485,10 +494,11 @@ export function createMap(canvas, campus) {
         }
         py = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy));
         box = { x1: px - pw / 2, y1: py - ph, x2: px + pw / 2, y2: py };
+        fx = px;
       }
       placed.push(box);
       plate.style.visibility = 'visible';
-      plate.style.transform = `translate(-50%, -100%) translate(${px}px, ${py}px)`;
+      plate.style.transform = `translate(-50%, -100%) translate(${fx}px, ${py}px)`;
       plate.style.opacity = hot ? '1' : '0.82';
       plate.classList.toggle('hot', hot);
     }
