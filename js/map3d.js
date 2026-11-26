@@ -517,14 +517,11 @@ export function createMap(canvas, campus) {
   function reset() {
     selectedId = null;
     targetGoal.set(centerX, 0, centerZ);
-    theta = 0.34;
-    phi = 0.86;
-    radius = span * 1.3;
-    camGoal.set(
-      targetGoal.x + radius * Math.cos(phi) * Math.sin(theta),
-      targetGoal.y + radius * Math.sin(phi),
-      targetGoal.z + radius * Math.cos(phi) * Math.cos(theta)
-    );
+    // Restore the *opening* framing. A fixed theta/phi/radius did not match what
+    // fitCamera() computes for the current aspect ratio, so "reset" landed at a
+    // different distance than the first paint.
+    fitCamera();
+    syncOrbitFromGoal();
     drawRoute();
   }
 

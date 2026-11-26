@@ -250,6 +250,7 @@ function cacheEls() {
   el.speakBtn = $('#speakBtn');
   el.suggestions = $('#suggestions');
   el.offlineBar = $('#offlineBar');
+  el.mapReset = $('#mapReset');
   el.langLabel = $('#langLabel');
   el.fromLabel = $('#fromLabel');
   el.fromSel = $('#fromSel');
@@ -303,10 +304,13 @@ function setLang(code) {
   if (state.listening) startListening();
   // Re-answer the last question in the new language so the change is visible.
   // Going back through ask() keeps the FAQ wording in the new language instead
-  // of swapping in the generic per-place sentence.
+  // of swapping in the generic per-place sentence. A failed lookup has no place,
+  // so it used to keep the old language's "not found" body under a new badge.
   if (changed && state.lastPlace) {
     if (state.lastQuestion) ask(state.lastQuestion, { speakIt: true });
     else showPlace(state.lastPlace, { speakIt: true });
+  } else if (changed && state.lastQuestion) {
+    ask(state.lastQuestion, { speakIt: true });
   }
 }
 
@@ -414,7 +418,12 @@ async function boot() {
     state.map.setLang(() => shortLang(state.lang));
     state.map.setOrigin(state.originBuilding);
     state.map.start();
-    el.map.onPick = (place) => showPlace(place, { speakIt: false });
+    el.map.onPick = (place) => {
+      // A tap is its own turn: forget the previous typed question so switching
+      // language later re-renders the tapped place, not the old search.
+      state.lastQuestion = '';
+      showPlace(place, { speakIt: false });
+    };
   } catch (err) {
     console.error('map failed, text mode only', err);
   }
@@ -509,6 +518,11 @@ function wireEvents() {
     if (e.key === 'Enter') submitTyped();
   });
   el.fromSel.addEventListener('change', () => setOrigin(el.fromSel.value, 'picked'));
+  el.mapReset.addEventListener('click', () => {
+    if (!state.map) return;
+    state.map.reset();
+    updateRouteNote();
+  });
   el.showMe.addEventListener('click', () => {
     // The answer already framed the building, so a no-op click read as a dead
     // button. This one moves in closer and re-centres, which is visibly different.
@@ -647,9 +661,18 @@ function shortLang(code) {
 function faqHit(place, question) {
   if (!state.faq) return null;
   const q = question.toLowerCase();
+  // A pattern match must beat a place match. The Wi-Fi entry is filed under the
+  // IT Building, so place-first lookup answered "Where is the IT department?"
+  // with the helpdesk paragraph instead of the building.
   for (const entry of state.faq.entries) {
-    if (place && entry.place === place.id) return entry;
-    if (entry.patterns.some((p) => q.includes(p.toLowerCase()))) return entry;
+    if (entry.patterns.some((p) => p && q.includes(p.toLowerCase()))) return entry;
+  }
+  if (place) {
+    // Only the entry that IS this place. Filing a facility question under a
+    // building (Wi-Fi under the IT Building) must not let it hijack every
+    // question about that building.
+    const byPlace = state.faq.entries.find((e) => e.place === place.id && e.id === place.id);
+    if (byPlace) return byPlace;
   }
   return null;
 }
@@ -674,7 +697,9 @@ function submitTyped() {
     el.typed.classList.remove('need-input');
     el.typed.removeAttribute('aria-invalid');
   }, 2600);
-  sayStatus('needQuestion');
+  // Do not replace the question line here: if an answer is on screen, changing
+  // the question text would leave the card answering a question that is no
+  // longer shown. The input itself carries the hint.
 }
 
 async function ask(question, opts) {

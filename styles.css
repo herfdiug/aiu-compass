@@ -161,6 +161,28 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
 }
 .origin select option { background: #0b2740; color: var(--text); }
 
+/* After dragging or zooming there was no way back to the opening framing.
+   A single reset button is cheaper than a zoom widget: wheel and pinch already
+   zoom, so only "put it back" was missing. */
+.mapReset {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(6, 24, 42, 0.9);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  opacity: 0.9;
+}
+.mapReset:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+.mapReset:active { transform: scale(0.94); }
+
 .mapLabel {
   position: absolute;
   top: 0;
@@ -347,8 +369,18 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
   #panel { gap: 12px; }
   /* The map is short once an answer is open, and every pixel of it is a label
      row. The control shrinks to just the place name so it stops eating rows;
-     the full "Starting from" wording returns as soon as the answer is closed. */
-  body.has-answer .origin label { display: none; }
+     the full "Starting from" wording returns as soon as the answer is closed.
+     The label is visually hidden rather than display:none, so the select keeps
+     its accessible name for screen readers. */
+  body.has-answer .origin label {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
   body.has-answer .origin { padding: 2px 8px; max-width: 150px; }
   body.has-answer .origin select { min-height: 34px; max-width: 132px; font-size: 12px; }
   /* Only the suggestion chips step aside for an answer. The mic row stays:
