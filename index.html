@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -11,15 +11,23 @@
 <body>
 
 <header>
-  <div class="dot" id="dot"></div>
-  <div class="brand"><b>AIU Compass</b><span id="status">Loading…</span></div>
-  <div class="chips" id="chips"></div>
+  <div class="brand"><b>AIU Compass</b></div>
+  <div class="langbar">
+    <span class="langlabel" id="langLabel">ภาษา</span>
+    <div class="chips" id="chips" role="group" aria-labelledby="langLabel"></div>
+  </div>
 </header>
 
 <main>
   <section id="stage">
-    <canvas id="map" aria-label="Schematic campus map"></canvas>
-    <div class="offlineBar" id="offlineBar">Offline pack · cached answers only</div>
+    <canvas id="map" aria-label="Campus map"></canvas>
+    <div class="origin" id="originBox">
+      <label for="fromSel" id="fromLabel">Starting from</label>
+      <select id="fromSel"></select>
+    </div>
+    <div class="routeNote" id="routeNote"></div>
+    <div class="stageNote" id="stageNote"></div>
+    <div class="offlineBar" id="offlineBar"></div>
   </section>
 
   <section id="panel">
@@ -31,17 +39,17 @@
         </svg>
       </button>
       <div class="hint">
-        <b>Tap and speak</b><br />
-        Try: “ห้อง IT208 อยู่ไหน” · “where do I pay the dorm fee”
+        <b id="hintTitle">แตะแล้วพูด</b><br />
+        <span id="hintTry">ลองพูดว่า “ห้อง IT208 อยู่ไหน”</span>
       </div>
     </div>
 
-    <div class="transcript" id="transcript">Ready when you are.</div>
+    <div class="transcript" id="transcript"></div>
 
     <div class="typed">
       <input id="typedInput" type="text" inputmode="text" autocomplete="off"
-             placeholder="…or type your question" />
-      <button id="askBtn" type="button">Ask</button>
+             placeholder="…หรือพิมพ์คำถาม" />
+      <button id="askBtn" type="button">ถาม</button>
     </div>
 
     <div class="suggestions" id="suggestions"></div>
@@ -51,17 +59,16 @@
       <div class="main" id="answerMain"></div>
       <div class="secondary" id="answerSecondary"></div>
       <div class="note" id="answerNote"></div>
+      <div class="note voice" id="voiceNote"></div>
       <div class="actions">
         <button class="showMe" id="showMe" type="button">Show me on the map</button>
-        <button class="ghost" id="speakBtn" type="button">🔊 Replay</button>
+        <button class="ghost" id="speakBtn" type="button">Replay</button>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
-  AIU Compass · prototype by one student · schematic map, verify office hours before relying on them
-</footer>
+<footer id="footer"></footer>
 
 <script src="config.js"></script>
 <script type="module" src="js/app.js"></script>

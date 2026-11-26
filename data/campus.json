@@ -3,7 +3,111 @@
     "name": "Asia-Pacific International University",
     "note": "Schematic layout for the demo. Building names, floor counts and dormitory names checked against AIU sources and the student's campus notes. Room numbers are shown only where published (IT208, IT209); other rooms are deliberately left unnamed rather than guessed.",
     "hoursVerified": false,
-    "updated": "2026-11-26"
+    "updated": "2026-11-26",
+    "hoursI18n": {
+      "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00": {
+        "th": "จ.–พฤ. 08:00–12:00, 13:00–17:00; ศ. 08:00–13:00",
+        "id": "Sen–Kam 08.00–12.00, 13.00–17.00; Jum 08.00–13.00",
+        "vi": "Thứ Hai–Thứ Năm 08:00–12:00, 13:00–17:00; Thứ Sáu 08:00–13:00",
+        "zh": "周一至周四 08:00–12:00、13:00–17:00；周五 08:00–13:00"
+      },
+      "Mon-Fri 08:00-17:00": {
+        "th": "จ.–ศ. 08:00–17:00",
+        "id": "Sen–Jum 08.00–17.00",
+        "vi": "Thứ Hai–Thứ Sáu 08:00–17:00",
+        "zh": "周一至周五 08:00–17:00"
+      },
+      "Mon-Thu 08:00-20:00, Fri 08:00-12:00, Sun 13:00-17:00": {
+        "th": "จ.–พฤ. 08:00–20:00, ศ. 08:00–12:00, อา. 13:00–17:00",
+        "id": "Sen–Kam 08.00–20.00, Jum 08.00–12.00, Min 13.00–17.00",
+        "vi": "Thứ Hai–Thứ Năm 08:00–20:00, Thứ Sáu 08:00–12:00, Chủ nhật 13:00–17:00",
+        "zh": "周一至周四 08:00–20:00，周五 08:00–12:00，周日 13:00–17:00"
+      },
+      "Same as library": {
+        "th": "เหมือนหอสมุด",
+        "id": "Sama dengan perpustakaan",
+        "vi": "Giống thư viện",
+        "zh": "与图书馆相同"
+      },
+      "Mon-Thu and Sun 07:00-09:00, 10:00-14:00, 15:00-18:00; Fri 07:00-09:00, 10:00-14:00, 15:00-17:00; Sat 12:00-14:00, 16:00-18:00. A la carte counter 16:00-18:00 Mon-Thu": {
+        "th": "จ.–พฤ. และอา. 07:00–09:00, 10:00–14:00, 15:00–18:00; ศ. 07:00–09:00, 10:00–14:00, 15:00–17:00; ส. 12:00–14:00, 16:00–18:00 (เคาน์เตอร์ตามสั่ง 16:00–18:00 จ.–พฤ.)",
+        "id": "Sen–Kam dan Min 07.00–09.00, 10.00–14.00, 15.00–18.00; Jum 07.00–09.00, 10.00–14.00, 15.00–17.00; Sab 12.00–14.00, 16.00–18.00 (konter à la carte 16.00–18.00 Sen–Kam)",
+        "vi": "Thứ Hai–Thứ Năm và Chủ nhật 07:00–09:00, 10:00–14:00, 15:00–18:00; Thứ Sáu 07:00–09:00, 10:00–14:00, 15:00–17:00; Thứ Bảy 12:00–14:00, 16:00–18:00 (quầy gọi món 16:00–18:00 Thứ Hai–Thứ Năm)",
+        "zh": "周一至周四及周日 07:00–09:00、10:00–14:00、15:00–18:00；周五 07:00–09:00、10:00–14:00、15:00–17:00；周六 12:00–14:00、16:00–18:00（点餐柜台周一至周四 16:00–18:00）"
+      },
+      "Daily 07:00-22:00": {
+        "th": "ทุกวัน 07:00–22:00",
+        "id": "Setiap hari 07.00–22.00",
+        "vi": "Hằng ngày 07:00–22:00",
+        "zh": "每天 07:00–22:00"
+      },
+      "24 hours": {
+        "th": "ตลอด 24 ชั่วโมง",
+        "id": "24 jam",
+        "vi": "24 giờ",
+        "zh": "24 小时"
+      },
+      "Mon-Fri 09:00-16:00": {
+        "th": "จ.–ศ. 09:00–16:00",
+        "id": "Sen–Jum 09.00–16.00",
+        "vi": "Thứ Hai–Thứ Sáu 09:00–16:00",
+        "zh": "周一至周五 09:00–16:00"
+      },
+      "Mon-Fri 08:30-16:30": {
+        "th": "จ.–ศ. 08:30–16:30",
+        "id": "Sen–Jum 08.30–16.30",
+        "vi": "Thứ Hai–Thứ Sáu 08:30–16:30",
+        "zh": "周一至周五 08:30–16:30"
+      },
+      "Daily 06:00-20:00": {
+        "th": "ทุกวัน 06:00–20:00",
+        "id": "Setiap hari 06.00–20.00",
+        "vi": "Hằng ngày 06:00–20:00",
+        "zh": "每天 06:00–20:00"
+      },
+      "Not confirmed yet": {
+        "th": "ยังไม่ยืนยัน",
+        "id": "Belum dikonfirmasi",
+        "vi": "Chưa xác nhận",
+        "zh": "尚未确认"
+      },
+      "No fixed schedule - opens when there is an event": {
+        "th": "ไม่มีตารางประจำ เปิดเมื่อมีกิจกรรม",
+        "id": "Tidak ada jadwal tetap — buka saat ada acara",
+        "vi": "Không có lịch cố định — mở khi có sự kiện",
+        "zh": "无固定时间——有活动时开放"
+      },
+      "Open with the building": {
+        "th": "เปิดตามเวลาอาคาร",
+        "id": "Mengikuti jam gedung",
+        "vi": "Mở cùng tòa nhà",
+        "zh": "随楼开放"
+      },
+      "Daily 06:00-22:00": {
+        "th": "ทุกวัน 06:00–22:00",
+        "id": "Setiap hari 06.00–22.00",
+        "vi": "Hằng ngày 06:00–22:00",
+        "zh": "每天 06:00–22:00"
+      },
+      "By booking": {
+        "th": "α╣âα╕èα╣ëα╣Çα╕ºα╕Ñα╕▓α╣üα╕Üα╕Üα╕Öα╕▒α╕öα╕½α╕íα╕▓α╕ó",
+        "id": "Dengan pemesanan",
+        "vi": "Theo ─æß║╖t tr╞░ß╗¢c",
+        "zh": "Θ£ÇµÅÉσëìΘóäτ║ª"
+      },
+      "Mon-Thu 08:00-17:00": {
+        "th": "จ.–พฤ. 08:00–17:00",
+        "id": "Sen–Kam 08.00–17.00",
+        "vi": "Thứ Hai–Thứ Năm 08:00–17:00",
+        "zh": "周一至周四 08:00–17:00"
+      },
+      "Dean's office Mon-Fri 08:00-17:00": {
+        "th": "สำนักงานหอพัก จ.–ศ. 08:00–17:00",
+        "id": "Kantor asrama Sen–Jum 08.00–17.00",
+        "vi": "Văn phòng ký túc xá Thứ Hai–Thứ Sáu 08:00–17:00",
+        "zh": "宿舍办公室 周一至周五 08:00–17:00"
+      }
+    }
   },
   "buildings": [
     {
@@ -15,7 +119,12 @@
       "w": 150,
       "h": 90,
       "floors": 3,
-      "color": "#1d6b5a"
+      "color": "#1d6b5a",
+      "names": {
+        "id": "Gedung IT",
+        "vi": "Tòa nhà IT",
+        "zh": "IT 楼"
+      }
     },
     {
       "id": "library",
@@ -26,7 +135,12 @@
       "w": 130,
       "h": 90,
       "floors": 3,
-      "color": "#2a5f8f"
+      "color": "#2a5f8f",
+      "names": {
+        "id": "Perpustakaan",
+        "vi": "Thư viện",
+        "zh": "图书馆"
+      }
     },
     {
       "id": "science",
@@ -37,7 +151,12 @@
       "w": 140,
       "h": 90,
       "floors": 3,
-      "color": "#7a4b8f"
+      "color": "#7a4b8f",
+      "names": {
+        "id": "Gedung Sains",
+        "vi": "Tòa nhà Khoa học",
+        "zh": "科学楼"
+      }
     },
     {
       "id": "admin",
@@ -48,7 +167,12 @@
       "w": 160,
       "h": 85,
       "floors": 3,
-      "color": "#8f5a2a"
+      "color": "#8f5a2a",
+      "names": {
+        "id": "Administrasi",
+        "vi": "Hành chính",
+        "zh": "行政楼"
+      }
     },
     {
       "id": "cafeteria",
@@ -59,7 +183,12 @@
       "w": 120,
       "h": 80,
       "floors": 1,
-      "color": "#b4572f"
+      "color": "#b4572f",
+      "names": {
+        "id": "Kantin",
+        "vi": "Nhà ăn",
+        "zh": "食堂"
+      }
     },
     {
       "id": "gym",
@@ -70,7 +199,12 @@
       "w": 130,
       "h": 85,
       "floors": 1,
-      "color": "#4a6f2a"
+      "color": "#4a6f2a",
+      "names": {
+        "id": "Pusat Mahasiswa",
+        "vi": "Trung tâm Sinh viên",
+        "zh": "学生中心"
+      }
     },
     {
       "id": "clinic",
@@ -81,28 +215,60 @@
       "w": 85,
       "h": 65,
       "floors": 1,
-      "color": "#8f2a3a"
+      "color": "#8f2a3a",
+      "names": {
+        "id": "Klinik",
+        "vi": "Phòng y tế",
+        "zh": "医务室"
+      }
     },
     {
       "id": "chapel",
-      "en": "Chapel",
-      "th": "โบสถ์",
+      "en": "AIU Church",
+      "th": "โบสถ์เอไอยู",
       "x": 300,
       "y": -200,
       "w": 80,
       "h": 65,
       "floors": 1,
-      "color": "#8f7a2a"
+      "color": "#8f7a2a",
+      "names": {
+        "id": "Gereja AIU",
+        "vi": "Nhà thờ AIU",
+        "zh": "AIU 教堂"
+      }
     },
     {
       "id": "dorm_solomon",
       "en": "Solomon Hall",
       "th": "หอพักโซโลมอน",
-      "x": -240,
+      "x": -283,
       "y": -290,
-      "w": 95,
+      "w": 34,
       "h": 70,
-      "color": "#4a5a7a"
+      "color": "#4a5a7a",
+      "names": {
+        "id": "Asrama Solomon",
+        "vi": "Ký túc xá Solomon",
+        "zh": "所罗门宿舍"
+      }
+    },
+    {
+      "id": "dorm_sarah",
+      "en": "Sarah Hall",
+      "th": "หอพักซาราห์",
+      "names": {
+        "id": "Asrama Sarah",
+        "vi": "Ký túc xá Sarah",
+        "zh": "撒拉宿舍"
+      },
+      "x": -249,
+      "y": -290,
+      "w": 34,
+      "h": 70,
+      "floors": 2,
+      "color": "#6a5470",
+      "wing": "dorm_solomon"
     },
     {
       "id": "dorm_elijah",
@@ -112,7 +278,12 @@
       "y": -290,
       "w": 95,
       "h": 70,
-      "color": "#4a5a7a"
+      "color": "#4a5a7a",
+      "names": {
+        "id": "Asrama Elia",
+        "vi": "Ký túc xá Ê-li",
+        "zh": "以利亚宿舍"
+      }
     },
     {
       "id": "dorm_esther",
@@ -122,7 +293,12 @@
       "y": -290,
       "w": 95,
       "h": 70,
-      "color": "#7a4a5a"
+      "color": "#7a4a5a",
+      "names": {
+        "id": "Asrama Ester",
+        "vi": "Ký túc xá Ê-xơ-tê",
+        "zh": "以斯帖宿舍"
+      }
     },
     {
       "id": "dorm_ruth",
@@ -132,7 +308,12 @@
       "y": -290,
       "w": 95,
       "h": 70,
-      "color": "#7a4a5a"
+      "color": "#7a4a5a",
+      "names": {
+        "id": "Asrama Rut",
+        "vi": "Ký túc xá Ru-tơ",
+        "zh": "路得宿舍"
+      }
     },
     {
       "id": "dorm_eve",
@@ -142,7 +323,12 @@
       "y": -290,
       "w": 95,
       "h": 70,
-      "color": "#7a4a5a"
+      "color": "#7a4a5a",
+      "names": {
+        "id": "Asrama Hawa",
+        "vi": "Ký túc xá Ê-va",
+        "zh": "夏娃宿舍"
+      }
     }
   ],
   "places": [
@@ -153,7 +339,7 @@
       "floor": 2,
       "room": "IT208",
       "en": "Room IT208, office of Asst. Prof. Dr. Pimpa Cheewaprakobkit, Dean of Information Technology, IT Building, 2nd floor",
-      "th": "ห้อง IT208 ห้องทำงานของ Asst. Prof. Dr. Pimpa Cheewaprakobkit คณบดีคณะเทคโนโลยีสารสนเทศ อาคารไอที ชั้น 2",
+      "th": "ห้อง IT208 ห้องทำงานของ Pimpa Cheewaprakobkit คณบดีคณะเทคโนโลยีสารสนเทศ อาคารไอที ชั้น 2",
       "aliases": [
         "it208",
         "it 208",
@@ -184,7 +370,7 @@
       "floor": 2,
       "room": "IT209",
       "en": "Room IT209, office of Mr. Phaneendra Puppala, IT Building, 2nd floor",
-      "th": "ห้อง IT209 ห้องทำงานของ Mr. Phaneendra Puppala อาคารไอที ชั้น 2",
+      "th": "ห้อง IT209 ห้องทำงานของ Phaneendra Puppala อาคารไอที ชั้น 2",
       "aliases": [
         "it209",
         "it 209",
@@ -214,7 +400,7 @@
       "floor": 1,
       "room": "IT Building",
       "en": "Business and Information Technology Center (IT Building), centre of campus, 3 floors",
-      "th": "อาคารไอที (ศูนย์บริหารธุรกิจและเทคโนโลยีสารสนเทศ) ใจกลาง campus 3 ชั้น",
+      "th": "อาคารไอที (ศูนย์บริหารธุรกิจและเทคโนโลยีสารสนเทศ) ใจกลางมหาวิทยาลัย 3 ชั้น",
       "aliases": [
         "it building",
         "business building",
@@ -421,7 +607,10 @@
         "ข้าว",
         "กินข้าว",
         "canteen",
-        "lunch"
+        "lunch",
+        "kantin",
+        "nhà ăn",
+        "食堂"
       ],
       "hours": "Mon-Thu and Sun 07:00-09:00, 10:00-14:00, 15:00-18:00; Fri 07:00-09:00, 10:00-14:00, 15:00-17:00; Sat 12:00-14:00, 16:00-18:00. A la carte counter 16:00-18:00 Mon-Thu",
       "tags": [
@@ -652,18 +841,71 @@
       "floor": 1,
       "room": "Church",
       "en": "AIU Church, east side of campus",
-      "th": "โบสถ์ AIU ด้านตะวันออกของ campus",
+      "th": "โบสถ์เอไอยู ด้านตะวันออกของมหาวิทยาลัย",
       "aliases": [
         "church",
         "chapel",
         "โบสถ์",
-        "สวดมนต์",
+        "นมัสการ",
         "worship",
         "sabbath"
       ],
       "hours": "No fixed schedule - opens when there is an event",
       "tags": [
         "worship"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "toilet",
+      "type": "facility",
+      "building": "it",
+      "floor": 1,
+      "room": "IT Building, every floor",
+      "en": "Restrooms, every floor of the IT Building, Library and Administration Building",
+      "th": "ห้องน้ำ ทุกชั้นของอาคารไอที หอสมุด และอาคารบริหาร",
+      "aliases": [
+        "toilet",
+        "restroom",
+        "bathroom",
+        "washroom",
+        "ห้องน้ำ",
+        "สุขา",
+        "wc",
+        "nhà vệ sinh",
+        "toilet ada di mana",
+        "洗手间",
+        "厕所"
+      ],
+      "hours": "Open with the building",
+      "tags": [
+        "facility"
+      ],
+      "hoursVerified": true
+    },
+    {
+      "id": "water_fountain",
+      "type": "facility",
+      "building": "it",
+      "floor": 1,
+      "room": "IT Building, next to the restrooms",
+      "en": "Drinking-water stations, next to the restrooms in the IT Building and Library, and in the cafeteria",
+      "th": "จุดน้ำดื่ม ข้างห้องน้ำในอาคารไอทีและหอสมุด และที่โรงอาหาร",
+      "aliases": [
+        "water fountain",
+        "drinking water",
+        "water cooler",
+        "น้ำดื่ม",
+        "ตู้น้ำ",
+        "น้ำฟรี",
+        "air minum",
+        "nước uống",
+        "饮水机",
+        "开水"
+      ],
+      "hours": "Open with the building",
+      "tags": [
+        "facility"
       ],
       "hoursVerified": true
     },
@@ -735,11 +977,12 @@
       "floor": 1,
       "room": "Solomon Hall",
       "en": "Solomon Hall, men's residence, north side of campus",
-      "th": "หอพักโซโลมอน หอชาย ด้านเหนือของ campus",
+      "th": "หอพักโซโลมอน หอชาย ด้านเหนือของมหาวิทยาลัย",
       "aliases": [
         "solomon hall",
         "solomon",
-        "หอโซโลมอน หอชาย ด้านเหนือของ campus",
+        "หอโซโลมอน",
+        "หอพักโซโลมอน",
         "dorm",
         "หอพัก"
       ],
@@ -751,11 +994,11 @@
     {
       "id": "dorm_sarah",
       "type": "residence",
-      "building": "dorm_solomon",
+      "building": "dorm_sarah",
       "floor": 1,
       "room": "Right half of Solomon Hall",
       "en": "Sarah Hall, residence in the right half of Solomon Hall, north side of campus",
-      "th": "หอพักซาราห์ ครึ่งขวาของหอพักโซโลมอน ด้านเหนือของ campus",
+      "th": "หอพักซาราห์ ครึ่งขวาของหอพักโซโลมอน ด้านเหนือของมหาวิทยาลัย",
       "aliases": [
         "sarah hall",
         "sarah",
@@ -776,11 +1019,12 @@
       "floor": 1,
       "room": "Elijah Hall",
       "en": "Elijah Hall, men's residence, north side of campus",
-      "th": "หอพักเอลียาห์ หอชาย ด้านเหนือของ campus",
+      "th": "หอพักเอลียาห์ หอชาย ด้านเหนือของมหาวิทยาลัย",
       "aliases": [
         "elijah hall",
         "elijah",
-        "หอเอลียาห์ หอชาย ด้านเหนือของ campus",
+        "หอเอลียาห์",
+        "หอพักเอลียาห์",
         "dorm",
         "หอพัก"
       ],
@@ -796,11 +1040,12 @@
       "floor": 1,
       "room": "Esther Hall",
       "en": "Esther Hall, women's residence, north side of campus",
-      "th": "หอพักเอสเธอร์ หอหญิง ด้านเหนือของ campus",
+      "th": "หอพักเอสเธอร์ หอหญิง ด้านเหนือของมหาวิทยาลัย",
       "aliases": [
         "esther hall",
         "esther",
-        "หอเอสเธอร์ หอหญิง ด้านเหนือของ campus",
+        "หอเอสเธอร์",
+        "หอพักเอสเธอร์",
         "dorm",
         "หอพัก"
       ],
@@ -816,11 +1061,12 @@
       "floor": 1,
       "room": "Ruth Hall",
       "en": "Ruth Hall, women's residence, north side of campus",
-      "th": "หอพักรูธ หอหญิง ด้านเหนือของ campus",
+      "th": "หอพักรูธ หอหญิง ด้านเหนือของมหาวิทยาลัย",
       "aliases": [
         "ruth hall",
         "ruth",
-        "หอรูธ หอหญิง ด้านเหนือของ campus",
+        "หอรูธ",
+        "หอพักรูธ",
         "dorm",
         "หอพัก"
       ],
@@ -836,11 +1082,12 @@
       "floor": 1,
       "room": "Eve Hall",
       "en": "Eve Hall, women's residence, north side of campus",
-      "th": "หอพักอีฟ หอหญิง ด้านเหนือของ campus",
+      "th": "หอพักอีฟ หอหญิง ด้านเหนือของมหาวิทยาลัย",
       "aliases": [
         "eve hall",
         "eve",
-        "หออีฟ หอหญิง ด้านเหนือของ campus",
+        "หออีฟ",
+        "หอพักอีฟ",
         "dorm",
         "หอพัก"
       ],

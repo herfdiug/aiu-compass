@@ -19,42 +19,75 @@
 </head>
 <body>
 <h1>AIU Compass — language probe</h1>
-<p>Run this on the actual demo phone. Tap <b>Speak</b> once per language, say one short sentence, and note which languages return text. This is the only test that decides what the pitch may claim.</p>
+<p>Run this on the actual demo phone. Tap <b>Hear</b> once per language to check the spoken voice, then tap <b>Speak</b> and say one short sentence to check recognition. This is the only test that decides what the pitch may claim.</p>
 
 <div class="row" id="row"></div>
 <pre id="out">voices: reading…</pre>
 
 <div class="note">
   <b>Reading the result:</b> a line starting with <code>OK</code> means that language is usable for the demo.
-  <code>ERR network</code> means the browser has no route to its speech service. <code>ERR language-not-supported</code>
-  means the language must be dropped from the claim.
+  <code>NO VOICE</code> means the phone has no installed voice for that language, so the app will show a
+  written note instead of reading the answer aloud. <code>ERR language-not-supported</code> means the
+  recognition language must be dropped from the claim.
 </div>
 
 <script>
 const LANGS = [
-  ['th-TH', 'Thai'],
-  ['en-US', 'English'],
-  ['id-ID', 'Indonesian'],
-  ['vi-VN', 'Vietnamese'],
-  ['zh-CN', 'Chinese']
+  ['th-TH', 'Thai', 'ห้อง IT208 อยู่ชั้นสอง'],
+  ['en-US', 'English', 'Room IT208 is on the second floor'],
+  ['id-ID', 'Indonesian', 'Ruang IT208 ada di lantai dua'],
+  ['vi-VN', 'Vietnamese', 'Phòng IT208 ở tầng hai'],
+  ['zh-CN', 'Chinese', 'IT208 在二楼']
 ];
 
 const out = document.getElementById('out');
 const row = document.getElementById('row');
 const log = (s) => { out.textContent += '\n' + s; };
 
-out.textContent = 'voices: ' + (window.speechSynthesis ? speechSynthesis.getVoices().map(v => v.lang).join(', ') : 'none');
+function dumpVoices() {
+  if (!window.speechSynthesis) return 'none';
+  return speechSynthesis.getVoices().map(v => v.lang).join(', ') || 'none';
+}
+
+out.textContent = 'voices: ' + dumpVoices();
 if (window.speechSynthesis) {
   speechSynthesis.onvoiceschanged = () => {
-    out.textContent = 'voices: ' + speechSynthesis.getVoices().map(v => v.lang).join(', ');
+    out.textContent = 'voices: ' + dumpVoices();
   };
 }
 
-for (const [code, label] of LANGS) {
-  const b = document.createElement('button');
-  b.textContent = label;
-  b.onclick = () => listen(code);
-  row.appendChild(b);
+function pickVoice(code) {
+  const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  const base = code.split('-')[0].toLowerCase();
+  const exact = voices.find(v => v.lang.toLowerCase() === code.toLowerCase());
+  if (exact) return exact;
+  const same = voices.filter(v => v.lang.toLowerCase().split('-')[0] === base);
+  return same.find(v => v.localService) || same[0] || null;
+}
+
+for (const [code, label, sample] of LANGS) {
+  const wrap = document.createElement('span');
+  const hear = document.createElement('button');
+  hear.textContent = 'Hear ' + label;
+  hear.onclick = () => {
+    if (!window.speechSynthesis) { log(code + ' NO SPEECH API'); return; }
+    const v = pickVoice(code);
+    if (!v) { log('NO VOICE ' + code + ' — nothing installed for this language'); return; }
+    const u = new SpeechSynthesisUtterance(sample);
+    u.lang = code;
+    u.voice = v;
+    u.onend = () => log('OK ' + code + ' spoke with ' + v.name + ' (' + v.lang + ')');
+    u.onerror = (e) => log(code + ' SPEAK ERR ' + (e.error || 'unknown'));
+    log('--- speaking ' + code + ' with ' + v.name);
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  };
+  const speak = document.createElement('button');
+  speak.textContent = 'Speak ' + label;
+  speak.onclick = () => listen(code);
+  wrap.appendChild(hear);
+  wrap.appendChild(speak);
+  row.appendChild(wrap);
 }
 
 function listen(code) {

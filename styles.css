@@ -24,41 +24,48 @@ html, body {
   overscroll-behavior: none;
 }
 
-body { display: flex; flex-direction: column; min-height: 100vh; }
+body { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
+/* ---------------------------------------------------------------- header */
 header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--line);
-  background: rgba(4, 16, 28, 0.7);
-  backdrop-filter: blur(8px);
+  background: rgba(4, 16, 28, 0.72);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 20;
 }
 
 .brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
-.brand b { font-size: 20px; letter-spacing: 0.4px; white-space: nowrap; }
-.brand span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.brand b { font-size: 20px; letter-spacing: 0.3px; white-space: nowrap; }
 
-.chips { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+/* The language group is labelled, so the chips read as "choose a language",
+   not as decoration. */
+.langbar { display: flex; align-items: center; gap: 8px; margin-left: auto; min-width: 0; }
+.langlabel {
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
 
 @media (max-width: 700px) {
   header { flex-wrap: wrap; row-gap: 8px; padding: 10px 12px; }
   .brand { width: 100%; }
   .brand b { font-size: 18px; }
-  .chips {
-    margin-left: 0;
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .chips::-webkit-scrollbar { display: none; }
-  .chip { flex: 0 0 auto; padding: 6px 11px; font-size: 12px; }
+  .langbar { margin-left: 0; width: 100%; }
+  .chips { width: 100%; flex-wrap: wrap; gap: 5px; }
+  .chip { padding: 6px 10px; font-size: 12px; }
+}
+
+@media (max-width: 380px) {
+  .chip { padding: 5px 8px; font-size: 11px; }
 }
 
 .chip {
@@ -71,17 +78,142 @@ header {
   cursor: pointer;
   transition: 120ms ease;
 }
+.chip:hover { border-color: rgba(120, 220, 255, 0.45); }
 .chip[aria-pressed="true"] { background: var(--accent); color: #04231a; border-color: var(--accent); font-weight: 700; }
+.chip:focus-visible, .typed input:focus-visible, .typed button:focus-visible,
+.suggestions button:focus-visible, .showMe:focus-visible, .ghost:focus-visible,
+.origin select:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
 
-.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-.dot.off { background: var(--warn); box-shadow: 0 0 10px var(--warn); }
+main { flex: 1; display: grid; grid-template-rows: 44vh 1fr; gap: 0; min-height: 0; overflow: hidden; }
 
-main { flex: 1; display: grid; grid-template-rows: 42vh 1fr; gap: 0; min-height: 0; }
+/* While an answer is on screen the map gives up height on a phone, so the answer
+   and both of its buttons fit without the visitor having to hunt for them. */
+body.has-answer main { grid-template-rows: 34vh 1fr; }
 
-#stage { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+/* ---------------------------------------------------------------- stage */
+#stage { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); background: #071d2f; }
 #map { width: 100%; height: 100%; display: block; touch-action: none; }
 
-#panel { padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+/* The "schematic" disclaimer used to be drawn inside the canvas, where it
+   collided with buttons. It lives in the page now, in its own bar. */
+.stageNote {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: rgba(190, 214, 230, 0.72);
+  background: linear-gradient(to top, rgba(4, 16, 28, 0.9), rgba(4, 16, 28, 0));
+  pointer-events: none;
+  text-align: center;
+}
+
+/* Walking hint, shown only once the visitor has said where they start. */
+.routeNote {
+  position: absolute;
+  left: 10px;
+  bottom: 30px;
+  max-width: calc(100% - 20px);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(6, 40, 32, 0.92);
+  border: 1px solid rgba(53, 224, 161, 0.55);
+  color: #d8fff0;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  pointer-events: none;
+}
+.routeNote.show { opacity: 1; transform: none; }
+
+.origin {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(6, 24, 42, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 6px 10px;
+  backdrop-filter: blur(8px);
+  max-width: calc(100% - 20px);
+}
+.origin label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); white-space: nowrap; }
+.origin select {
+  background: transparent;
+  color: var(--text);
+  border: none;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 2px 0;
+  max-width: 190px;
+  cursor: pointer;
+}
+.origin select option { background: #0b2740; color: var(--text); }
+
+.mapLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(6, 24, 42, 0.94);
+  border: 1px solid rgba(53, 224, 161, 0.5);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+.mapLabel.show { opacity: 1; }
+
+.mapHint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+/* Name plates sit in the page above the canvas, so text stays crisp and
+   never gets clipped by the WebGL viewport. */
+.mapLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mapPlate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(4, 16, 28, 0.78);
+  border: 1px solid rgba(150, 220, 255, 0.16);
+  color: #dceeff;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.mapPlate.hot {
+  color: #eafff6;
+  border-color: rgba(53, 224, 161, 0.85);
+  background: rgba(6, 40, 32, 0.94);
+}
+
+/* ---------------------------------------------------------------- panel */
+#panel { padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; min-height: 0; -webkit-overflow-scrolling: touch; }
 
 .micRow { display: flex; align-items: center; gap: 16px; }
 
@@ -121,6 +253,7 @@ main { flex: 1; display: grid; grid-template-rows: 42vh 1fr; gap: 0; min-height:
   padding: 12px 14px;
   color: var(--text);
   font-size: 16px;
+  font-family: inherit;
   outline: none;
 }
 .typed input:focus { border-color: var(--accent2); }
@@ -131,6 +264,7 @@ main { flex: 1; display: grid; grid-template-rows: 42vh 1fr; gap: 0; min-height:
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 15px;
+  font-family: inherit;
   cursor: pointer;
 }
 
@@ -142,6 +276,7 @@ main { flex: 1; display: grid; grid-template-rows: 42vh 1fr; gap: 0; min-height:
   border-radius: 999px;
   padding: 8px 12px;
   font-size: 13px;
+  font-family: inherit;
   cursor: pointer;
 }
 .suggestions button:hover { color: var(--text); border-color: var(--accent2); }
@@ -157,26 +292,25 @@ main { flex: 1; display: grid; grid-template-rows: 42vh 1fr; gap: 0; min-height:
 .answer.show { display: block; }
 @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-.answer .lang { font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); }
+.answer .lang { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); }
 .answer .main { font-size: 24px; line-height: 1.35; margin: 8px 0 10px; font-weight: 600; }
 .answer .secondary { font-size: 15px; color: var(--muted); line-height: 1.4; }
 .answer .note { font-size: 12px; color: var(--warn); margin-top: 8px; display: none; }
 .answer .note.show { display: block; }
+.answer .note.voice { color: var(--muted); }
 
 .answer .actions { display: flex; gap: 10px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
-.pill {
-  border-radius: 999px; padding: 8px 14px; font-size: 14px;
-  background: rgba(79, 195, 247, 0.14); border: 1px solid rgba(79, 195, 247, 0.4); color: var(--accent2);
-}
 .showMe {
   background: var(--accent); color: #04231a; border: none; border-radius: 999px;
-  padding: 10px 18px; font-weight: 700; font-size: 15px; cursor: pointer;
+  padding: 10px 18px; font-weight: 700; font-size: 15px; font-family: inherit; cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
 }
+.showMe.used { box-shadow: 0 0 0 6px rgba(53, 224, 161, 0.22); }
 
 footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: center; }
 
 .offlineBar {
-  position: absolute; left: 12px; top: 12px;
+  position: absolute; left: 10px; bottom: 30px;
   background: rgba(255, 183, 77, 0.16);
   border: 1px solid rgba(255, 183, 77, 0.5);
   color: var(--warn);
@@ -185,12 +319,27 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
 }
 .offlineBar.show { display: block; }
 
+@media (max-width: 859px) {
+  /* Once an answer is on screen the asking controls step aside on a phone.
+     The visitor is reading, not asking, and the answer needs the height. */
+  body.has-answer .micRow,
+  body.has-answer .suggestions { display: none; }
+  body.has-answer .answer .main { font-size: 20px; }
+  body.has-answer .answer .secondary { font-size: 14px; }
+}
+
 @media (min-width: 860px) {
-  main { grid-template-rows: none; grid-template-columns: 1.15fr 1fr; }
+  main { grid-template-rows: none; grid-template-columns: 1.25fr 1fr; }
+  body.has-answer main { grid-template-rows: none; grid-template-columns: 1.25fr 1fr; }
   #stage { border-bottom: none; border-right: 1px solid var(--line); height: 100%; }
   #panel { padding: 26px 30px; }
   .answer .main { font-size: 28px; }
   .brand b { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .answer { animation: none; }
+  .mic, .chip, .mapLabel { transition: none; }
 }
 
 @media print { body { background: #fff; color: #000; } }

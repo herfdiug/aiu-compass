@@ -1,6 +1,6 @@
 {
   "meta": {
-    "count": 12,
+    "count": 27,
     "note": "Offline counter pack. Answers are short on purpose so they fit on a phone screen."
   },
   "entries": [
@@ -129,7 +129,7 @@
       ],
       "answers": {
         "en": "Room IT208 is on the 2nd floor of the IT Building. It is the office of Asst. Prof. Dr. Pimpa Cheewaprakobkit, Dean of Information Technology.",
-        "th": "ห้อง IT208 อยู่ชั้น 2 อาคารไอที เป็นห้องทำงานของ Asst. Prof. Dr. Pimpa Cheewaprakobkit คณบดีคณะเทคโนโลยีสารสนเทศ",
+        "th": "ห้อง IT208 อยู่ชั้น 2 อาคารไอที เป็นห้องทำงานของ Pimpa Cheewaprakobkit คณบดีคณะเทคโนโลยีสารสนเทศ",
         "id": "Ruang IT208 ada di lantai 2 Gedung IT. Itu kantor Asst. Prof. Dr. Pimpa Cheewaprakobkit, Dekan Fakultas Teknologi Informasi.",
         "vi": "Phòng IT208 ở tầng 2 tòa nhà IT. Đây là văn phòng của Asst. Prof. Dr. Pimpa Cheewaprakobkit, Trưởng khoa Công nghệ Thông tin.",
         "zh": "IT208 在 IT 楼二楼，是信息技术学院院长 Asst. Prof. Dr. Pimpa Cheewaprakobkit 的办公室。"
@@ -183,7 +183,7 @@
       ],
       "answers": {
         "en": "The security office is at the main gate and is staffed 24 hours. Call them for any emergency on campus.",
-        "th": "สำนักงานรักษาความปลอดภัยอยู่ที่ประตูหลัก มีเจ้าหน้าที่ตลอด 24 ชั่วโมง โทรแจ้งเหตุฉุกเฉินใน campus ได้ตลอด",
+        "th": "สำนักงานรักษาความปลอดภัยอยู่ที่ประตูหลัก มีเจ้าหน้าที่ตลอด 24 ชั่วโมง โทรแจ้งเหตุฉุกเฉินในมหาวิทยาลัยได้ตลอด",
         "id": "Kantor keamanan ada di gerbang utama dan berjaga 24 jam. Hubungi mereka untuk keadaan darurat di kampus.",
         "vi": "Phòng bảo vệ ở cổng chính và trực 24 giờ. Hãy gọi khi có tình huống khẩn cấp trong trường.",
         "zh": "保安室在校门，24 小时值班。校园内任何紧急情况都可以联系他们。"
@@ -222,6 +222,281 @@
         "id": "7-Eleven ada di sebelah kantin dan buka setiap hari dari 07.00 sampai 22.00.",
         "vi": "7-Eleven ở cạnh nhà ăn, mở cửa hằng ngày từ 07:00 đến 22:00.",
         "zh": "7-Eleven 在食堂旁边，每天 07:00 至 22:00 营业。"
+      }
+    },
+    {
+      "id": "toilet",
+      "place": "toilet",
+      "patterns": [
+        "toilet",
+        "restroom",
+        "bathroom",
+        "washroom",
+        "ห้องน้ำ",
+        "สุขา",
+        "toilet di mana",
+        "nhà vệ sinh",
+        "洗手间",
+        "厕所"
+      ],
+      "answers": {
+        "en": "Restrooms are on every floor of the IT Building, the Library and the Administration Building, at the end of each corridor. The nearest one to the main entrance is on the 1st floor of the IT Building.",
+        "th": "ห้องน้ำมีอยู่ทุกชั้นของอาคารไอที หอสมุด และอาคารบริหาร อยู่ปลายทางเดินของแต่ละชั้น ห้องที่ใกล้ทางเข้าหลักที่สุดอยู่ชั้น 1 อาคารไอที",
+        "id": "Toilet ada di setiap lantai Gedung IT, Perpustakaan, dan Gedung Administrasi, di ujung koridor. Yang terdekat dari pintu masuk utama ada di lantai 1 Gedung IT.",
+        "vi": "Nhà vệ sinh có ở mọi tầng của Tòa nhà IT, Thư viện và Tòa nhà Hành chính, ở cuối hành lang. Gần lối vào chính nhất là ở tầng 1 Tòa nhà IT.",
+        "zh": "IT 楼、图书馆和行政楼每层都有洗手间，位于走廊尽头。离正门最近的是 IT 楼一楼。"
+      }
+    },
+    {
+      "id": "water",
+      "place": "water_fountain",
+      "patterns": [
+        "water fountain",
+        "drinking water",
+        "water cooler",
+        "น้ำดื่ม",
+        "ตู้น้ำ",
+        "น้ำฟรี",
+        "air minum",
+        "nước uống",
+        "饮水机",
+        "开水"
+      ],
+      "answers": {
+        "en": "Drinking-water stations are next to the restrooms on each floor of the IT Building and the Library, and in the cafeteria. Bring your own bottle.",
+        "th": "จุดน้ำดื่มอยู่ข้างห้องน้ำในแต่ละชั้นของอาคารไอทีและหอสมุด และที่โรงอาหาร ควรพกขวดน้ำมาเอง",
+        "id": "Stasiun air minum ada di sebelah toilet di setiap lantai Gedung IT dan Perpustakaan, serta di kantin. Bawa botol sendiri.",
+        "vi": "Trạm nước uống nằm cạnh nhà vệ sinh ở mỗi tầng Tòa nhà IT và Thư viện, và trong nhà ăn. Hãy mang theo bình nước.",
+        "zh": "IT 楼和图书馆每层的洗手间旁都有饮水处，食堂也有。请自带水杯。"
+      }
+    },
+    {
+      "id": "prayer",
+      "place": "prayer_room",
+      "patterns": [
+        "prayer room",
+        "muslim prayer",
+        "ห้องละหมาด",
+        "ละหมาด",
+        "prayer"
+      ],
+      "answers": {
+        "en": "The prayer room is on the 1st floor of the IT Building and is open daily from 06:00 to 22:00.",
+        "th": "ห้องละหมาดอยู่ชั้น 1 อาคารไอที เปิดทุกวัน เวลา 06:00 ถึง 22:00",
+        "id": "Ruang doa ada di lantai 1 Gedung IT dan buka setiap hari dari 06.00 sampai 22.00.",
+        "vi": "Phòng cầu nguyện ở tầng 1 Tòa nhà IT, mở cửa hằng ngày từ 06:00 đến 22:00.",
+        "zh": "祈祷室在 IT 楼一楼，每天 06:00 至 22:00 开放。"
+      }
+    },
+    {
+      "id": "atm",
+      "place": "atm",
+      "patterns": [
+        "atm",
+        "cash machine",
+        "ตู้เอทีเอ็ม",
+        "กดเงิน",
+        "withdraw"
+      ],
+      "answers": {
+        "en": "The ATM is outside the Administration Building and is available 24 hours a day.",
+        "th": "ตู้เอทีเอ็มอยู่หน้าอาคารบริหาร ใช้ได้ตลอด 24 ชั่วโมงทุกวัน ไม่มีวันหยุด",
+        "id": "ATM ada di luar Gedung Administrasi dan tersedia 24 jam sehari, setiap hari.",
+        "vi": "Máy ATM ở ngoài Tòa nhà Hành chính và hoạt động 24 giờ mỗi ngày.",
+        "zh": "ATM 在行政楼外，全天 24 小时可用，每天都开放。"
+      }
+    },
+    {
+      "id": "parking",
+      "place": "parking",
+      "patterns": [
+        "parking",
+        "park my car",
+        "ที่จอดรถ",
+        "จอดรถ",
+        "ที่จอดมอเตอร์ไซค์"
+      ],
+      "answers": {
+        "en": "Visitor parking is at the main gate and is open 24 hours. Motorcycle parking is beside it.",
+        "th": "ที่จอดรถผู้มาเยือนอยู่ที่ประตูหลัก เปิดตลอด 24 ชั่วโมง ที่จอดมอเตอร์ไซค์อยู่ข้างกัน",
+        "id": "Parkir pengunjung ada di gerbang utama dan buka 24 jam. Parkir motor ada di sebelahnya.",
+        "vi": "Bãi đỗ xe khách ở cổng chính, mở 24 giờ. Bãi xe máy ở ngay bên cạnh.",
+        "zh": "访客停车场在校门，24 小时开放。摩托车停车场在旁边。"
+      }
+    },
+    {
+      "id": "security",
+      "place": "security",
+      "patterns": [
+        "security",
+        "guard",
+        "รักษาความปลอดภัย",
+        "รปภ",
+        "ยาม"
+      ],
+      "answers": {
+        "en": "The security office is at the main gate and is staffed 24 hours. For an emergency at night, call security first.",
+        "th": "สำนักงานรักษาความปลอดภัยอยู่ที่ประตูหลัก มีเจ้าหน้าที่ตลอด 24 ชั่วโมง ถ้าเกิดเหตุฉุกเฉินตอนกลางคืน ให้โทรหาประกันก่อน",
+        "id": "Kantor keamanan ada di gerbang utama dan berjaga 24 jam. Untuk darurat malam, hubungi keamanan lebih dulu.",
+        "vi": "Phòng bảo vệ ở cổng chính, trực 24 giờ. Khi khẩn cấp ban đêm, hãy gọi bảo vệ trước.",
+        "zh": "保安室在校门，24 小时值班。夜间紧急情况请先联系保安。"
+      }
+    },
+    {
+      "id": "printing",
+      "place": "printing",
+      "patterns": [
+        "printing",
+        "print",
+        "photocopy",
+        "ถ่ายเอกสาร",
+        "พิมพ์งาน",
+        "ปรินต์"
+      ],
+      "answers": {
+        "en": "The printing and photocopy shop is on the 1st floor of the Library, open Monday to Friday 08:00 to 17:00.",
+        "th": "ร้านถ่ายเอกสารและพิมพ์งานอยู่ชั้น 1 หอสมุด เปิดวันจันทร์ถึงศุกร์ เวลา 08:00 ถึง 17:00",
+        "id": "Toko cetak dan fotokopi ada di lantai 1 Perpustakaan, buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Tiệm in và photocopy ở tầng 1 Thư viện, mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "打印复印店在图书馆一楼，周一至周五 08:00 至 17:00 营业。"
+      }
+    },
+    {
+      "id": "dorm_solomon",
+      "place": "dorm_solomon",
+      "patterns": [
+        "solomon hall",
+        "solomon",
+        "หอพักโซโลมอน",
+        "หอโซโลมอน"
+      ],
+      "answers": {
+        "en": "Solomon Hall is a men's residence on the north side of campus. Its right half is Sarah Hall. The dean's office is open Monday to Friday 08:00 to 17:00.",
+        "th": "หอโซโลมอนเป็นหอพักชาย อยู่ทางเหนือของมหาวิทยาลัย ครึ่งขวาคือหอซาราห์ สำนักงานหอพักเปิดวันจันทร์ถึงศุกร์ 08:00 ถึง 17:00",
+        "id": "Solomon Hall adalah asrama pria di sisi utara kampus. Separuh kanannya adalah Sarah Hall. Kantor dekan buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Solomon Hall là ký túc xá nam ở phía bắc khuôn viên. Nửa bên phải là Sarah Hall. Văn phòng quản lý mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "Solomon Hall 是校园北侧的男生宿舍，右半部分是 Sarah Hall。管理办公室周一至周五 08:00 至 17:00 办公。"
+      }
+    },
+    {
+      "id": "dorm_sarah",
+      "place": "dorm_sarah",
+      "patterns": [
+        "sarah hall",
+        "sarah",
+        "หอซาราห์"
+      ],
+      "answers": {
+        "en": "Sarah Hall is the right half of Solomon Hall, on the north side of campus. The dean's office is open Monday to Friday 08:00 to 17:00.",
+        "th": "หอซาราห์คือครึ่งขวาของหอโซโลมอน อยู่ทางเหนือของมหาวิทยาลัย สำนักงานหอพักเปิดวันจันทร์ถึงศุกร์ 08:00 ถึง 17:00",
+        "id": "Sarah Hall adalah separuh kanan Solomon Hall, di sisi utara kampus. Kantor dekan buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Sarah Hall là nửa bên phải của Solomon Hall, ở phía bắc khuôn viên. Văn phòng quản lý mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "Sarah Hall 是 Solomon Hall 的右半部分，位于校园北侧。管理办公室周一至周五 08:00 至 17:00 办公。"
+      }
+    },
+    {
+      "id": "dorm_elijah",
+      "place": "dorm_elijah",
+      "patterns": [
+        "elijah hall",
+        "elijah",
+        "หอเอลียาห์"
+      ],
+      "answers": {
+        "en": "Elijah Hall is a men's residence on the north side of campus. The dean's office is open Monday to Friday 08:00 to 17:00.",
+        "th": "หอเอลียาห์เป็นหอพักชาย อยู่ทางเหนือของมหาวิทยาลัย สำนักงานหอพักเปิดวันจันทร์ถึงศุกร์ 08:00 ถึง 17:00",
+        "id": "Elijah Hall adalah asrama pria di sisi utara kampus. Kantor dekan buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Elijah Hall là ký túc xá nam ở phía bắc khuôn viên. Văn phòng quản lý mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "Elijah Hall 是校园北侧的男生宿舍。管理办公室周一至周五 08:00 至 17:00 办公。"
+      }
+    },
+    {
+      "id": "dorm_esther",
+      "place": "dorm_esther",
+      "patterns": [
+        "esther hall",
+        "esther",
+        "หอเอสเธอร์"
+      ],
+      "answers": {
+        "en": "Esther Hall is a women's residence on the north side of campus. The dean's office is open Monday to Friday 08:00 to 17:00.",
+        "th": "หอเอสเธอร์เป็นหอพักหญิง อยู่ทางเหนือของมหาวิทยาลัย สำนักงานหอพักเปิดวันจันทร์ถึงศุกร์ 08:00 ถึง 17:00",
+        "id": "Esther Hall adalah asrama wanita di sisi utara kampus. Kantor dekan buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Esther Hall là ký túc xá nữ ở phía bắc khuôn viên. Văn phòng quản lý mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "Esther Hall 是校园北侧的女生宿舍。管理办公室周一至周五 08:00 至 17:00 办公。"
+      }
+    },
+    {
+      "id": "dorm_ruth",
+      "place": "dorm_ruth",
+      "patterns": [
+        "ruth hall",
+        "ruth",
+        "หอรูธ"
+      ],
+      "answers": {
+        "en": "Ruth Hall is a women's residence on the north side of campus. The dean's office is open Monday to Friday 08:00 to 17:00.",
+        "th": "หอรูธเป็นหอพักหญิง อยู่ทางเหนือของมหาวิทยาลัย สำนักงานหอพักเปิดวันจันทร์ถึงศุกร์ 08:00 ถึง 17:00",
+        "id": "Ruth Hall adalah asrama wanita di sisi utara kampus. Kantor dekan buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Ruth Hall là ký túc xá nữ ở phía bắc khuôn viên. Văn phòng quản lý mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "Ruth Hall 是校园北侧的女生宿舍。管理办公室周一至周五 08:00 至 17:00 办公。"
+      }
+    },
+    {
+      "id": "dorm_eve",
+      "place": "dorm_eve",
+      "patterns": [
+        "eve hall",
+        "eve",
+        "หออีฟ"
+      ],
+      "answers": {
+        "en": "Eve Hall is a women's residence on the north side of campus. The dean's office is open Monday to Friday 08:00 to 17:00.",
+        "th": "หออีฟเป็นหอพักหญิง อยู่ทางเหนือของมหาวิทยาลัย สำนักงานหอพักเปิดวันจันทร์ถึงศุกร์ 08:00 ถึง 17:00",
+        "id": "Eve Hall adalah asrama wanita di sisi utara kampus. Kantor dekan buka Senin sampai Jumat 08.00 sampai 17.00.",
+        "vi": "Eve Hall là ký túc xá nữ ở phía bắc khuôn viên. Văn phòng quản lý mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
+        "zh": "Eve Hall 是校园北侧的女生宿舍。管理办公室周一至周五 08:00 至 17:00 办公。"
+      }
+    },
+    {
+      "id": "church",
+      "place": "chapel",
+      "patterns": [
+        "church",
+        "chapel",
+        "โบสถ์",
+        "นมัสการ",
+        "worship"
+      ],
+      "answers": {
+        "en": "The AIU church is on the east side of campus. It has no fixed daily schedule; it opens when there is an event.",
+        "th": "โบสถ์เอไอยู อยู่ทางตะวันออกของมหาวิทยาลัย ไม่มีตารางประจำ เปิดเมื่อมีกิจกรรม",
+        "id": "Gereja AIU ada di sisi timur kampus. Tidak ada jadwal tetap; gereja dibuka saat ada acara.",
+        "vi": "Nhà thờ AIU ở phía đông khuôn viên. Không có lịch cố định; mở khi có sự kiện.",
+        "zh": "AIU 教堂在校园东侧。没有固定时间表，有活动时开放。"
+      }
+    },
+    {
+      "id": "cafeteria",
+      "place": "cafeteria",
+      "patterns": [
+        "cafeteria",
+        "canteen",
+        "food",
+        "eat",
+        "โรงอาหาร",
+        "อาหาร",
+        "กินข้าว",
+        "kantin",
+        "nhà ăn",
+        "食堂"
+      ],
+      "answers": {
+        "en": "The cafeteria is next to the Administration Building. Monday to Thursday and Sunday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 18:00. Friday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 17:00. Saturday: 12:00 to 14:00, 16:00 to 18:00. The a la carte counter serves an extra menu 16:00 to 18:00 Monday to Thursday.",
+        "th": "โรงอาหารอยู่ข้างอาคารบริหาร วันจันทร์ถึงพฤหัสบดีและวันอาทิตย์ 07:00 ถึง 09:00, 10:00 ถึง 14:00, 15:00 ถึง 18:00 วันศุกร์ 07:00 ถึง 09:00, 10:00 ถึง 14:00, 15:00 ถึง 17:00 วันเสาร์ 12:00 ถึง 14:00, 16:00 ถึง 18:00 และมีเคาน์เตอร์อาหารตามสั่งเพิ่มเมนูพิเศษ 16:00 ถึง 18:00 วันจันทร์ถึงพฤหัสบดี",
+        "id": "Kantin ada di sebelah Gedung Administrasi. Senin sampai Kamis dan Minggu: 07.00-09.00, 10.00-14.00, 15.00-18.00. Jumat: 07.00-09.00, 10.00-14.00, 15.00-17.00. Sabtu: 12.00-14.00, 16.00-18.00. Konter a la carte menyajikan menu tambahan 16.00-18.00 Senin sampai Kamis.",
+        "vi": "Nhà ăn nằm cạnh tòa nhà Hành chính. Thứ Hai đến thứ Năm và Chủ nhật: 07:00-09:00, 10:00-14:00, 15:00-18:00. Thứ Sáu: 07:00-09:00, 10:00-14:00, 15:00-17:00. Thứ Bảy: 12:00-14:00, 16:00-18:00. Quầy gọi món phục vụ thêm 16:00-18:00 thứ Hai đến thứ Năm.",
+        "zh": "食堂在行政楼旁边。周一至周四及周日：07:00-09:00、10:00-14:00、15:00-18:00。周五：07:00-09:00、10:00-14:00、15:00-17:00。周六：12:00-14:00、16:00-18:00。点餐柜台周一至周四 16:00-18:00 供应额外菜单。"
       }
     }
   ]
