@@ -41,7 +41,7 @@ header {
 }
 
 .brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
-.brand b { font-size: 20px; letter-spacing: 0.3px; white-space: nowrap; }
+.brand h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
 
 /* The language group is labelled, so the chips read as "choose a language",
    not as decoration. */
@@ -58,7 +58,7 @@ header {
 @media (max-width: 700px) {
   header { flex-wrap: wrap; row-gap: 8px; padding: 10px 12px; }
   .brand { width: 100%; }
-  .brand b { font-size: 18px; }
+  .brand h1 { font-size: 18px; }
   .langbar { margin-left: 0; width: 100%; align-items: flex-start; }
   /* With two rows of chips, a vertically centred label lands in the gap and
      reads as if it belongs to neither row. Pin it to the first row. */
@@ -342,7 +342,7 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
   #stage { border-bottom: none; border-right: 1px solid var(--line); height: 100%; }
   #panel { padding: 26px 30px; }
   .answer .main { font-size: 28px; }
-  .brand b { font-size: 24px; }
+  .brand h1 { font-size: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
