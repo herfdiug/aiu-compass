@@ -533,7 +533,7 @@ function wireEvents() {
     window.setTimeout(() => el.showMe.classList.remove('used'), 600);
   });
   el.speakBtn.addEventListener('click', () => {
-    if (state.lastAnswer) speak(state.lastAnswer.main, state.lastAnswer.lang);
+    if (state.lastAnswer) speak(state.lastAnswer.main, state.lastAnswer.lang, { showWarning: true });
   });
 
   window.addEventListener('online', () => { state.offline = false; el.offlineBar.classList.remove('show'); });
@@ -938,6 +938,10 @@ function speak(text, lang, opts) {
   }
 
   if (!text || !window.speechSynthesis) return;
+  // Speaking Thai text with an English voice is worse than silence: the visitor
+  // hears gibberish and thinks the app is broken. When the device has no voice
+  // for this language, the answer stays on screen and the note says why.
+  if (missing && voices.length > 0) return;
   stopSpeaking();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
