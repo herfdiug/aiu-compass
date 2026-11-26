@@ -459,13 +459,28 @@ export function createMap(canvas, campus) {
       const pw = plate.offsetWidth || 44;
       const ph = plate.offsetHeight || 18;
       const px = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, sx));
-      const py = Math.max(pad + ph, Math.min(rect.height - pad, sy));
-      const box = { x1: px - pw / 2, y1: py - ph, x2: px + pw / 2, y2: py };
-      const clash = placed.some((p) => !(box.x2 < p.x1 || box.x1 > p.x2 || box.y2 < p.y1 || box.y1 > p.y2));
-      if (clash && !hot) {
-        plate.style.opacity = '0';
-        plate.style.visibility = 'hidden';
-        continue;
+      // A short stage (phone with the answer open) cannot fit every label on one
+      // row, so a clashing plate is nudged to a neighbouring row before giving up.
+      // The row step is the plate height plus a hair, so rows never touch.
+      const step = ph + 3;
+      let box = null;
+      let py = 0;
+      for (const shift of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step]) {
+        const tryY = Math.max(pad + ph, Math.min(rect.height - pad, sy + shift));
+        const candidate = { x1: px - pw / 2, y1: tryY - ph, x2: px + pw / 2, y2: tryY };
+        const hit = placed.some((p) => !(candidate.x2 < p.x1 || candidate.x1 > p.x2 || candidate.y2 < p.y1 || candidate.y1 > p.y2));
+        if (!hit) { box = candidate; py = tryY; break; }
+      }
+      if (!box) {
+        // Every row near this roof is taken. The selected or hovered building keeps
+        // its name even if it covers a neighbour; the rest wait for a zoom.
+        if (!hot) {
+          plate.style.opacity = '0';
+          plate.style.visibility = 'hidden';
+          continue;
+        }
+        py = Math.max(pad + ph, Math.min(rect.height - pad, sy));
+        box = { x1: px - pw / 2, y1: py - ph, x2: px + pw / 2, y2: py };
       }
       placed.push(box);
       plate.style.visibility = 'visible';
