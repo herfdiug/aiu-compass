@@ -584,7 +584,7 @@ export function createMap(canvas, campus) {
       const tries = [];
       for (const dy of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step, -4 * step, 4 * step, -5 * step, 5 * step]) tries.push([0, dy]);
       for (const dy of [0, -step, step, -2 * step, 2 * step]) {
-        for (const dx of [pw * 0.7, -pw * 0.7, pw * 1.3, -pw * 1.3]) tries.push([dx, dy]);
+        for (const dx of [pw * 0.6, -pw * 0.6]) tries.push([dx, dy]);
       }
       for (const [dx, dy] of tries) {
         const tryX = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, px + dx));
