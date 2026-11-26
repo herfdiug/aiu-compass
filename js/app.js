@@ -7,7 +7,7 @@ import { createMap } from './map3d.js';
 const LANGS = [
   { code: 'th-TH', label: 'ไทย', short: 'th', bcp: 'th' },
   { code: 'en-US', label: 'English', short: 'en', bcp: 'en' },
-  { code: 'id-ID', label: 'Indonesia', short: 'id', bcp: 'id' },
+  { code: 'id-ID', label: 'Bahasa Indonesia', short: 'id', bcp: 'id' },
   { code: 'vi-VN', label: 'Tiếng Việt', short: 'vi', bcp: 'vi' },
   { code: 'zh-CN', label: '中文', short: 'zh', bcp: 'zh' }
 ];
@@ -22,6 +22,11 @@ const UI = {
     placeholder: '…หรือพิมพ์คำถาม',
     ask: 'ถาม',
     needQuestion: 'พิมพ์คำถามก่อน แล้วกดถาม',
+    answerLabel: 'คำตอบ',
+    searching: 'กำลังค้นหา',
+    symptomLead: 'ถ้าอาการรุนแรงหรือเร่งด่วน ให้ไปที่ห้องพยาบาลทันที หรือติดต่อเจ้าหน้าที่ความปลอดภัยของมหาวิทยาลัย',
+    floorsLabel: 'ชั้น',
+    alsoInBuilding: 'ในอาคารนี้ยังมี:',
     micLabel: 'แตะแล้วพูด',
     from: 'เริ่มจาก',
     fromNone: 'ยังไม่ได้ระบุ',
@@ -33,6 +38,7 @@ const UI = {
     listening: 'กำลังฟัง…',
     nothing: 'ไม่ได้ยินอะไร ลองแตะไมโครโฟนอีกครั้ง',
     micBlocked: 'เบราว์เซอร์นี้ใช้ไมโครโฟนไม่ได้ พิมพ์แทนได้',
+    micDenied: 'ยังไม่ได้อนุญาตให้ใช้ไมโครโฟน เปิดสิทธิ์ในเบราว์เซอร์แล้วลองใหม่ หรือพิมพ์แทน',
     micError: 'ไมโครโฟนมีปัญหา: ',
     notFound: 'ขออภัย ไม่พบสถานที่นี้ในระบบ ลองพิมพ์ชื่อห้องหรือชื่ออาคารอีกครั้ง',
     unrecordedRoom: 'ไม่มีข้อมูลห้อง {code} ในระบบ แต่ห้องนี้อยู่ในอาคารนี้',
@@ -57,6 +63,11 @@ const UI = {
     placeholder: '…or type your question',
     ask: 'Ask',
     needQuestion: 'Type a question first, then press Ask.',
+    answerLabel: 'Answer',
+    searching: 'searching',
+    symptomLead: 'If this is urgent or severe, go to the clinic now, or call campus security for help.',
+    floorsLabel: 'floors',
+    alsoInBuilding: 'Also in this building:',
     micLabel: 'Tap to speak',
     from: 'Starting from',
     fromNone: 'Not set yet',
@@ -68,6 +79,7 @@ const UI = {
     listening: 'Listening…',
     nothing: 'Nothing heard. Tap the microphone and try again.',
     micBlocked: 'Speech input is not available in this browser. Type instead.',
+    micDenied: 'Microphone permission was refused. Allow it in the browser and try again, or type instead.',
     micError: 'Microphone error: ',
     notFound: 'Sorry, I could not find that place. Try a room code such as IT208, or a name such as registrar, clinic, library.',
     unrecordedRoom: 'Room {code} is not in the campus record, but it is in this building.',
@@ -92,6 +104,11 @@ const UI = {
     placeholder: '…atau ketik pertanyaan Anda',
     ask: 'Tanya',
     needQuestion: 'Ketik pertanyaan dulu, lalu tekan Tanya.',
+    answerLabel: 'Jawaban',
+    searching: 'mencari',
+    symptomLead: 'Jika ini darurat atau berat, segera ke klinik, atau hubungi keamanan kampus.',
+    floorsLabel: 'lantai',
+    alsoInBuilding: 'Juga di gedung ini:',
     micLabel: 'Ketuk dan bicara',
     from: 'Mulai dari',
     fromNone: 'Belum diatur',
@@ -103,6 +120,7 @@ const UI = {
     listening: 'Mendengarkan…',
     nothing: 'Tidak ada suara. Ketuk mikrofon dan coba lagi.',
     micBlocked: 'Input suara tidak tersedia di browser ini. Ketik saja.',
+    micDenied: 'Izin mikrofon ditolak. Izinkan di browser lalu coba lagi, atau ketik saja.',
     micError: 'Kesalahan mikrofon: ',
     notFound: 'Maaf, tempat itu tidak ditemukan. Coba kode ruang seperti IT208, atau nama seperti registrasi, klinik, perpustakaan.',
     unrecordedRoom: 'Ruang {code} tidak ada di catatan kampus, tetapi berada di gedung ini.',
@@ -127,6 +145,11 @@ const UI = {
     placeholder: '…hoặc gõ câu hỏi của bạn',
     ask: 'Hỏi',
     needQuestion: 'Hãy gõ câu hỏi rồi nhấn Hỏi.',
+    answerLabel: 'Trả lời',
+    searching: 'đang tìm',
+    symptomLead: 'Nếu đây là trường hợp khẩn cấp hoặc nặng, hãy đến phòng y tế ngay, hoặc gọi bảo vệ trường.',
+    floorsLabel: 'tầng',
+    alsoInBuilding: 'Cũng trong tòa nhà này:',
     micLabel: 'Chạm và nói',
     from: 'Bắt đầu từ',
     fromNone: 'Chưa đặt',
@@ -138,6 +161,7 @@ const UI = {
     listening: 'Đang nghe…',
     nothing: 'Không nghe thấy gì. Chạm micro và thử lại.',
     micBlocked: 'Trình duyệt này không hỗ trợ giọng nói. Hãy gõ.',
+    micDenied: 'Quyền dùng micro bị từ chối. Hãy cho phép trong trình duyệt rồi thử lại, hoặc gõ câu hỏi.',
     micError: 'Lỗi micro: ',
     notFound: 'Xin lỗi, không tìm thấy địa điểm đó. Thử mã phòng như IT208, hoặc tên như phòng đào tạo, phòng y tế, thư viện.',
     unrecordedRoom: 'Phòng {code} không có trong hồ sơ của trường, nhưng nằm trong tòa nhà này.',
@@ -162,6 +186,11 @@ const UI = {
     placeholder: '…或输入你的问题',
     ask: '提问',
     needQuestion: '请先输入问题，再按提问。',
+    answerLabel: '回答',
+    searching: '正在查找',
+    symptomLead: '如果情况紧急或严重，请立即前往医务室，或联系校园保安。',
+    floorsLabel: '层',
+    alsoInBuilding: '这栋楼里还有：',
     micLabel: '点击并说话',
     from: '出发地',
     fromNone: '尚未设置',
@@ -173,6 +202,7 @@ const UI = {
     listening: '正在听…',
     nothing: '没有听到声音。点击麦克风再试一次。',
     micBlocked: '此浏览器不支持语音输入，请改用打字。',
+    micDenied: '麦克风权限被拒绝。请在浏览器中允许后重试，或改用打字。',
     micError: '麦克风出错：',
     notFound: '抱歉，找不到这个地点。试试 IT208 这样的房间号，或注册处、医务室、图书馆等名称。',
     unrecordedRoom: '校园记录中没有 {code} 房间，但它在这栋楼里。',
@@ -307,10 +337,10 @@ function setLang(code) {
   // of swapping in the generic per-place sentence. A failed lookup has no place,
   // so it used to keep the old language's "not found" body under a new badge.
   if (changed && state.lastPlace) {
-    if (state.lastQuestion) ask(state.lastQuestion, { speakIt: true });
+    if (state.lastQuestion) ask(state.lastQuestion, { speakIt: true, route: false });
     else showPlace(state.lastPlace, { speakIt: true });
   } else if (changed && state.lastQuestion) {
-    ask(state.lastQuestion, { speakIt: true });
+    ask(state.lastQuestion, { speakIt: true, route: false });
   }
 }
 
@@ -329,7 +359,12 @@ function applyChrome() {
   if (el.stageNote) el.stageNote.textContent = t('schematic');
   if (!el.transcript.dataset.locked) el.transcript.textContent = t('transcript');
   el.offlineBar.textContent = t('offline');
-  if (state.lastAnswer) el.answerLang.textContent = (LANGS.find((l) => l.code === state.lang) || {}).label;
+  // Before an answer, the card header is the only English word on an otherwise
+  // fully translated page ("Answer" in the heading of the card).
+  el.answerLang.textContent = state.lastAnswer
+    ? (LANGS.find((l) => l.code === state.lang) || {}).label
+    : t('answerLabel');
+  el.answerLang.classList.toggle('latin', /^[A-Za-z]/.test(el.answerLang.textContent || ''));
   renderSuggestions();
   buildOriginOptions();
   updateRouteNote();
@@ -539,15 +574,23 @@ function wireEvents() {
   window.addEventListener('online', () => { state.offline = false; el.offlineBar.classList.remove('show'); });
   window.addEventListener('offline', () => { state.offline = true; el.offlineBar.classList.add('show'); });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.target && e.target.tagName === 'INPUT') return;
-    const k = e.key.toLowerCase();
-    if (k === 'l') toggleListen();
-    if (k === 't') el.typed.focus();
-    if (k === 'o') { state.offline = !state.offline; el.offlineBar.classList.toggle('show', state.offline); }
-    if (k === 'r') { if (state.map) state.map.reset(); }
-    if (k === 's') promptForKey();
-  });
+  // Developer shortcuts used to fire on a bare keypress, so typing "s" anywhere
+  // outside the input opened an API-key prompt with no context. They now require
+  // an explicit ?dev=1 in the URL, which no visitor or student will type.
+  let devMode = false;
+  try { devMode = new URLSearchParams(location.search).has('dev'); } catch { /* old browser */ }
+  if (devMode) {
+    document.addEventListener('keydown', (e) => {
+      if (e.target && e.target.tagName === 'INPUT') return;
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+      const k = e.key.toLowerCase();
+      if (k === 'l') toggleListen();
+      if (k === 't') el.typed.focus();
+      if (k === 'o') { state.offline = !state.offline; el.offlineBar.classList.toggle('show', state.offline); }
+      if (k === 'r') { if (state.map) state.map.reset(); }
+      if (k === 's') promptForKey();
+    });
+  }
 }
 
 function promptForKey() {
@@ -602,9 +645,13 @@ function startListening() {
     el.transcript.textContent = (finalText + ' ' + interim).trim() || t('listening');
   };
   recognition.onerror = (ev) => {
-    if (ev.error !== 'no-speech' && ev.error !== 'aborted') {
-      el.transcript.textContent = t('micError') + ev.error + '. ' + t('micBlocked');
-    }
+    if (ev.error === 'aborted' || ev.error === 'no-speech') return;
+    // "not-allowed" means the visitor (or the browser) refused the microphone.
+    // Saying "this browser does not support voice" sent them to the wrong fix.
+    const denied = ev.error === 'not-allowed' || ev.error === 'service-not-allowed';
+    el.transcript.textContent = denied
+      ? t('micDenied')
+      : t('micError') + ev.error + '. ' + t('micBlocked');
   };
   recognition.onend = () => {
     state.listening = false;
@@ -633,8 +680,9 @@ function localisedHours(place, lang) {
 }
 
 // The free-text description of each place only exists in Thai and English.
-// The hours, however, are fully translated, so no answer mixes Indonesian or
-// Chinese labels with English day names any more.
+// The hours, building name and floor are localized, so the other three
+// languages get a composed answer instead of English prose with a translated
+// "Jam buka" glued on (which is what fell back and read as broken).
 function localAnswer(place, lang) {
   const hours = localisedHours(place, lang);
   const end = (s) => (/[.!?\u3002]$/.test(s) ? s : s + '.');
@@ -648,9 +696,39 @@ function localAnswer(place, lang) {
     if (hours) bits.push('Hours: ' + hours);
     return bits.join(' ');
   }
-  const label = { id: 'Jam buka', vi: 'Giờ mở cửa', zh: '开放时间' };
-  if (lang === 'zh') return `${place.en}。${label.zh}：${hours || '—'}。`;
-  return `${end(place.en)} ${label[lang] || label.id}: ${hours || '-'}.`;
+  // A building synthesised from the building table has no description of its own,
+  // so the composed answer names it and gives the floor count.
+  if (place.synthetic) {
+    const b = state.campus && state.campus.buildings.find((x) => x.id === place.building);
+    const name = b ? buildingLabel(b) : '';
+    const floors = b ? Number(b.floors) || 0 : 0;
+    const label = { id: 'Jam buka', vi: 'Giờ mở cửa', zh: '开放时间' }[lang] || 'Hours';
+    const floorsWord = { id: 'lantai', vi: 'tầng', zh: '层' }[lang] || 'floors';
+    let t = name + (floors ? ' · ' + floors + ' ' + floorsWord : '') + (hours ? ' · ' + label + ': ' + hours : '');
+    if (lang === 'zh') return t.replace(/ · /g, '，') + '。';
+    return t + '.';
+  }
+  const words = {
+    id: { hours: 'Jam buka', floor: 'Lantai' },
+    vi: { hours: 'Giờ mở cửa', floor: 'Tầng' },
+    zh: { hours: '开放时间', floor: '层' }
+  }[lang] || { hours: 'Hours', floor: 'Floor' };
+  const b = state.campus && state.campus.buildings.find((x) => x.id === place.building);
+  const bName = b ? buildingLabel(b) : '';
+  const room = place.room || '';
+  // Only keep a room *code* ("IT208"); a prose room string is English and would
+  // put untranslated words back into the answer. The building name covers it.
+  const roomCode = /^[A-Z]{1,4}\s?\d{1,4}$/.test(room) ? room : '';
+  // Compose: "<room code> · <building>, <floor>F · <hours label>: <hours>"
+  const bits = [];
+  if (roomCode) bits.push(roomCode);
+  if (bName) bits.push(bName);
+  if (Number(place.floor) > 1) bits.push(words.floor + ' ' + place.floor);
+  let text = bits.join(' · ');
+  if (!text) text = bName || room || '';
+  if (hours) text += (text ? ' · ' : '') + words.hours + ': ' + hours;
+  if (lang === 'zh') return text.replace(/ · /g, '，') + '。';
+  return text + '.';
 }
 
 function shortLang(code) {
@@ -702,12 +780,66 @@ function submitTyped() {
   // longer shown. The input itself carries the hint.
 }
 
-async function ask(question, opts) {
-  if (state.busy || !question) return;
-  state.busy = true;
+/* "from the library to the cafeteria" / "rute dari perpustakaan ke kantin" —
+   an explicit origin in the question used to be ignored, so the app answered
+   with the origin's own hours and said "you are already here". */
+const ROUTE_RE = /(?:\bfrom\b|\bdari\b|\btu\b|\bde\b|จาก|ตั้งแต่)\s+(.+?)\s+(?:\bto\b|\bke\b|\bden\b|ถึง|ไป)\s+(.+?)[?.!]*$/i;
+
+// A question about a symptom, not about the clinic's hours. Kept narrow: it is
+// only used to put first-aid advice in front of the timetable.
+const SYMPTOM_RE = /ปวด|เจ็บ|เป็นไข้|ไม่สบาย|ท้องเสีย|มีอาการ|headache|head ache|migraine|fever|nausea|dizzy|sick|ill\b|pain|hurt|sakit|demam|pusing|mual|đau|sốt|chóng mặt|buồn nôn|头疼|頭疼|发烧|發燒|恶心|噁心|头晕|頭暈|不舒服/i;
+
+function takeRoute(question, lang) {
+  const m = ROUTE_RE.exec(String(question));
+  if (!m || !state.index) return false;
+  const fromHit = resolve(m[1], state.index);
+  const toHit = resolve(m[2], state.index);
+  if (!fromHit.place || !toHit.place) return false;
+  if (fromHit.place.id === toHit.place.id) return false;
+  const fromBuilding = fromHit.place.building;
+  // Prefer a whole building as an origin, since the route is drawn between blocks.
+  if (fromBuilding && state.campus && state.campus.buildings.some((b) => b.id === fromBuilding)) {
+    setOrigin(fromBuilding, 'picked');
+  }
   state.lastQuestion = question;
   el.transcript.dataset.locked = '1';
   el.transcript.textContent = question;
+  if (state.map) state.map.focus(toHit.place);
+  showPlace(toHit.place, { speakIt: false, question });
+  updateRouteNote();
+  return true;
+}
+
+async function ask(question, opts) {
+  if (state.busy || !question) return;
+  if (!state.index) {
+    // The very first Ask on a cold load can arrive before the campus data has
+    // initialised the index and FAQ. That made the whole panel stay blank; wait
+    // briefly instead of silently returning nothing.
+    await new Promise((resolve) => {
+      const t0 = Date.now();
+      const poll = () => {
+        if (state.index && state.faq) return resolve();
+        if (Date.now() - t0 > 5000) return resolve();
+        setTimeout(poll, 100);
+      };
+      poll();
+    });
+  }
+  state.busy = true;
+  if (!opts || opts.route !== false) {
+    if (takeRoute(question, shortLang(state.lang))) {
+      state.busy = false;
+      return;
+    }
+  }
+  state.lastQuestion = question;
+  el.transcript.dataset.locked = '1';
+  el.transcript.textContent = question;
+  // A visible pending state: the Thai symptom query once took 15s while the line
+  // showed only the question, which looked frozen. The text after the question
+  // keeps the question readable and says something is happening.
+  el.transcript.textContent = question + ' … ' + t('searching');
   const lang = shortLang(state.lang);
   const hit = resolve(question, state.index);
   const place = hit.place;
@@ -728,11 +860,16 @@ async function ask(question, opts) {
       secondary: null,
       place: null
     });
+    el.transcript.textContent = question;
     state.busy = false;
     return;
   }
 
   const faqEntry = faqHit(place, question);
+  // A symptom query ("I have a bad headache") deserves advice first, not a
+  // timetable: the same paragraph answered a person in pain with opening hours.
+  const symptom = place.id === 'clinic' && SYMPTOM_RE.test(String(question));
+  const symptomLead = symptom ? t('symptomLead') + ' ' : '';
   const useNetwork = !state.offline && navigator.onLine !== false && Boolean(state.groqKey) && !faqEntry;
 
   if (useNetwork) {
@@ -748,6 +885,7 @@ async function ask(question, opts) {
           source: 'AI'
         });
         if (opts && opts.speakIt === false) stopSpeaking();
+        el.transcript.textContent = question;
         state.busy = false;
         return;
       }
@@ -762,16 +900,31 @@ async function ask(question, opts) {
   // "every floor" in Thai and "Hours: Open with the building" in English.
   const textEn = faqEntry && faqEntry.answers ? faqEntry.answers.en : (localEn || local);
   // A room code we only know by floor is answered with the building, and says so,
-  // instead of pretending the exact room is on record.
+  // instead of pretending the exact room is on record. The building text comes
+  // from the building record, not from a facility filed under it (the Wi-Fi
+  // entry used to be glued on here).
   const roomCaveat = hit.unrecordedRoom ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) : '';
+  let buildingLine = '';
+  if (roomCaveat) {
+    const bMeta = state.campus && state.campus.buildings.find((b) => b.id === place.building);
+    if (bMeta) {
+      const floors = Number(bMeta.floors) || 0;
+      // Localized name only. Using bMeta.en here put an English sentence inside
+      // an Indonesian or Chinese answer.
+      buildingLine = buildingLabel(bMeta);
+      if (floors > 0) buildingLine += ' · ' + floors + ' ' + t('floorsLabel');
+    }
+  }
   showAnswer({
     lang: state.lang,
-    main: roomCaveat ? roomCaveat + ' ' + textLocal : textLocal,
-    secondary: lang === 'en' ? null : (roomCaveat ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) + ' ' + textEn : textEn),
+    main: roomCaveat ? roomCaveat + ' ' + buildingLine : textLocal,
+    secondary: lang === 'en' ? null : (roomCaveat ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) + ' ' + buildingLine : textEn),
     secondaryLabel: lang === 'en' ? null : 'English',
-    place
+    place,
+    lead: symptomLead
   });
   if (opts && opts.speakIt === false) stopSpeaking();
+  el.transcript.textContent = question;
   state.busy = false;
 }
 
@@ -826,17 +979,24 @@ function buildingName(place, lang) {
   return lang === 'th' ? b.th : b.en;
 }
 
-function showAnswer({ lang, main, secondary, secondaryLabel, place, source }) {
+function showAnswer({ lang, main, secondary, secondaryLabel, place, source, lead }) {
   el.answer.classList.add('show');
   document.body.classList.add('has-answer');
-  state.lastAnswer = { main, lang };
-  el.answerLang.textContent = (LANGS.find((l) => l.code === lang) || {}).label || lang;
-  el.answerMain.textContent = main || '';
+  const body = (lead ? lead : '') + (main || '');
+  state.lastAnswer = { main: body, lang };
+  const langMeta = LANGS.find((l) => l.code === lang) || {};
+  el.answerLang.textContent = langMeta.label || lang;
+  // Only Latin gets the uppercase/letter-spaced treatment.
+  el.answerLang.classList.toggle('latin', /^[A-Za-z]/.test(langMeta.label || ''));
+  el.answerMain.textContent = body;
   if (secondary && secondaryLabel) {
     el.answerSecondary.style.display = 'block';
     el.answerSecondary.innerHTML = '<b>' + secondaryLabel + '</b><br>' + escapeHtml(secondary);
   } else {
+    // Clear the node, not just hide it. A hidden block kept the previous place's
+    // English sentence in the DOM, so a screen reader read the wrong place.
     el.answerSecondary.style.display = 'none';
+    el.answerSecondary.innerHTML = '';
   }
   el.showMe.style.display = place ? 'inline-block' : 'none';
   el.speakBtn.style.display = 'inline-block';
@@ -847,9 +1007,21 @@ function showAnswer({ lang, main, secondary, secondaryLabel, place, source }) {
   el.answerNote.textContent = hoursUnverified ? t('hoursNote') : '';
 
   updateRouteNote();
+  // Scrolling the card under a sticky row is what hid the start of the answer.
+  // The panel scroll position is computed from live rects, not offsetTop: the
+  // answer's offsetParent is the body, so offsetTop was measured against the
+  // wrong origin and the card still parked under the bar.
   if (window.innerWidth < 860) {
     requestAnimationFrame(() => {
-      el.answer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const panel = el.answer.parentElement;
+      const bar = document.querySelector('.micRow');
+      const barH = bar ? Math.ceil(bar.getBoundingClientRect().height) : 0;
+      const panelRect = panel.getBoundingClientRect();
+      const ansRect = el.answer.getBoundingClientRect();
+      const topInPanel = ansRect.top - panelRect.top; // may be negative if scrolled
+      const target = Math.max(0, panel.scrollTop + topInPanel - barH - 12);
+      // Only correct when the card would be hidden behind the bar.
+      if (topInPanel < barH) panel.scrollTop = target;
     });
   }
   speak(main, lang, { showWarning: true });
@@ -868,10 +1040,26 @@ function showPlace(place, opts) {
   const placeName = langName || place.en || place.room || place.id;
   el.transcript.dataset.locked = '1';
   el.transcript.textContent = String(question).replace('{place}', placeName);
-  const faqEntry = faqHit(place, '') || (state.faq && state.faq.entries.find((e) => e.place === place.id));
+  const faqEntry = faqHit(place, '');
+  // A building tap should list what is inside, not one arbitrary room. The
+  // whole-building list is capped so a phone answer stays readable, and the
+  // building's own name and floor count lead it.
+  const inBuilding = place.type === 'building'
+    ? (state.campus.places || [])
+      .filter((p) => p.building === place.building && p.id !== place.id && p.type !== 'facility')
+      .slice(0, 5)
+      .map((p) => {
+        const nm = lang !== 'id' ? p[p.type === 'room' ? 'room' : lang] : ((p.names && p.names.id) || p.room);
+        return (nm || p.room || '').split(',')[0];
+      })
+      .filter(Boolean)
+    : [];
+  const alsoHere = inBuilding.length
+    ? ' ' + t('alsoInBuilding') + ' ' + inBuilding.join(' · ')
+    : '';
   showAnswer({
     lang: state.lang,
-    main: faqEntry && faqEntry.answers ? (faqEntry.answers[lang] || faqEntry.answers.en) : localAnswer(place, lang),
+    main: (faqEntry && faqEntry.answers ? (faqEntry.answers[lang] || faqEntry.answers.en) : localAnswer(place, lang)) + alsoHere,
     secondary: lang === 'en' ? null : (faqEntry && faqEntry.answers ? faqEntry.answers.en : localAnswer(place, 'en')),
     secondaryLabel: lang === 'en' ? null : 'English',
     place
@@ -924,6 +1112,8 @@ function speak(text, lang, opts) {
 
   // A Replay button that cannot speak is a dead control. When the device really
   // has no voice for this language, disable it rather than let it do nothing.
+  // (Zero voices at cold load is normal in Chrome — the list arrives late — so
+  // an empty list is not proof that speech is unavailable.)
   if (el.speakBtn) {
     const dead = missing && voices.length > 0;
     el.speakBtn.disabled = dead;
@@ -938,6 +1128,9 @@ function speak(text, lang, opts) {
   }
 
   if (!text || !window.speechSynthesis) return;
+  // A dry run only refreshes the button state after the voice list arrives; it
+  // must not speak.
+  if (opts && opts.dryRun) return;
   // Speaking Thai text with an English voice is worse than silence: the visitor
   // hears gibberish and thinks the app is broken. When the device has no voice
   // for this language, the answer stays on screen and the note says why.
@@ -951,7 +1144,12 @@ function speak(text, lang, opts) {
 }
 
 window.addEventListener('load', () => {
-  if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => { /* warm the voice list */ };
+  if (!window.speechSynthesis) return;
+  speechSynthesis.onvoiceschanged = () => {
+    // The voice list arrives late in Chrome. Re-check the Replay button once it
+    // does, so a language with no voice is disabled only after the list is real.
+    if (state.lastAnswer) speak(state.lastAnswer.main, state.lastAnswer.lang, { showWarning: true, dryRun: true });
+  };
 });
 
 init();

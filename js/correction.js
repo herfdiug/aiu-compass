@@ -143,7 +143,27 @@ export function resolve(input, index) {
     }
   }
 
-  // 2. Alias containment, longest alias wins.
+  // 2. A bare room number, the way students actually ask: "208" or "ห้อง 208".
+  // It is ambiguous between buildings, so it answers with the building that owns
+  // that floor and says the room is not individually recorded. The match is
+  // anchored: a query that also names a place ("where is IT208") must not be
+  // captured here, and the room-code regex above handles those.
+  const bare = /^(?:[\u0E2B\u0E49\u0E2D\u0E07\u0E17\u0E35]*|room)?(\d{3})$/.exec(c);
+  if (bare) {
+    const n = Number(bare[1]);
+    const floorNo = Number(String(n)[0]);
+    // 2xx on this campus means the IT building's second floor; 1xx means the
+    // Administration ground floor. No other block has a documented mapping, so
+    // anything else stays not-found rather than guessing.
+    const guessBlock = floorNo === 2 ? 'it' : floorNo === 1 ? 'admin' : null;
+    const bMeta = guessBlock && index.buildingMeta ? index.buildingMeta.find((b) => b.id === guessBlock) : null;
+    const place = guessBlock && index.placeByBuilding ? index.placeByBuilding(guessBlock) : null;
+    if (place && bMeta && floorNo <= (Number(bMeta.floors) || 1)) {
+      return { place, id: place.id, confidence: 0.5, method: 'bare_room', alternatives: [], unrecordedRoom: String(n) };
+    }
+  }
+
+  // 3. Alias containment, longest alias wins.
   const hits = [];
   for (const entry of index.aliases) {
     const len = entry.alias.length;
@@ -167,7 +187,7 @@ export function resolve(input, index) {
     };
   }
 
-  // 3. Fuzzy match against aliases (typos, spacing, partial phrasing).
+  // 4. Fuzzy match against aliases (typos, spacing, partial phrasing).
   let best = { score: 0, place: null };
   for (const entry of index.aliases) {
     const score = windowScore(c, entry.alias);
@@ -177,7 +197,7 @@ export function resolve(input, index) {
     return { place: best.place, id: best.place.id, confidence: 0.82, method: 'fuzzy', alternatives: [] };
   }
 
-  // 4. Thai consonant skeleton, last resort.
+  // 5. Thai consonant skeleton, last resort.
   // Only for Thai input. Running the skeleton pass over English text made
   // "Where is the rocket launch pad?" resolve to Esther Hall, because stripping
   // vowels from Latin words matches almost anything.

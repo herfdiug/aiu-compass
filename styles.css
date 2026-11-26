@@ -64,7 +64,9 @@ header {
      reads as if it belongs to neither row. Pin it to the first row. */
   .langlabel { padding-top: 7px; }
   .chips { width: 100%; flex-wrap: wrap; gap: 5px; }
-  .chip { padding: 6px 10px; font-size: 12px; }
+  /* Chips measured 32-33px tall, under the 44px floor this app uses elsewhere.
+     min-height grows the hit area without changing the visual weight. */
+  .chip { padding: 6px 10px; font-size: 12px; min-height: 44px; display: inline-flex; align-items: center; }
 }
 
 @media (max-width: 380px) {
@@ -168,8 +170,8 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   border-radius: 10px;
@@ -223,6 +225,14 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   position: absolute;
   top: 0;
   left: 0;
+  /* A plate is nudged off its roof to avoid overlaps, so the block behind it is
+     often a different building. Tapping the plate must therefore answer for the
+     building it names; pointer-events:none made the click fall through to
+     whatever geometry happened to be there. */
+  pointer-events: auto;
+  cursor: pointer;
+  appearance: none;
+  font-family: inherit;
   padding: 2px 7px;
   border-radius: 6px;
   background: rgba(4, 16, 28, 0.78);
@@ -233,6 +243,7 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   white-space: nowrap;
   transition: color 120ms ease, border-color 120ms ease;
 }
+.mapPlate:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
 .mapPlate.hot {
   color: #eafff6;
   border-color: rgba(53, 224, 161, 0.85);
@@ -240,7 +251,9 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
 }
 
 /* ---------------------------------------------------------------- panel */
-#panel { padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; min-height: 0; -webkit-overflow-scrolling: touch; }
+/* scroll-padding keeps scrollIntoView() from parking content under the sticky
+   mic row on a phone. */
+#panel { padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; min-height: 0; -webkit-overflow-scrolling: touch; scroll-padding-top: 64px; }
 
 .micRow { display: flex; align-items: center; gap: 16px; }
 
@@ -336,7 +349,11 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
 .answer.show { display: block; }
 @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-.answer .lang { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); }
+/* uppercase + letter-spacing is Latin typography. On Thai it breaks the
+   tone-mark stack apart and implies a case the script does not have, so the
+   styling is applied only when the tag is Latin. */
+.answer .lang { font-size: 12px; color: var(--accent); }
+.answer .lang.latin { letter-spacing: 1.2px; text-transform: uppercase; }
 .answer .main { font-size: 24px; line-height: 1.35; margin: 8px 0 10px; font-weight: 600; }
 .answer .secondary { font-size: 15px; color: var(--muted); line-height: 1.4; }
 .answer .note { font-size: 12px; color: var(--warn); margin-top: 8px; display: none; }
@@ -382,7 +399,7 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
     border: 0;
   }
   body.has-answer .origin { padding: 2px 8px; max-width: 150px; }
-  body.has-answer .origin select { min-height: 34px; max-width: 132px; font-size: 12px; }
+  body.has-answer .origin select { min-height: 44px; max-width: 132px; font-size: 12px; }
   /* Only the suggestion chips step aside for an answer. The mic row stays:
      hiding it removed the voice follow-up entirely after the first question,
      which is the feature the demo is built around. */
@@ -397,13 +414,23 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
   body.has-answer .micRow {
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 4;
     gap: 10px;
     margin: -8px -16px 0;
     padding: 8px 16px;
-    background: linear-gradient(to bottom, rgba(6, 24, 42, 0.98), rgba(6, 24, 42, 0.86));
+    /* Opaque, not a gradient: a see-through bar let the message box underneath
+       show through it, which read as two controls on top of each other. */
+    background: #06182a;
     border-bottom: 1px solid var(--line);
   }
+  /* Focusing the box scrolls it into view; without this the sticky bar parks on
+     top of it and the left third of the field is not tappable. */
+  body.has-answer .typed { scroll-margin-top: 64px; }
+  body.has-answer .typed input { scroll-margin-top: 64px; }
+  /* The card scrolled under the sticky row, so its header was sliced by the
+     gradient (8px measured). Reserve the row's height above the card. */
+  body.has-answer .answer { scroll-margin-top: 68px; }
+  body.has-answer #answerLang { padding-top: 2px; }
   body.has-answer .mic { width: 44px; height: 44px; box-shadow: 0 6px 18px rgba(53, 224, 161, 0.22); }
   body.has-answer .mic svg { width: 22px; height: 22px; }
   body.has-answer .hint { font-size: 13px; line-height: 1.3; }

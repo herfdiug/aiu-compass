@@ -22,7 +22,11 @@ export function createMap(canvas, campus) {
   // selected building and read as a rendering glitch.)
   const labelLayer = document.createElement('div');
   labelLayer.className = 'mapLabels';
-  labelLayer.setAttribute('aria-hidden', 'true');
+  // The plates are buttons that answer for their building, so the layer must not
+  // be aria-hidden: focusable content inside an aria-hidden subtree is an axe
+  // violation and screen readers would skip real controls.
+  labelLayer.setAttribute('role', 'group');
+  labelLayer.setAttribute('aria-label', 'Campus buildings');
   wrap.appendChild(labelLayer);
   const plates = new Map();
 
@@ -164,9 +168,20 @@ export function createMap(canvas, campus) {
     door.position.set(0, FLOOR_H * 0.36, b.h / 2 + 0.4);
     g.add(door);
 
-    const plate = document.createElement('span');
+    const plate = document.createElement('button');
+    plate.type = 'button';
     plate.className = 'mapPlate';
+    plate.dataset.building = b.id;
     plate.textContent = shortName(b);
+    // The plate names its own building, so it is also a direct way in.
+    plate.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const place = placeOfBuilding(b.id);
+      if (!place) return;
+      focus(place);
+      if (typeof canvas.onPick === 'function') canvas.onPick(place);
+    });
     labelLayer.appendChild(plate);
     plates.set(b.id, plate);
   }
@@ -327,7 +342,30 @@ export function createMap(canvas, campus) {
   }
 
   function placeOfBuilding(id) {
-    return places.find((p) => p.building === id) || null;
+    // Prefer the record that describes the whole building. `places.find` returned
+    // whichever room happened to come first, so tapping the IT block answered
+    // with the dean's office and hid the other floors.
+    const exact = places.find((p) => p.building === id && p.type === 'building');
+    if (exact) return exact;
+    // Library, Science, Administration and the dorms have no whole-building
+    // record, so synthesise one from the building table instead of answering with
+    // an arbitrary room. The app then lists the rooms that are inside it.
+    const b = byBuilding.get(id);
+    if (!b) return null;
+    return {
+      id: b.id,
+      type: 'building',
+      building: b.id,
+      floor: 1,
+      room: b.en,
+      en: b.en,
+      th: b.th,
+      names: b.names,
+      aliases: [],
+      hours: '',
+      tags: ['building'],
+      synthetic: true
+    };
   }
 
   canvas.addEventListener('pointermove', (ev) => {
@@ -439,15 +477,31 @@ export function createMap(canvas, campus) {
 
   // Walking distance from the chosen origin to the selected building, in metres.
   // The layout is illustrative, so this is an approximation, and the UI says so.
+  // It follows the same corner points the drawn route uses, so the number and the
+  // line cannot disagree. World z is -planY, the same convention drawRoute uses;
+  // mixing the two put the corners on the wrong side of the campus.
   function routeInfo() {
     const from = byBuilding.get(originId);
     const to = byBuilding.get(selectedId);
     if (!from || !to || from.id === to.id) return null;
-    const dx = to.x - from.x;
-    const dy = to.y - from.y;
-    const units = Math.hypot(dx, dy);
+    const nearestSpine = (x, z) => {
+      const cands = [{ x: 0, z }, { x, z: 0 }, { x: 0, z: -300 }];
+      return cands.sort((p, q) => Math.hypot(p.x - x, p.z - z) - Math.hypot(q.x - x, q.z - z))[0];
+    };
+    const fz = -from.y;
+    const tz = -to.y;
+    const p0 = nearestSpine(from.x, fz);
+    const p1 = nearestSpine(to.x, tz);
+    const legs = [
+      Math.hypot(p0.x - from.x, p0.z - fz),
+      Math.hypot(p1.x - p0.x, p1.z - p0.z),
+      Math.hypot(to.x - p1.x, tz - p1.z)
+    ];
+    const units = legs.reduce((n, v) => n + v, 0);
     const metres = Math.round(units * 1.1 / 10) * 10;
     // Clock face: 0 = north (up on the plan), 90 = east.
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
     const bearing = ((Math.atan2(dx, -dy) * 180) / Math.PI + 360) % 360;
     return { from: from.id, to: to.id, metres, minutes: Math.max(1, Math.round(metres / 75)), bearing };
   }
@@ -480,9 +534,26 @@ export function createMap(canvas, campus) {
     }
     const a = new THREE.Vector3(from.x, 6, -from.y);
     const b = new THREE.Vector3(to.x, 6, -to.y);
-    const mid = new THREE.Vector3((a.x + b.x) / 2, 6, (a.z + b.z) / 2);
-    const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
-    const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(60));
+    // Walk the campus spines instead of cutting across the blocks. The app draws
+    // a central avenue, an east-west spine and links to the dorms, so the route
+    // follows those; a straight bezier ran through the Administration Building.
+    const nearestSpine = (x, z) => {
+      // Spine points: x=0 running north-south, z=0 running east-west, z=-300 east.
+      const cands = [
+        { x: 0, z },
+        { x, z: 0 },
+        { x: 0, z: -300 }
+      ];
+      return cands.sort((p, q) => Math.hypot(p.x - x, p.z - z) - Math.hypot(q.x - x, q.z - z))[0];
+    };
+    const p0 = nearestSpine(a.x, a.z);
+    const p1 = nearestSpine(b.x, b.z);
+    // Keep only corners that are not already on the line (a building standing on
+    // a spine needs no detour), then dedupe, so the dashes never bunch.
+    const pts = [a, new THREE.Vector3(p0.x, 6, p0.z), new THREE.Vector3(p1.x, 6, p1.z), b]
+      .filter((p, i, arr) => i === 0 || p.distanceTo(arr[i - 1]) > 8);
+    const curve = new THREE.CatmullRomCurve3(pts.length >= 2 ? pts : [a, b], false, 'centripetal', 0.4);
+    const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(70));
     routeLine = new THREE.Line(geo, routeMat);
     routeLine.computeLineDistances();
     scene.add(routeLine);
@@ -600,6 +671,12 @@ export function createMap(canvas, campus) {
       // row, so a clashing plate is nudged to a neighbouring row before giving up.
       // The row step is the plate height plus a hair, so rows never touch.
       const step = ph + 3;
+      // On a very short stage (phone with the answer open) the usable band can be
+      // negative: rect.height - noteH may be less than one plate. Clamping with
+      // Math.min then produced a position below the stage, which is why a plate
+      // was clipped by overflow:hidden. Floor the band at one row.
+      const minY = pad + ph;
+      const maxY = Math.max(minY, rect.height - pad - noteH);
       let box = null;
       let py = 0;
       let fx = px;
@@ -612,8 +689,10 @@ export function createMap(canvas, campus) {
       }
       for (const [dx, dy] of tries) {
         const tryX = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, px + dx));
-        const tryY = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy + dy));
+        const tryY = Math.max(minY, Math.min(maxY, sy + dy));
         const candidate = { x1: tryX - pw / 2, y1: tryY - ph, x2: tryX + pw / 2, y2: tryY };
+        // A plate taller than the band cannot be shown without covering the note.
+        if (tryY - ph < pad) continue;
         const clash = (p) => !(candidate.x2 < p.x1 || candidate.x1 > p.x2 || candidate.y2 < p.y1 || candidate.y1 > p.y2);
         const hit = placed.some(clash) || reserved.some(clash);
         if (!hit) { box = candidate; py = tryY; fx = tryX; break; }
@@ -622,7 +701,7 @@ export function createMap(canvas, campus) {
         // Every row near this roof is taken. The selected or hovered building keeps
         // its name even if it covers a neighbour; the rest wait for a zoom.
         const fallback = { x1: px - pw / 2, y1: 0, x2: px + pw / 2, y2: 0 };
-        const py0 = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy));
+        const py0 = Math.max(minY, Math.min(maxY, sy));
         fallback.y1 = py0 - ph;
         fallback.y2 = py0;
         const overControl = reserved.some((p) => !(fallback.x2 < p.x1 || fallback.x1 > p.x2 || fallback.y2 < p.y1 || fallback.y1 > p.y2));
