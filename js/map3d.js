@@ -639,6 +639,15 @@ export function createMap(canvas, campus) {
       const ro = new ResizeObserver(resize);
       ro.observe(canvas);
     }
+    // If the GPU drops the context (tab asleep, driver reset, another tab taking
+    // the GPU), the campus used to stay blank with no way back. Reload once so a
+    // visitor sees a map rather than an empty panel.
+    canvas.addEventListener('webglcontextlost', (ev) => {
+      ev.preventDefault();
+      window.setTimeout(() => {
+        try { location.reload(); } catch { /* ignore */ }
+      }, 600);
+    }, false);
     if (!raf) raf = requestAnimationFrame(tick);
   }
 
