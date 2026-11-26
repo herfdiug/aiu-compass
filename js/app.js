@@ -697,10 +697,14 @@ async function ask(question, opts) {
   }
 
   const textLocal = faqEntry && faqEntry.answers ? faqEntry.answers[lang] || faqEntry.answers.en : local;
+  // The English line under the answer must say the same thing as the answer
+  // above it. Preferring the generated place text made the toilet answer say
+  // "every floor" in Thai and "Hours: Open with the building" in English.
+  const textEn = faqEntry && faqEntry.answers ? faqEntry.answers.en : (localEn || local);
   showAnswer({
     lang: state.lang,
     main: textLocal,
-    secondary: lang === 'en' ? null : (localEn || (faqEntry && faqEntry.answers.en)),
+    secondary: lang === 'en' ? null : textEn,
     secondaryLabel: lang === 'en' ? null : 'English',
     place
   });
