@@ -1,6 +1,6 @@
 {
   "meta": {
-    "count": 36,
+    "count": 33,
     "note": "Offline counter pack. Answers are short on purpose so they fit on a phone screen."
   },
   "entries": [
@@ -87,7 +87,12 @@
         "โรงอาหาร",
         "ข้าว",
         "eat",
-        "กินข้าว"
+        "กินข้าว",
+        "canteen",
+        "อาหาร",
+        "kantin",
+        "nhà ăn",
+        "食堂"
       ],
       "answers": {
         "en": "The cafeteria is next to the Administration Building. Monday to Thursday and Sunday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 18:00. Friday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 17:00. Saturday: 12:00 to 14:00, 16:00 to 18:00. The a la carte counter serves an extra menu 16:00 to 18:00 Monday to Thursday.",
@@ -105,7 +110,8 @@
         "print",
         "ถ่ายเอกสาร",
         "พิมพ์งาน",
-        "photocopy"
+        "photocopy",
+        "ปรินต์"
       ],
       "answers": {
         "en": "The printing and photocopy shop is on the 1st floor of the Library. Open Monday to Friday, 08:00 to 17:00.",
@@ -176,17 +182,19 @@
       "place": "security",
       "patterns": [
         "security",
-        "emergency",
+        "guard",
+        "รักษาความปลอดภัย",
         "รปภ",
         "ยาม",
+        "emergency",
         "ฉุกเฉิน"
       ],
       "answers": {
-        "en": "The security office is at the main gate and is staffed 24 hours. Call them for any emergency on campus.",
-        "th": "สำนักงานรักษาความปลอดภัยอยู่ที่ประตูหลัก มีเจ้าหน้าที่ตลอด 24 ชั่วโมง โทรแจ้งเหตุฉุกเฉินในมหาวิทยาลัยได้ตลอด",
-        "id": "Kantor keamanan ada di gerbang utama dan berjaga 24 jam. Hubungi mereka untuk keadaan darurat di kampus.",
-        "vi": "Phòng bảo vệ ở cổng chính và trực 24 giờ. Hãy gọi khi có tình huống khẩn cấp trong trường.",
-        "zh": "保安室在校门，24 小时值班。校园内任何紧急情况都可以联系他们。"
+        "en": "The security office is at the main gate and is staffed 24 hours. For an emergency at night, call security first.",
+        "th": "สำนักงานรักษาความปลอดภัยอยู่ที่ประตูหลัก มีเจ้าหน้าที่ตลอด 24 ชั่วโมง ถ้าเกิดเหตุฉุกเฉินตอนกลางคืน ให้โทรหารักษาความปลอดภัยก่อน",
+        "id": "Kantor keamanan ada di gerbang utama dan berjaga 24 jam. Untuk darurat malam, hubungi keamanan lebih dulu.",
+        "vi": "Phòng bảo vệ ở cổng chính, trực 24 giờ. Khi khẩn cấp ban đêm, hãy gọi bảo vệ trước.",
+        "zh": "保安室在校门，24 小时值班。夜间紧急情况请先联系保安。"
       }
     },
     {
@@ -325,43 +333,6 @@
       }
     },
     {
-      "id": "security",
-      "place": "security",
-      "patterns": [
-        "security",
-        "guard",
-        "รักษาความปลอดภัย",
-        "รปภ",
-        "ยาม"
-      ],
-      "answers": {
-        "en": "The security office is at the main gate and is staffed 24 hours. For an emergency at night, call security first.",
-        "th": "สำนักงานรักษาความปลอดภัยอยู่ที่ประตูหลัก มีเจ้าหน้าที่ตลอด 24 ชั่วโมง ถ้าเกิดเหตุฉุกเฉินตอนกลางคืน ให้โทรหาประกันก่อน",
-        "id": "Kantor keamanan ada di gerbang utama dan berjaga 24 jam. Untuk darurat malam, hubungi keamanan lebih dulu.",
-        "vi": "Phòng bảo vệ ở cổng chính, trực 24 giờ. Khi khẩn cấp ban đêm, hãy gọi bảo vệ trước.",
-        "zh": "保安室在校门，24 小时值班。夜间紧急情况请先联系保安。"
-      }
-    },
-    {
-      "id": "printing",
-      "place": "printing",
-      "patterns": [
-        "printing",
-        "print",
-        "photocopy",
-        "ถ่ายเอกสาร",
-        "พิมพ์งาน",
-        "ปรินต์"
-      ],
-      "answers": {
-        "en": "The printing and photocopy shop is on the 1st floor of the Library, open Monday to Friday 08:00 to 17:00.",
-        "th": "ร้านถ่ายเอกสารและพิมพ์งานอยู่ชั้น 1 หอสมุด เปิดวันจันทร์ถึงศุกร์ เวลา 08:00 ถึง 17:00",
-        "id": "Toko cetak dan fotokopi ada di lantai 1 Perpustakaan, buka Senin sampai Jumat 08.00 sampai 17.00.",
-        "vi": "Tiệm in và photocopy ở tầng 1 Thư viện, mở thứ Hai đến thứ Sáu 08:00 đến 17:00.",
-        "zh": "打印复印店在图书馆一楼，周一至周五 08:00 至 17:00 营业。"
-      }
-    },
-    {
       "id": "dorm_solomon",
       "place": "dorm_solomon",
       "patterns": [
@@ -474,29 +445,6 @@
         "id": "Gereja AIU ada di sisi timur kampus. Tidak ada jadwal tetap; gereja dibuka saat ada acara.",
         "vi": "Nhà thờ AIU ở phía đông khuôn viên. Không có lịch cố định; mở khi có sự kiện.",
         "zh": "AIU 教堂在校园东侧。没有固定时间表，有活动时开放。"
-      }
-    },
-    {
-      "id": "cafeteria",
-      "place": "cafeteria",
-      "patterns": [
-        "cafeteria",
-        "canteen",
-        "food",
-        "eat",
-        "โรงอาหาร",
-        "อาหาร",
-        "กินข้าว",
-        "kantin",
-        "nhà ăn",
-        "食堂"
-      ],
-      "answers": {
-        "en": "The cafeteria is next to the Administration Building. Monday to Thursday and Sunday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 18:00. Friday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 17:00. Saturday: 12:00 to 14:00, 16:00 to 18:00. The a la carte counter serves an extra menu 16:00 to 18:00 Monday to Thursday.",
-        "th": "โรงอาหารอยู่ข้างอาคารบริหาร วันจันทร์ถึงพฤหัสบดีและวันอาทิตย์ 07:00 ถึง 09:00, 10:00 ถึง 14:00, 15:00 ถึง 18:00 วันศุกร์ 07:00 ถึง 09:00, 10:00 ถึง 14:00, 15:00 ถึง 17:00 วันเสาร์ 12:00 ถึง 14:00, 16:00 ถึง 18:00 และมีเคาน์เตอร์อาหารตามสั่งเพิ่มเมนูพิเศษ 16:00 ถึง 18:00 วันจันทร์ถึงพฤหัสบดี",
-        "id": "Kantin ada di sebelah Gedung Administrasi. Senin sampai Kamis dan Minggu: 07.00-09.00, 10.00-14.00, 15.00-18.00. Jumat: 07.00-09.00, 10.00-14.00, 15.00-17.00. Sabtu: 12.00-14.00, 16.00-18.00. Konter a la carte menyajikan menu tambahan 16.00-18.00 Senin sampai Kamis.",
-        "vi": "Nhà ăn nằm cạnh tòa nhà Hành chính. Thứ Hai đến thứ Năm và Chủ nhật: 07:00-09:00, 10:00-14:00, 15:00-18:00. Thứ Sáu: 07:00-09:00, 10:00-14:00, 15:00-17:00. Thứ Bảy: 12:00-14:00, 16:00-18:00. Quầy gọi món phục vụ thêm 16:00-18:00 thứ Hai đến thứ Năm.",
-        "zh": "食堂在行政楼旁边。周一至周四及周日：07:00-09:00、10:00-14:00、15:00-18:00。周五：07:00-09:00、10:00-14:00、15:00-17:00。周六：12:00-14:00、16:00-18:00。点餐柜台周一至周四 16:00-18:00 供应额外菜单。"
       }
     },
     {
