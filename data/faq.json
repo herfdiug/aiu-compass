@@ -248,11 +248,11 @@
         "厕所"
       ],
       "answers": {
-        "en": "Restrooms are on every floor of the IT Building, the Library and the Administration Building, at the end of each corridor. The nearest one to the main entrance is on the 1st floor of the IT Building.",
-        "th": "ห้องน้ำมีอยู่ทุกชั้นของอาคารไอที หอสมุด และอาคารบริหาร อยู่ปลายทางเดินของแต่ละชั้น ห้องที่ใกล้ทางเข้าหลักที่สุดอยู่ชั้น 1 อาคารไอที",
-        "id": "Toilet ada di setiap lantai Gedung IT, Perpustakaan, dan Gedung Administrasi, di ujung koridor. Yang terdekat dari pintu masuk utama ada di lantai 1 Gedung IT.",
-        "vi": "Nhà vệ sinh có ở mọi tầng của Tòa nhà IT, Thư viện và Tòa nhà Hành chính, ở cuối hành lang. Gần lối vào chính nhất là ở tầng 1 Tòa nhà IT.",
-        "zh": "IT 楼、图书馆和行政楼每层都有洗手间，位于走廊尽头。离正门最近的是 IT 楼一楼。"
+        "en": "Restrooms are on every floor of the IT Building, the Library and the Administration Building, at the end of each corridor. The one nearest the main entrance is on the 1st floor of the IT Building (highlighted on the map).",
+        "th": "ห้องน้ำมีอยู่ทุกชั้นของอาคารไอที หอสมุด และอาคารบริหาร อยู่ปลายทางเดินของแต่ละชั้น ห้องที่เกล้าทางเข้าหลักที่สุดอยู่ชั้น 1 อาคารไอที (ไฮลไต์บนแผนที่)",
+        "id": "Toilet ada di setiap lantai Gedung IT, Perpustakaan, dan Gedung Administrasi, di ujung koridor. Yang terdekat dari pintu masuk utama ada di lantai 1 Gedung IT (disorot di peta).",
+        "vi": "Nhà vệ sinh có ở mọi tầng của Tòa nhà IT, Thư viện và Tòa nhà Hành chính, ở cuối hành lang. Gần lối vào chính nhất là ở tầng 1 Tòa nhà IT (được đánh dấu trên bản đồ).",
+        "zh": "IT 楼、图书馆和行政楼每层都有洗手间，位于走廊尽头。离正门最近的是 IT 楼一楼（已在地图上标出）。"
       }
     },
     {

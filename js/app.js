@@ -38,7 +38,7 @@ const UI = {
     showMe: 'แสดงบนแผนที่',
     replay: 'ฟังอีกครั้ง',
     voiceMissing: 'เสียงอ่านภาษานี้ยังไม่มีในอุปกรณ์ — ข้อความด้านบนคือคำตอบ',
-    hoursNote: 'เวลาเปิดทำการยังไม่ยืนยัน — โปรดสอบถามที่เคาน์เตอร์',
+    hoursNote: 'เวลาข้างต้นมาจากข้อมูลของมหาวิทยาลัยและยังไม่ยืนยัน — โปรดสอบถามที่เคานเตอร์',
     offline: 'โหมดออฟไลน์ · ใช้คำตอบที่บันทึกไว้',
     footer: 'AIU Compass · แผนที่จำลอง ตรวจเวลาเปิดทำการก่อนใช้จริง',
     hint: 'เลือกภาษาที่ต้องการ แล้วถามเป็นเสียงหรือพิมพ์ก็ได้',
@@ -70,7 +70,7 @@ const UI = {
     showMe: 'Show me on the map',
     replay: 'Replay',
     voiceMissing: 'This device has no voice for that language — the text above is the answer.',
-    hoursNote: 'Opening hours are not confirmed yet — please check at the counter.',
+    hoursNote: 'Those hours come from the campus record and are not confirmed yet — please check at the counter.',
     offline: 'Offline mode · cached answers only',
     footer: 'AIU Compass · schematic map, verify office hours before relying on them',
     hint: 'Pick your language, then ask by voice or by typing.',
@@ -102,7 +102,7 @@ const UI = {
     showMe: 'Tunjukkan di peta',
     replay: 'Putar lagi',
     voiceMissing: 'Perangkat ini tidak punya suara untuk bahasa itu — teks di atas adalah jawabannya.',
-    hoursNote: 'Jam buka belum dikonfirmasi — silakan tanyakan di konter.',
+    hoursNote: 'Jam di atas berasal dari catatan kampus dan belum dikonfirmasi — silakan tanyakan di konter.',
     offline: 'Mode offline · hanya jawaban tersimpan',
     footer: 'AIU Compass · peta skematis, periksa jam kantor sebelum mengandalkannya',
     hint: 'Pilih bahasa Anda, lalu bertanya dengan suara atau ketik.',
@@ -134,7 +134,7 @@ const UI = {
     showMe: 'Chỉ trên bản đồ',
     replay: 'Nghe lại',
     voiceMissing: 'Thiết bị này không có giọng đọc cho ngôn ngữ đó — văn bản ở trên là câu trả lời.',
-    hoursNote: 'Giờ mở cửa chưa được xác nhận — vui lòng hỏi tại quầy.',
+    hoursNote: 'Giờ trên đây lấy từ hồ sơ của trường và chưa được xác nhận — vui lòng hỏi tại quầy.',
     offline: 'Chế độ ngoại tuyến · chỉ câu trả lời đã lưu',
     footer: 'AIU Compass · bản đồ sơ đồ, kiểm tra giờ làm việc trước khi dùng',
     hint: 'Chọn ngôn ngữ, rồi hỏi bằng giọng nói hoặc gõ.',
@@ -166,7 +166,7 @@ const UI = {
     showMe: '在地图上显示',
     replay: '再听一次',
     voiceMissing: '此设备没有该语言的语音——上面的文字就是答案。',
-    hoursNote: '开放时间尚未确认——请到柜台询问。',
+    hoursNote: '以上时间来自校园记录，尚未确认——请到柜台询问。',
     offline: '离线模式 · 仅使用已保存的答案',
     footer: 'AIU Compass · 示意地图，使用前请核实办公时间',
     hint: '选择语言，然后用语音或打字提问。',
@@ -659,6 +659,9 @@ async function ask(question, opts) {
   if (place && state.map) state.map.focus(place);
 
   if (!place) {
+    // A failed lookup must not leave the previous building lit and the previous
+    // route drawn: the map would contradict the answer.
+    if (state.map) state.map.clear();
     showAnswer({
       lang: state.lang,
       main: t('notFound'),
@@ -826,21 +829,33 @@ function stopSpeaking() {
 }
 
 function speak(text, lang, opts) {
+  const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  const v = pickVoice(lang);
+  const wanted = shortLang(lang);
+  const got = v ? v.lang.toLowerCase().split('-')[0] : '';
+  const missing = wanted !== 'en' && got !== wanted;
+
+  // A Replay button that cannot speak is a dead control. When the device really
+  // has no voice for this language, disable it rather than let it do nothing.
+  if (el.speakBtn) {
+    const dead = missing && voices.length > 0;
+    el.speakBtn.disabled = dead;
+    el.speakBtn.setAttribute('aria-disabled', dead ? 'true' : 'false');
+    el.speakBtn.title = dead ? t('voiceMissing') : '';
+  }
+
+  // Name the voice language in the UI so it is clear what is being spoken.
+  if (el.voiceNote && opts && opts.showWarning) {
+    el.voiceNote.textContent = missing ? t('voiceMissing') : '';
+    el.voiceNote.classList.toggle('show', missing);
+  }
+
   if (!text || !window.speechSynthesis) return;
   stopSpeaking();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = 0.98;
-  const v = pickVoice(lang);
   if (v) u.voice = v;
-  // Name the voice language in the UI so it is clear what is being spoken.
-  if (el.voiceNote && opts && opts.showWarning) {
-    const wanted = shortLang(lang);
-    const got = v ? v.lang.toLowerCase().split('-')[0] : '';
-    const missing = wanted !== 'en' && got !== wanted;
-    el.voiceNote.textContent = missing ? t('voiceMissing') : '';
-    el.voiceNote.classList.toggle('show', missing);
-  }
   speechSynthesis.speak(u);
 }
 

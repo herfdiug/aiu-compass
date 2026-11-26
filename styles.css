@@ -59,7 +59,10 @@ header {
   header { flex-wrap: wrap; row-gap: 8px; padding: 10px 12px; }
   .brand { width: 100%; }
   .brand b { font-size: 18px; }
-  .langbar { margin-left: 0; width: 100%; }
+  .langbar { margin-left: 0; width: 100%; align-items: flex-start; }
+  /* With two rows of chips, a vertically centred label lands in the gap and
+     reads as if it belongs to neither row. Pin it to the first row. */
+  .langlabel { padding-top: 7px; }
   .chips { width: 100%; flex-wrap: wrap; gap: 5px; }
   .chip { padding: 6px 10px; font-size: 12px; }
 }
@@ -232,6 +235,10 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
 .mic:active, .mic.listening { transform: scale(0.94); box-shadow: 0 0 0 14px rgba(53, 224, 161, 0.14); }
 .mic:disabled { filter: grayscale(0.6); cursor: wait; }
 
+/* A Replay button with no voice for the language is disabled, so it reads as
+   unavailable instead of looking live and doing nothing. */
+.ghost:disabled { opacity: 0.45; cursor: not-allowed; }
+
 .hint { color: var(--muted); font-size: 15px; line-height: 1.45; }
 .hint b { color: var(--text); }
 
@@ -320,10 +327,11 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
 .offlineBar.show { display: block; }
 
 @media (max-width: 859px) {
-  /* Once an answer is on screen the asking controls step aside on a phone.
-     The visitor is reading, not asking, and the answer needs the height. */
-  body.has-answer .micRow,
+  /* Only the suggestion chips step aside for an answer. The mic row stays:
+     hiding it removed the voice follow-up entirely after the first question,
+     which is the feature the demo is built around. */
   body.has-answer .suggestions { display: none; }
+  body.has-answer main { grid-template-rows: 28vh 1fr; }
   body.has-answer .answer .main { font-size: 20px; }
   body.has-answer .answer .secondary { font-size: 14px; }
 }
