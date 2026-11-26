@@ -12,7 +12,10 @@
         "ทะเบียน",
         "transcript",
         "ใบแสดงผล",
-        "ลงทะเบียน"
+        "ลงทะเบียน",
+        "registrasi",
+        "phòng đào tạo",
+        "注册处"
       ],
       "answers": {
         "en": "The Registrar's Office is on the 1st floor of the Administration Building. Open Monday to Thursday, 08:00 to 12:00 and 13:00 to 17:00; Friday, 08:00 to 13:00.",
@@ -31,7 +34,10 @@
         "pay dorm",
         "จ่ายค่าหอพัก",
         "tuition",
-        "ค่าเทอม"
+        "ค่าเทอม",
+        "keuangan",
+        "tài vụ",
+        "财务处"
       ],
       "answers": {
         "en": "Pay the dorm fee at the Finance and Cashier counter, 1st floor of the Administration Building. Open Monday to Thursday, 08:00 to 12:00 and 13:00 to 17:00; Friday, 08:00 to 13:00.",
@@ -50,7 +56,12 @@
         "พยาบาล",
         "sick",
         "ปวดหัว",
-        "หมอ"
+        "หมอ",
+        "klinik",
+        "phòng y tế",
+        "trạm y tế",
+        "医务室",
+        "校医室"
       ],
       "answers": {
         "en": "The campus clinic is beside the dormitories. It keeps normal office hours: Monday to Thursday 08:00 to 12:00 and 13:00 to 17:00, Friday 08:00 to 13:00. For an emergency at night, call the security office, which is open 24 hours.",
@@ -68,7 +79,10 @@
         "หอสมุด",
         "ห้องสมุด",
         "borrow",
-        "ยืมหนังสือ"
+        "ยืมหนังสือ",
+        "perpustakaan",
+        "thư viện",
+        "图书馆"
       ],
       "answers": {
         "en": "The Library service desk is on the 1st floor. Open Monday to Thursday 08:00 to 20:00, Friday 08:00 to 12:00, and Sunday 13:00 to 17:00.",
@@ -92,7 +106,9 @@
         "อาหาร",
         "kantin",
         "nhà ăn",
-        "食堂"
+        "食堂",
+        "kantin di mana",
+        "căng tin"
       ],
       "answers": {
         "en": "The cafeteria is next to the Administration Building. Monday to Thursday and Sunday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 18:00. Friday: 07:00 to 09:00, 10:00 to 14:00, 15:00 to 17:00. Saturday: 12:00 to 14:00, 16:00 to 18:00. The a la carte counter serves an extra menu 16:00 to 18:00 Monday to Thursday.",
@@ -111,7 +127,11 @@
         "ถ่ายเอกสาร",
         "พิมพ์งาน",
         "photocopy",
-        "ปรินต์"
+        "ปรินต์",
+        "fotokopi",
+        "percetakan",
+        "in ấn",
+        "复印"
       ],
       "answers": {
         "en": "The printing and photocopy shop is on the 1st floor of the Library. Open Monday to Friday, 08:00 to 17:00.",
@@ -167,7 +187,10 @@
         "lost",
         "ของหาย",
         "found",
-        "ทำของหาย"
+        "ทำของหาย",
+        "barang hilang",
+        "đồ thất lạc",
+        "失物招领"
       ],
       "answers": {
         "en": "Lost and found is at the Administration Building, 1st floor. Open Monday to Friday, 08:30 to 16:30.",
@@ -187,7 +210,11 @@
         "รปภ",
         "ยาม",
         "emergency",
-        "ฉุกเฉิน"
+        "ฉุกเฉิน",
+        "keamanan",
+        "satpam",
+        "bảo vệ",
+        "保安"
       ],
       "answers": {
         "en": "The security office is at the main gate and is staffed 24 hours. For an emergency at night, call security first.",
@@ -205,7 +232,10 @@
         "รถเมล์",
         "van",
         "รถตู้",
-        "taxi"
+        "taxi",
+        "halte bus",
+        "trạm xe buýt",
+        "公交站"
       ],
       "answers": {
         "en": "The bus stop and van pickup point are at the main gate. Service runs daily from 06:00 to 20:00.",
@@ -245,7 +275,8 @@
         "toilet di mana",
         "nhà vệ sinh",
         "洗手间",
-        "厕所"
+        "厕所",
+        "kamar kecil"
       ],
       "answers": {
         "en": "Restrooms are on every floor of the IT Building, the Library and the Administration Building, at the end of each corridor. The one nearest the main entrance is on the 1st floor of the IT Building (highlighted on the map).",
@@ -268,7 +299,9 @@
         "air minum",
         "nước uống",
         "饮水机",
-        "开水"
+        "开水",
+        "máy nước",
+        "直饮水"
       ],
       "answers": {
         "en": "Drinking-water stations are next to the restrooms on each floor of the IT Building and the Library, and in the cafeteria. Bring your own bottle.",
@@ -286,7 +319,11 @@
         "muslim prayer",
         "ห้องละหมาด",
         "ละหมาด",
-        "prayer"
+        "prayer",
+        "ruang doa",
+        "mushola",
+        "phòng cầu nguyện",
+        "祈祷室"
       ],
       "answers": {
         "en": "The prayer room is on the 1st floor of the IT Building and is open daily from 06:00 to 22:00.",
@@ -304,7 +341,10 @@
         "cash machine",
         "ตู้เอทีเอ็ม",
         "กดเงิน",
-        "withdraw"
+        "withdraw",
+        "mesin atm",
+        "máy atm",
+        "取款机"
       ],
       "answers": {
         "en": "The ATM is outside the Administration Building and is available 24 hours a day.",
@@ -322,7 +362,10 @@
         "park my car",
         "ที่จอดรถ",
         "จอดรถ",
-        "ที่จอดมอเตอร์ไซค์"
+        "ที่จอดมอเตอร์ไซค์",
+        "parkir",
+        "bãi đỗ xe",
+        "停车场"
       ],
       "answers": {
         "en": "Visitor parking is at the main gate and is open 24 hours. Motorcycle parking is beside it.",
@@ -437,7 +480,10 @@
         "chapel",
         "โบสถ์",
         "นมัสการ",
-        "worship"
+        "worship",
+        "gereja",
+        "nhà thờ",
+        "教堂"
       ],
       "answers": {
         "en": "The AIU church is on the east side of campus. It has no fixed daily schedule; it opens when there is an event.",
@@ -458,7 +504,10 @@
         "phaneendra",
         "puppala",
         "it lecturer",
-        "อาจารย์ไอที"
+        "อาจารย์ไอที",
+        "ruang it209",
+        "phòng it209",
+        "it209室"
       ],
       "answers": {
         "en": "Room IT209 is on the 2nd floor of the IT Building and is the office of Mr. Phaneendra Puppala. Open Monday to Thursday 08:00 to 12:00 and 13:00 to 17:00; Friday 08:00 to 13:00.",
@@ -475,7 +524,10 @@
         "discussion room",
         "group study",
         "ห้องประชุมกลุ่ม",
-        "ห้องอ่านหนังสือ"
+        "ห้องอ่านหนังสือ",
+        "ruang diskusi",
+        "phòng thảo luận",
+        "讨论室"
       ],
       "answers": {
         "en": "The group discussion rooms are on the 3rd floor of the Library and keep the same hours as the Library: Monday to Thursday 08:00 to 20:00, Friday 08:00 to 12:00, Sunday 13:00 to 17:00.",
@@ -494,7 +546,10 @@
         "enrol",
         "enroll",
         "รับสมัคร",
-        "สมัครเรียน"
+        "สมัครเรียน",
+        "penerimaan mahasiswa",
+        "tuyển sinh",
+        "招生办"
       ],
       "answers": {
         "en": "The Admissions Office is on the 1st floor of the Administration Building. Open Monday to Thursday 08:00 to 12:00 and 13:00 to 17:00; Friday 08:00 to 13:00.",
@@ -531,7 +586,10 @@
         "package",
         "ไปรษณีย์",
         "พัสดุ",
-        "รับพัสดุ"
+        "รับพัสดุ",
+        "paket",
+        "bưu kiện",
+        "包裹"
       ],
       "answers": {
         "en": "The mail and parcel room is on the 1st floor of the Administration Building, open Monday to Friday 09:00 to 16:00. Bring your student card to collect a parcel.",
@@ -551,7 +609,10 @@
         "basketball",
         "โรงยิม",
         "ฟิตเนส",
-        "บาส"
+        "บาส",
+        "pusat kebugaran",
+        "phòng gym",
+        "健身房"
       ],
       "answers": {
         "en": "The gym is inside the Student Center, west of the Administration Building. Its opening hours have not been confirmed yet, so please check at the Student Center counter.",
@@ -570,7 +631,10 @@
         "soccer",
         "สนามกีฬา",
         "สนามฟุตบอล",
-        "วิ่ง"
+        "วิ่ง",
+        "lapangan olahraga",
+        "sân thể thao",
+        "运动场"
       ],
       "answers": {
         "en": "The sports field is behind the Student Center and is open daily from 06:00 to 20:00.",
@@ -588,7 +652,10 @@
         "event hall",
         "assembly hall",
         "หอประชุม",
-        "ห้องประชุมใหญ่"
+        "ห้องประชุมใหญ่",
+        "aula",
+        "hội trường",
+        "礼堂"
       ],
       "answers": {
         "en": "The auditorium is on the ground floor of the Administration Building and is used by booking only, so ask the Administration counter if an event needs the room.",
@@ -607,7 +674,10 @@
         "chem lab",
         "bio lab",
         "แล็บวิทยาศาสตร์",
-        "ห้องทดลอง"
+        "ห้องทดลอง",
+        "laboratorium",
+        "phòng thí nghiệm",
+        "实验室"
       ],
       "answers": {
         "en": "The science laboratories are on the 1st floor of the Science Building, open Monday to Thursday 08:00 to 17:00. Lab access during class time is arranged by the lecturer.",

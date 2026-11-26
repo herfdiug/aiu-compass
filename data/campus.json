@@ -362,7 +362,19 @@
         "it faculty dean",
         "α╕äα╕ôα╕Üα╕öα╕╡α╣äα╕¡α╕ùα╕╡",
         "α╕äα╕ôα╕Üα╕öα╕╡α╣Çα╕ùα╕äα╣éα╕Öα╣éα╕Ñα╕óα╕╡α╕¬α╕▓α╕úα╕¬α╕Öα╣Çα╕ùα╕¿",
-        "α╕½α╕▒α╕ºα╕½α╕Öα╣ëα╕▓α╕áα╕▓α╕äα╣äα╕¡α╕ùα╕╡"
+        "α╕½α╕▒α╕ºα╕½α╕Öα╣ëα╕▓α╕áα╕▓α╕äα╣äα╕¡α╕ùα╕╡",
+        "ruang dekan",
+        "kantor dekan it",
+        "dekan it",
+        "trưởng khoa it",
+        "văn phòng khoa it",
+        "信息技术系主任",
+        "系主任办公室",
+        "α╕aα╕oα╕Uα╕oα╕╡α╣aα╕¡α╕uα╕╡",
+        "α╕aα╕oα╕Uα╕oα╕╡α╣Cα╕uα╕aα╣eα╕Oα╣eα╕Nα╕oα╕╡α╕¬α╕▓α╕uα╕¬α╕Oα╣Cα╕uα╕¿",
+        "α╕½α╕▒α╕ºα╕½α╕Oα╣eα╕▓α╕aα╕▓α╕aα╣aα╕¡α╕uα╕╡",
+        "truong khoa it",
+        "van phong khoa it"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -392,7 +404,13 @@
         "it lecturer",
         "อาจารย์ไอที",
         "phaneendra",
-        "puppala"
+        "puppala",
+        "ruang it209",
+        "kantor pak puppala",
+        "phòng it209",
+        "IT209室",
+        "普帕拉办公室",
+        "phong it209"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -422,7 +440,15 @@
         "internet",
         "helpdesk",
         "ไวไฟ",
-        "เน็ต"
+        "เน็ต",
+        "gedung it",
+        "gedung teknologi informasi",
+        "tòa nhà it",
+        "nhà it",
+        "it楼",
+        "信息技术楼",
+        "toa nha it",
+        "nha it"
       ],
       "hours": "Mon-Fri 08:00-17:00",
       "tags": [
@@ -445,7 +471,15 @@
         "เคาน์เตอร์หอสมุด",
         "borrow book",
         "borrow",
-        "ยืมหนังสือ"
+        "ยืมหนังสือ",
+        "perpustakaan",
+        "meja perpustakaan",
+        "thư viện",
+        "bàn thư viện",
+        "图书馆",
+        "图书馆服务台",
+        "thu vien",
+        "ban thu vien"
       ],
       "hours": "Mon-Thu 08:00-20:00, Fri 08:00-12:00, Sun 13:00-17:00",
       "tags": [
@@ -466,7 +500,15 @@
         "ห้องประชุมกลุ่ม",
         "ห้องอ่านหนังสือ",
         "library third floor",
-        "ชั้นสามหอสมุด"
+        "ชั้นสามหอสมุด",
+        "ruang diskusi",
+        "ruang belajar kelompok",
+        "phòng thảo luận",
+        "phòng học nhóm",
+        "讨论室",
+        "小组学习室",
+        "phong thao luan",
+        "phong hoc nhom"
       ],
       "hours": "Same as library",
       "tags": [
@@ -489,7 +531,15 @@
         "registration",
         "ลงทะเบียน",
         "transcript",
-        "ใบแสดงผล"
+        "ใบแสดงผล",
+        "registrasi",
+        "kantor registrasi",
+        "phòng đào tạo",
+        "phòng công tác sinh viên",
+        "注册处",
+        "教务处",
+        "phong dao tao",
+        "phong cong tac sinh vien"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -511,7 +561,14 @@
         "รับสมัคร",
         "สมัครเรียน",
         "enrol",
-        "enroll"
+        "enroll",
+        "penerimaan mahasiswa",
+        "pendaftaran",
+        "tuyển sinh",
+        "phòng tuyển sinh",
+        "招生办",
+        "招生办公室",
+        "phong tuyen sinh"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -541,7 +598,15 @@
         "ค่าหอพัก",
         "dorm fee",
         "pay dorm",
-        "จ่ายค่าหอพัก"
+        "จ่ายค่าหอพัก",
+        "keuangan",
+        "kantor keuangan",
+        "tài vụ",
+        "phòng tài chính",
+        "财务处",
+        "缴费处",
+        "tai vu",
+        "phong tai chinh"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -562,7 +627,14 @@
         "vice president",
         "vp office",
         "รองอธิการบดี",
-        "president office"
+        "president office",
+        "wakil rektor",
+        "kantor wakil rektor",
+        "phó hiệu trưởng",
+        "văn phòng phó hiệu trưởng",
+        "副校长办公室",
+        "pho hieu truong",
+        "van phong pho hieu truong"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -590,7 +662,14 @@
         "ปวดหัว",
         "ไม่สบาย",
         "medicine",
-        "ยา"
+        "ยา",
+        "klinik",
+        "puskesmas kampus",
+        "phòng y tế",
+        "trạm y tế",
+        "医务室",
+        "校医室",
+        "phong y te"
       ],
       "hours": "Mon-Thu 08:00-12:00, 13:00-17:00; Fri 08:00-13:00",
       "tags": [
@@ -618,7 +697,11 @@
         "lunch",
         "kantin",
         "nhà ăn",
-        "食堂"
+        "食堂",
+        "tempat makan",
+        "căng tin",
+        "nha an",
+        "cang tin"
       ],
       "hours": "Mon-Thu and Sun 07:00-09:00, 10:00-14:00, 15:00-18:00; Fri 07:00-09:00, 10:00-14:00, 15:00-17:00; Sat 12:00-14:00, 16:00-18:00. A la carte counter 16:00-18:00 Mon-Thu",
       "tags": [
@@ -642,7 +725,11 @@
         "7 11",
         "convenience store",
         "convenience",
-        "ร้านสะดวกซื้อ"
+        "ร้านสะดวกซื้อ",
+        "toko kelontong",
+        "cửa hàng tiện lợi",
+        "便利店",
+        "cua hang tien loi"
       ],
       "hours": "Daily 07:00-22:00",
       "tags": [
@@ -664,7 +751,12 @@
         "ถ่ายเอกสาร",
         "พิมพ์งาน",
         "ปรินต์",
-        "printer"
+        "printer",
+        "fotokopi",
+        "percetakan",
+        "in ấn",
+        "打印店",
+        "复印"
       ],
       "hours": "Mon-Fri 08:00-17:00",
       "tags": [
@@ -684,7 +776,14 @@
         "cash machine",
         "ตู้เอทีเอ็ม",
         "กดเงิน",
-        "withdraw"
+        "withdraw",
+        "mesin atm",
+        "máy atm",
+        "cây atm",
+        "取款机",
+        "自动取款机",
+        "may atm",
+        "cay atm"
       ],
       "hours": "24 hours",
       "tags": [
@@ -706,7 +805,15 @@
         "package",
         "ไปรษณีย์",
         "พัสดุ",
-        "รับพัสดุ"
+        "รับพัสดุ",
+        "ruang surat",
+        "paket",
+        "phòng bưu kiện",
+        "bưu kiện",
+        "邮件室",
+        "包裹",
+        "phong buu kien",
+        "buu kien"
       ],
       "hours": "Mon-Fri 09:00-16:00",
       "tags": [
@@ -727,7 +834,14 @@
         "found",
         "ของหาย",
         "ทำของหาย",
-        "เก็บของได้"
+        "เก็บของได้",
+        "barang hilang",
+        "kehilangan",
+        "đồ thất lạc",
+        "mất đồ",
+        "失物招领",
+        "do that lac",
+        "mat do"
       ],
       "hours": "Mon-Fri 08:30-16:30",
       "tags": [
@@ -750,7 +864,14 @@
         "ยาม",
         "emergency",
         "ฉุกเฉิน",
-        "help"
+        "help",
+        "keamanan",
+        "satpam",
+        "bảo vệ",
+        "phòng bảo vệ",
+        "保安",
+        "保安室",
+        "phong bao ve"
       ],
       "hours": "24 hours",
       "tags": [
@@ -772,7 +893,14 @@
         "รถเมล์",
         "รถตู้",
         "ป้ายรถ",
-        "taxi"
+        "taxi",
+        "halte bus",
+        "halte",
+        "trạm xe buýt",
+        "bến xe buýt",
+        "公交站",
+        "tram xe buyt",
+        "ben xe buyt"
       ],
       "hours": "Daily 06:00-20:00",
       "tags": [
@@ -792,7 +920,14 @@
         "park",
         "ที่จอดรถ",
         "จอดรถ",
-        "ที่จอดมอเตอร์ไซค์"
+        "ที่จอดมอเตอร์ไซค์",
+        "parkir",
+        "tempat parkir",
+        "bãi đỗ xe",
+        "chỗ đậu xe",
+        "停车场",
+        "bai do xe",
+        "cho dau xe"
       ],
       "hours": "24 hours",
       "tags": [
@@ -814,7 +949,13 @@
         "ฟิตเนส",
         "fitness",
         "basketball",
-        "บาส"
+        "บาส",
+        "pusat kebugaran",
+        "phòng gym",
+        "phòng tập thể dục",
+        "健身房",
+        "phong gym",
+        "phong tap the duc"
       ],
       "hours": "Not confirmed yet",
       "tags": [
@@ -835,7 +976,14 @@
         "soccer",
         "สนามกีฬา",
         "สนามฟุตบอล",
-        "วิ่ง"
+        "วิ่ง",
+        "lapangan olahraga",
+        "lapangan",
+        "sân thể thao",
+        "sân vận động",
+        "运动场",
+        "san the thao",
+        "san van dong"
       ],
       "hours": "Daily 06:00-20:00",
       "tags": [
@@ -856,7 +1004,14 @@
         "โบสถ์",
         "นมัสการ",
         "worship",
-        "sabbath"
+        "sabbath",
+        "gereja",
+        "kapel",
+        "nhà thờ",
+        "nhà nguyện",
+        "教堂",
+        "nha tho",
+        "nha nguyen"
       ],
       "hours": "No fixed schedule - opens when there is an event",
       "tags": [
@@ -883,7 +1038,9 @@
         "nhà vệ sinh",
         "toilet ada di mana",
         "洗手间",
-        "厕所"
+        "厕所",
+        "kamar kecil",
+        "nha ve sinh"
       ],
       "hours": "Open with the building",
       "tags": [
@@ -909,7 +1066,12 @@
         "air minum",
         "nước uống",
         "饮水机",
-        "开水"
+        "开水",
+        "dispenser air",
+        "máy nước",
+        "直饮水",
+        "nuoc uong",
+        "may nuoc"
       ],
       "hours": "Open with the building",
       "tags": [
@@ -930,7 +1092,14 @@
         "muslim prayer",
         "ห้องละหมาด",
         "ละหมาด",
-        "prayer"
+        "prayer",
+        "ruang doa",
+        "mushola",
+        "phòng cầu nguyện",
+        "phòng nguyện",
+        "祈祷室",
+        "phong cau nguyen",
+        "phong nguyen"
       ],
       "hours": "Daily 06:00-22:00",
       "tags": [
@@ -950,7 +1119,14 @@
         "hall",
         "หอประชุม",
         "ห้องประชุมใหญ่",
-        "event hall"
+        "event hall",
+        "aula",
+        "hội trường",
+        "giảng đường lớn",
+        "礼堂",
+        "大礼堂",
+        "hoi truong",
+        "giang duong lon"
       ],
       "hours": "By booking",
       "tags": [
@@ -971,7 +1147,13 @@
         "แล็บวิทยาศาสตร์",
         "ห้องทดลอง",
         "chem lab",
-        "bio lab"
+        "bio lab",
+        "laboratorium",
+        "lab sains",
+        "phòng thí nghiệm",
+        "lab khoa học",
+        "实验室",
+        "phong thi nghiem"
       ],
       "hours": "Mon-Thu 08:00-17:00",
       "tags": [
@@ -992,7 +1174,16 @@
         "หอโซโลมอน",
         "หอพักโซโลมอน",
         "dorm",
-        "หอพัก"
+        "หอพัก",
+        "asrama solomon",
+        "asrama putra",
+        "ký túc xá solomon",
+        "ktx solomon",
+        "所罗门宿舍",
+        "ky tuc xa solomon",
+        "ky tuc xa",
+        "ktx",
+        "dormitory"
       ],
       "hours": "Dean's office Mon-Fri 08:00-17:00",
       "tags": [
@@ -1013,7 +1204,13 @@
         "หอซาราห์",
         "หอพักซาราห์",
         "dorm",
-        "หอพัก"
+        "หอพัก",
+        "asrama sarah",
+        "asrama putri",
+        "ký túc xá sarah",
+        "ktx sarah",
+        "莎拉宿舍",
+        "ky tuc xa sarah"
       ],
       "hours": "Dean's office Mon-Fri 08:00-17:00",
       "tags": [
@@ -1034,7 +1231,13 @@
         "หอเอลียาห์",
         "หอพักเอลียาห์",
         "dorm",
-        "หอพัก"
+        "หอพัก",
+        "asrama elijah",
+        "asrama putra",
+        "ký túc xá elijah",
+        "ktx elijah",
+        "以利亚宿舍",
+        "ky tuc xa elijah"
       ],
       "hours": "Dean's office Mon-Fri 08:00-17:00",
       "tags": [
@@ -1055,7 +1258,13 @@
         "หอเอสเธอร์",
         "หอพักเอสเธอร์",
         "dorm",
-        "หอพัก"
+        "หอพัก",
+        "asrama esther",
+        "asrama putri",
+        "ký túc xá esther",
+        "ktx esther",
+        "以斯帖宿舍",
+        "ky tuc xa esther"
       ],
       "hours": "Dean's office Mon-Fri 08:00-17:00",
       "tags": [
@@ -1076,7 +1285,13 @@
         "หอรูธ",
         "หอพักรูธ",
         "dorm",
-        "หอพัก"
+        "หอพัก",
+        "asrama rut",
+        "asrama putri",
+        "ký túc xá ruth",
+        "ktx ruth",
+        "路得宿舍",
+        "ky tuc xa ruth"
       ],
       "hours": "Dean's office Mon-Fri 08:00-17:00",
       "tags": [
@@ -1097,7 +1312,13 @@
         "หออีฟ",
         "หอพักอีฟ",
         "dorm",
-        "หอพัก"
+        "หอพัก",
+        "asrama hawa",
+        "asrama putri",
+        "ký túc xá eva",
+        "ktx eva",
+        "夏娃宿舍",
+        "ky tuc xa eva"
       ],
       "hours": "Dean's office Mon-Fri 08:00-17:00",
       "tags": [
