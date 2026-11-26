@@ -154,6 +154,8 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   font-size: 13px;
   font-family: inherit;
   padding: 2px 0;
+  /* The select measured 23px tall on a phone, under the 44px tap-target floor. */
+  min-height: 44px;
   max-width: 190px;
   cursor: pointer;
 }
@@ -248,6 +250,13 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   color: var(--muted);
   border-left: 3px solid var(--line);
   padding-left: 12px;
+  max-height: 5.4em;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+  /* Without this the panel's flex layout shrank the strip back to 30px and the
+     text scrolled invisibly instead of using its max-height. */
+  flex: none;
 }
 .transcript.live { color: var(--accent2); }
 
@@ -264,6 +273,12 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   outline: none;
 }
 .typed input:focus { border-color: var(--accent2); }
+/* An empty submit shows its hint on the field, where the visitor is looking. */
+.typed input.need-input {
+  border-color: var(--warn);
+  background: rgba(255, 183, 77, 0.08);
+}
+.typed input.need-input::placeholder { color: var(--warn); opacity: 1; }
 .typed button, .ghost {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.06);
@@ -327,6 +342,15 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
 .offlineBar.show { display: block; }
 
 @media (max-width: 859px) {
+  /* The suggestion row used to end 2px below the panel edge, so the last chip
+     looked cut off. A slightly tighter panel makes the whole set fit. */
+  #panel { gap: 12px; }
+  /* The map is short once an answer is open, and every pixel of it is a label
+     row. The control shrinks to just the place name so it stops eating rows;
+     the full "Starting from" wording returns as soon as the answer is closed. */
+  body.has-answer .origin label { display: none; }
+  body.has-answer .origin { padding: 2px 8px; max-width: 150px; }
+  body.has-answer .origin select { min-height: 34px; max-width: 132px; font-size: 12px; }
   /* Only the suggestion chips step aside for an answer. The mic row stays:
      hiding it removed the voice follow-up entirely after the first question,
      which is the feature the demo is built around. */
@@ -334,6 +358,25 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
   body.has-answer main { grid-template-rows: 28vh 1fr; }
   body.has-answer .answer .main { font-size: 20px; }
   body.has-answer .answer .secondary { font-size: 14px; }
+
+  /* The panel scrolls the answer into view, which pushed the full-size mic row
+     off the top and behind the map: measured 0% of the button visible after one
+     answer. A compact sticky row keeps voice reachable at any scroll position. */
+  body.has-answer .micRow {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    gap: 10px;
+    margin: -8px -16px 0;
+    padding: 8px 16px;
+    background: linear-gradient(to bottom, rgba(6, 24, 42, 0.98), rgba(6, 24, 42, 0.86));
+    border-bottom: 1px solid var(--line);
+  }
+  body.has-answer .mic { width: 44px; height: 44px; box-shadow: 0 6px 18px rgba(53, 224, 161, 0.22); }
+  body.has-answer .mic svg { width: 22px; height: 22px; }
+  body.has-answer .hint { font-size: 13px; line-height: 1.3; }
+  body.has-answer .hint br,
+  body.has-answer .hint #hintTry { display: none; }
 }
 
 @media (min-width: 860px) {

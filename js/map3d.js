@@ -415,6 +415,15 @@ export function createMap(canvas, campus) {
 
   // Exposed so the app (and tests) can assert what is actually on screen.
   function debug() {
+    // Screen position of each building's centre. Tapping a name plate is not a
+    // valid hit test: plates are nudged off their roof to avoid overlaps, so a
+    // tap under a moved plate proves nothing. These are the real targets.
+    const rect = canvas.getBoundingClientRect();
+    const screen = {};
+    for (const [id, g] of groupOf) {
+      const p = new THREE.Vector3(g.group.position.x, g.height * 0.5, g.group.position.z).project(camera);
+      screen[id] = [Math.round((p.x * 0.5 + 0.5) * rect.width), Math.round((-p.y * 0.5 + 0.5) * rect.height)];
+    }
     return {
       originId,
       selectedId,
@@ -423,7 +432,8 @@ export function createMap(canvas, campus) {
       plates: [...plates.keys()].length,
       radius: Math.round(radius),
       target: [Math.round(targetGoal.x), Math.round(targetGoal.z)],
-      camera: [Math.round(camGoal.x), Math.round(camGoal.y), Math.round(camGoal.z)]
+      camera: [Math.round(camGoal.x), Math.round(camGoal.y), Math.round(camGoal.z)],
+      screen
     };
   }
 
@@ -542,6 +552,23 @@ export function createMap(canvas, campus) {
     // Keep every name plate pinned above its roof, and hide any that collide.
     const rect = canvas.getBoundingClientRect();
     const placed = [];
+    // The page draws controls over the map (the "Starting from" select and the
+    // walking hint). A label underneath them is unreadable, so those boxes are
+    // reserved space that no plate may enter.
+    const reserved = [];
+    for (const sel of ['#originBox', '#routeNote']) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      if (sel === '#routeNote' && !el.classList.contains('show')) continue;
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) continue;
+      reserved.push({
+        x1: r.left - rect.left - 4,
+        y1: r.top - rect.top - 4,
+        x2: r.right - rect.left + 4,
+        y2: r.bottom - rect.top + 4
+      });
+    }
     const ordered = [...groupOf.keys()].sort((a, b) => {
       if (a === selectedId) return -1;
       if (b === selectedId) return 1;
@@ -584,25 +611,31 @@ export function createMap(canvas, campus) {
       const tries = [];
       for (const dy of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step, -4 * step, 4 * step, -5 * step, 5 * step]) tries.push([0, dy]);
       for (const dy of [0, -step, step, -2 * step, 2 * step]) {
-        for (const dx of [pw * 0.6, -pw * 0.6]) tries.push([dx, dy]);
+        for (const dx of [pw * 0.6, -pw * 0.6, pw * 1.2, -pw * 1.2, pw * 1.9, -pw * 1.9]) tries.push([dx, dy]);
       }
       for (const [dx, dy] of tries) {
         const tryX = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, px + dx));
         const tryY = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy + dy));
         const candidate = { x1: tryX - pw / 2, y1: tryY - ph, x2: tryX + pw / 2, y2: tryY };
-        const hit = placed.some((p) => !(candidate.x2 < p.x1 || candidate.x1 > p.x2 || candidate.y2 < p.y1 || candidate.y1 > p.y2));
+        const clash = (p) => !(candidate.x2 < p.x1 || candidate.x1 > p.x2 || candidate.y2 < p.y1 || candidate.y1 > p.y2);
+        const hit = placed.some(clash) || reserved.some(clash);
         if (!hit) { box = candidate; py = tryY; fx = tryX; break; }
       }
       if (!box) {
         // Every row near this roof is taken. The selected or hovered building keeps
         // its name even if it covers a neighbour; the rest wait for a zoom.
-        if (!hot) {
+        const fallback = { x1: px - pw / 2, y1: 0, x2: px + pw / 2, y2: 0 };
+        const py0 = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy));
+        fallback.y1 = py0 - ph;
+        fallback.y2 = py0;
+        const overControl = reserved.some((p) => !(fallback.x2 < p.x1 || fallback.x1 > p.x2 || fallback.y2 < p.y1 || fallback.y1 > p.y2));
+        if (!hot || overControl) {
           plate.style.opacity = '0';
           plate.style.visibility = 'hidden';
           continue;
         }
-        py = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy));
-        box = { x1: px - pw / 2, y1: py - ph, x2: px + pw / 2, y2: py };
+        py = py0;
+        box = fallback;
         fx = px;
       }
       placed.push(box);

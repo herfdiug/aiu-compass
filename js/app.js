@@ -35,6 +35,9 @@ const UI = {
     micBlocked: 'เบราว์เซอร์นี้ใช้ไมโครโฟนไม่ได้ พิมพ์แทนได้',
     micError: 'ไมโครโฟนมีปัญหา: ',
     notFound: 'ขออภัย ไม่พบสถานที่นี้ในระบบ ลองพิมพ์ชื่อห้องหรือชื่ออาคารอีกครั้ง',
+    unrecordedRoom: 'ไม่มีข้อมูลห้อง {code} ในระบบ แต่ห้องนี้อยู่ในอาคารนี้',
+    alreadyHere: 'คุณอยู่ที่นี่แล้ว',
+    tapQuestion: 'สถานที่นี้คือที่ไหน: {place}',
     showMe: 'แสดงบนแผนที่',
     replay: 'ฟังอีกครั้ง',
     voiceMissing: 'เสียงอ่านภาษานี้ยังไม่มีในอุปกรณ์ — ข้อความด้านบนคือคำตอบ',
@@ -67,6 +70,9 @@ const UI = {
     micBlocked: 'Speech input is not available in this browser. Type instead.',
     micError: 'Microphone error: ',
     notFound: 'Sorry, I could not find that place. Try a room code such as IT208, or a name such as registrar, clinic, library.',
+    unrecordedRoom: 'Room {code} is not in the campus record, but it is in this building.',
+    alreadyHere: 'You are already here.',
+    tapQuestion: 'Where is this: {place}',
     showMe: 'Show me on the map',
     replay: 'Replay',
     voiceMissing: 'This device has no voice for that language — the text above is the answer.',
@@ -99,6 +105,9 @@ const UI = {
     micBlocked: 'Input suara tidak tersedia di browser ini. Ketik saja.',
     micError: 'Kesalahan mikrofon: ',
     notFound: 'Maaf, tempat itu tidak ditemukan. Coba kode ruang seperti IT208, atau nama seperti registrasi, klinik, perpustakaan.',
+    unrecordedRoom: 'Ruang {code} tidak ada di catatan kampus, tetapi berada di gedung ini.',
+    alreadyHere: 'Anda sudah di sini.',
+    tapQuestion: 'Di mana ini: {place}',
     showMe: 'Tunjukkan di peta',
     replay: 'Putar lagi',
     voiceMissing: 'Perangkat ini tidak punya suara untuk bahasa itu — teks di atas adalah jawabannya.',
@@ -131,6 +140,9 @@ const UI = {
     micBlocked: 'Trình duyệt này không hỗ trợ giọng nói. Hãy gõ.',
     micError: 'Lỗi micro: ',
     notFound: 'Xin lỗi, không tìm thấy địa điểm đó. Thử mã phòng như IT208, hoặc tên như phòng đào tạo, phòng y tế, thư viện.',
+    unrecordedRoom: 'Phòng {code} không có trong hồ sơ của trường, nhưng nằm trong tòa nhà này.',
+    alreadyHere: 'Bạn đã ở đây rồi.',
+    tapQuestion: 'Đây là đâu: {place}',
     showMe: 'Chỉ trên bản đồ',
     replay: 'Nghe lại',
     voiceMissing: 'Thiết bị này không có giọng đọc cho ngôn ngữ đó — văn bản ở trên là câu trả lời.',
@@ -163,6 +175,9 @@ const UI = {
     micBlocked: '此浏览器不支持语音输入，请改用打字。',
     micError: '麦克风出错：',
     notFound: '抱歉，找不到这个地点。试试 IT208 这样的房间号，或注册处、医务室、图书馆等名称。',
+    unrecordedRoom: '校园记录中没有 {code} 房间，但它在这栋楼里。',
+    alreadyHere: '你已经在这里了。',
+    tapQuestion: '这里是哪里：{place}',
     showMe: '在地图上显示',
     replay: '再听一次',
     voiceMissing: '此设备没有该语言的语音——上面的文字就是答案。',
@@ -386,7 +401,7 @@ async function boot() {
 
   state.campus = campus;
   state.faq = faq;
-  state.index = buildIndex(campus.places);
+  state.index = buildIndex(campus.places, campus.buildings);
 
   let saved = '';
   try { saved = localStorage.getItem(ORIGIN_KEY) || ''; } catch { /* ignore */ }
@@ -464,6 +479,14 @@ function updateRouteNote() {
   if (!el.routeNote) return;
   const info = state.map && state.map.routeInfo ? state.map.routeInfo() : null;
   if (!info || !state.campus) {
+    // Standing where you already are is not an error, and silently hiding the
+    // line read as "the route broke". Say it instead.
+    const dbg = state.map && state.map.debug ? state.map.debug() : null;
+    if (dbg && dbg.originId && dbg.selectedId && dbg.originId === dbg.selectedId) {
+      el.routeNote.textContent = t('alreadyHere');
+      el.routeNote.classList.add('show');
+      return;
+    }
     el.routeNote.classList.remove('show');
     el.routeNote.textContent = '';
     return;
@@ -638,7 +661,19 @@ function submitTyped() {
     return;
   }
   // An empty box used to replay the previous answer, which looked like a bug.
+  // The hint now appears on the input itself: on a phone the transcript line is
+  // scrolled out of view, so a message there read as "nothing happened".
   el.typed.focus();
+  const original = el.typed.dataset.ph || el.typed.placeholder;
+  el.typed.dataset.ph = original;
+  el.typed.placeholder = t('needQuestion');
+  el.typed.classList.add('need-input');
+  el.typed.setAttribute('aria-invalid', 'true');
+  window.setTimeout(() => {
+    if (el.typed.dataset.ph) el.typed.placeholder = el.typed.dataset.ph;
+    el.typed.classList.remove('need-input');
+    el.typed.removeAttribute('aria-invalid');
+  }, 2600);
   sayStatus('needQuestion');
 }
 
@@ -701,10 +736,13 @@ async function ask(question, opts) {
   // above it. Preferring the generated place text made the toilet answer say
   // "every floor" in Thai and "Hours: Open with the building" in English.
   const textEn = faqEntry && faqEntry.answers ? faqEntry.answers.en : (localEn || local);
+  // A room code we only know by floor is answered with the building, and says so,
+  // instead of pretending the exact room is on record.
+  const roomCaveat = hit.unrecordedRoom ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) : '';
   showAnswer({
     lang: state.lang,
-    main: textLocal,
-    secondary: lang === 'en' ? null : textEn,
+    main: roomCaveat ? roomCaveat + ' ' + textLocal : textLocal,
+    secondary: lang === 'en' ? null : (roomCaveat ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) + ' ' + textEn : textEn),
     secondaryLabel: lang === 'en' ? null : 'English',
     place
   });
@@ -795,10 +833,21 @@ function showAnswer({ lang, main, secondary, secondaryLabel, place, source }) {
 function showPlace(place, opts) {
   state.lastPlace = place;
   const lang = shortLang(state.lang);
+  // A tap must read as one coherent turn: the question line says where the
+  // visitor just pointed, and the answer uses the same FAQ entry a typed
+  // question would, so the same place never gets two different answers.
+  const question = (opts && opts.question) || t('tapQuestion');
+  // `place.id` is the record identifier, so never index by language code blindly:
+  // the Indonesian code is "id" and would print "t208" instead of a name.
+  const langName = lang !== 'id' ? place[lang] : (place.names && place.names.id);
+  const placeName = langName || place.en || place.room || place.id;
+  el.transcript.dataset.locked = '1';
+  el.transcript.textContent = String(question).replace('{place}', placeName);
+  const faqEntry = faqHit(place, '') || (state.faq && state.faq.entries.find((e) => e.place === place.id));
   showAnswer({
     lang: state.lang,
-    main: localAnswer(place, lang),
-    secondary: lang === 'en' ? null : localAnswer(place, 'en'),
+    main: faqEntry && faqEntry.answers ? (faqEntry.answers[lang] || faqEntry.answers.en) : localAnswer(place, lang),
+    secondary: lang === 'en' ? null : (faqEntry && faqEntry.answers ? faqEntry.answers.en : localAnswer(place, 'en')),
     secondaryLabel: lang === 'en' ? null : 'English',
     place
   });
@@ -808,7 +857,16 @@ function showPlace(place, opts) {
 // Small debug hook so the route state can be asserted from a test harness.
 window.AIU = {
   get state() { return state; },
-  mapDebug: () => (state.map && state.map.debug ? state.map.debug() : null)
+  mapDebug: () => (state.map && state.map.debug ? state.map.debug() : null),
+  // Same entry point the map's tap handler uses, so a test can exercise the
+  // tap path without guessing which pixel is over which building.
+  pickPlace: (placeId) => {
+    const place = state.campus && state.campus.places.find((p) => p.id === placeId);
+    if (!place) return false;
+    if (state.map && state.map.focus) state.map.focus(place);
+    showPlace(place, { speakIt: false });
+    return true;
+  }
 };
 
 function escapeHtml(s) {

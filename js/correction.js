@@ -35,7 +35,7 @@ export function thaiSkeleton(input) {
   return s.replace(TH_MARKS, '').replace(/\s+/g, '');
 }
 
-export function buildIndex(places) {
+export function buildIndex(places, buildingsArg) {
   const byId = new Map();
   const aliases = [];
   for (const place of places) {
@@ -48,7 +48,16 @@ export function buildIndex(places) {
     }
   }
   aliases.sort((a, b) => b.alias.length - a.alias.length);
-  return { byId, aliases, places };
+  // A room code that is not in the record still tells us which building it is in.
+  // Prefer a place that is the whole building; fall back to the building's main
+  // service point (library desk, registrar) so LIB101 / AD101 still answer.
+  const placeByBuilding = (buildingId) =>
+    places.find((p) => p.building === buildingId && p.id === buildingId + '_building') ||
+    places.find((p) => p.building === buildingId && /\bbuilding\b/i.test(p.en || '')) ||
+    places.find((p) => p.building === buildingId) ||
+    null;
+  const buildings = places.map((p) => p.building).filter(Boolean);
+  return { byId, aliases, places, placeByBuilding, buildingMeta: Array.isArray(buildingsArg) ? buildingsArg : [], buildings: [...new Set(buildings)] };
 }
 
 function levenshtein(a, b) {
@@ -93,7 +102,13 @@ function windowScore(text, alias) {
   return best;
 }
 
-const ROOM_RE = /(?:room|hong|\u0E2B\u0E49\u0E2D\u0E07|\u0E17\u0E35|ti|it|t)([a-z]{0,3})(\d{1,4})/;
+// Room codes: IT208, IT 208, ที208, ห้อง 208, T208, plus LIB101 / SC101 / AD101.
+// `compact` removes spaces, so the prefix cannot be boundary-anchored. Longest
+// alternatives come first, and each must be followed directly by digits, so
+// "library" or "floor3" cannot match.
+const ROOM_RE = /(lib|it|ti|t|sc|ad|l|s|a)(\d{1,4})/;
+// Thai room forms: "ที208" and "ห้อง208" (compact strips the space).
+const ROOM_RE_TH = /(?:\u0E17\u0E35|\u0E2B\u0E49\u0E2D\u0E07)(\d{1,4})/;
 
 export function resolve(input, index) {
   const raw = String(input == null ? '' : input).trim();
@@ -103,13 +118,28 @@ export function resolve(input, index) {
   if (!c) return { place: null, id: null, confidence: 0, method: 'empty', alternatives: [] };
 
   // 1. Room code, e.g. T208 / ที 208 / ห้อง 208 / IT 208.
-  const room = ROOM_RE.exec(c);
-  if (room) {
-    const letter = (room[1] || 't').toUpperCase();
-    const digits = String(Number(room[2]));
+  const thRoom = ROOM_RE_TH.exec(c);
+  const room = thRoom ? null : ROOM_RE.exec(c);
+  if (thRoom || room) {
+    const letter = thRoom ? 'T' : room[1].toUpperCase();
+    const digits = String(Number(thRoom ? thRoom[1] : room[2]));
     const id = (letter + digits).toLowerCase();
-    if (index.byId.has(id)) {
-      return { place: index.byId.get(id), id, confidence: 0.97, method: 'room_regex', alternatives: [] };
+    // IT208 is stored under the legacy id t208, so IT and T both mean that record.
+    const isIt = letter === 'IT' || letter === 'TI' || letter === 'T';
+    const direct = index.byId.get(id) || (isIt ? index.byId.get('t' + digits) : null);
+    if (direct) {
+      return { place: direct, id: direct.id, confidence: 0.97, method: 'room_regex', alternatives: [] };
+    }
+    // A floor number with no recorded room: answer with the building it is in
+    // rather than "not found", which made the hint's promise untrue. The floor
+    // must actually exist in that building, so T999 stays not-found.
+    const block = { IT: 'it', TI: 'it', T: 'it', LIB: 'library', L: 'library', SC: 'science', S: 'science', AD: 'admin', A: 'admin' }[letter];
+    const floorNo = Number(digits.slice(0, 1));
+    const bMeta = block && index.buildingMeta ? index.buildingMeta.find((b) => b.id === block) : null;
+    const maxFloor = bMeta ? Number(bMeta.floors) || 1 : 0;
+    const building = block && index.placeByBuilding ? index.placeByBuilding(block) : null;
+    if (building && floorNo >= 1 && floorNo <= maxFloor) {
+      return { place: building, id: building.id, confidence: 0.62, method: 'room_building', alternatives: [], unrecordedRoom: id.toUpperCase() };
     }
   }
 
@@ -148,6 +178,12 @@ export function resolve(input, index) {
   }
 
   // 4. Thai consonant skeleton, last resort.
+  // Only for Thai input. Running the skeleton pass over English text made
+  // "Where is the rocket launch pad?" resolve to Esther Hall, because stripping
+  // vowels from Latin words matches almost anything.
+  if (!/[\u0E00-\u0E7F]/.test(raw)) {
+    return { place: null, id: null, confidence: 0, method: 'none', alternatives: [] };
+  }
   const sk = thaiSkeleton(raw);
   let skBest = { score: 0, place: null };
   for (const entry of index.aliases) {
