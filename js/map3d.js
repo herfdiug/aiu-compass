@@ -458,6 +458,10 @@ export function createMap(canvas, campus) {
       const pad = 6;
       const pw = plate.offsetWidth || 44;
       const ph = plate.offsetHeight || 18;
+      // The stage note bar sits on the bottom of the stage. A plate must clear it,
+      // or the label covers the disclaimer (and on a phone the two collide).
+      const noteEl = document.getElementById('stageNote');
+      const noteH = noteEl ? Math.ceil(noteEl.getBoundingClientRect().height) : 0;
       const px = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, sx));
       // A short stage (phone with the answer open) cannot fit every label on one
       // row, so a clashing plate is nudged to a neighbouring row before giving up.
@@ -465,8 +469,8 @@ export function createMap(canvas, campus) {
       const step = ph + 3;
       let box = null;
       let py = 0;
-      for (const shift of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step]) {
-        const tryY = Math.max(pad + ph, Math.min(rect.height - pad, sy + shift));
+      for (const shift of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step, -4 * step, 4 * step, -5 * step, 5 * step]) {
+        const tryY = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy + shift));
         const candidate = { x1: px - pw / 2, y1: tryY - ph, x2: px + pw / 2, y2: tryY };
         const hit = placed.some((p) => !(candidate.x2 < p.x1 || candidate.x1 > p.x2 || candidate.y2 < p.y1 || candidate.y1 > p.y2));
         if (!hit) { box = candidate; py = tryY; break; }
@@ -479,7 +483,7 @@ export function createMap(canvas, campus) {
           plate.style.visibility = 'hidden';
           continue;
         }
-        py = Math.max(pad + ph, Math.min(rect.height - pad, sy));
+        py = Math.max(pad + ph, Math.min(rect.height - pad - noteH, sy));
         box = { x1: px - pw / 2, y1: py - ph, x2: px + pw / 2, y2: py };
       }
       placed.push(box);
