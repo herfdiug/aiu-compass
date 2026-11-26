@@ -1,6 +1,6 @@
 {
   "meta": {
-    "count": 27,
+    "count": 36,
     "note": "Offline counter pack. Answers are short on purpose so they fit on a phone screen."
   },
   "entries": [
@@ -497,6 +497,176 @@
         "id": "Kantin ada di sebelah Gedung Administrasi. Senin sampai Kamis dan Minggu: 07.00-09.00, 10.00-14.00, 15.00-18.00. Jumat: 07.00-09.00, 10.00-14.00, 15.00-17.00. Sabtu: 12.00-14.00, 16.00-18.00. Konter a la carte menyajikan menu tambahan 16.00-18.00 Senin sampai Kamis.",
         "vi": "Nhà ăn nằm cạnh tòa nhà Hành chính. Thứ Hai đến thứ Năm và Chủ nhật: 07:00-09:00, 10:00-14:00, 15:00-18:00. Thứ Sáu: 07:00-09:00, 10:00-14:00, 15:00-17:00. Thứ Bảy: 12:00-14:00, 16:00-18:00. Quầy gọi món phục vụ thêm 16:00-18:00 thứ Hai đến thứ Năm.",
         "zh": "食堂在行政楼旁边。周一至周四及周日：07:00-09:00、10:00-14:00、15:00-18:00。周五：07:00-09:00、10:00-14:00、15:00-17:00。周六：12:00-14:00、16:00-18:00。点餐柜台周一至周四 16:00-18:00 供应额外菜单。"
+      }
+    },
+    {
+      "id": "t209_office",
+      "place": "t209",
+      "patterns": [
+        "it209",
+        "it 209",
+        "t209",
+        "t 209",
+        "phaneendra",
+        "puppala",
+        "it lecturer",
+        "อาจารย์ไอที"
+      ],
+      "answers": {
+        "en": "Room IT209 is on the 2nd floor of the IT Building and is the office of Mr. Phaneendra Puppala. Open Monday to Thursday 08:00 to 12:00 and 13:00 to 17:00; Friday 08:00 to 13:00.",
+        "th": "ห้อง IT209 อยู่ชั้น 2 อาคารไอที เป็นห้องทำงานของคุณ Phaneendra Puppala เปิดวันจันทร์ถึงพฤหัสบดี 08:00–12:00 และ 13:00–17:00 วันศุกร์ 08:00–13:00",
+        "id": "Ruang IT209 ada di lantai 2 Gedung IT dan merupakan kantor Bapak Phaneendra Puppala. Buka Senin sampai Kamis 08.00–12.00 dan 13.00–17.00; Jumat 08.00–13.00.",
+        "vi": "Phòng IT209 ở tầng 2 Tòa nhà IT, là văn phòng của ông Phaneendra Puppala. Mở cửa thứ Hai đến thứ Năm 08:00–12:00 và 13:00–17:00; thứ Sáu 08:00–13:00.",
+        "zh": "IT209 在 IT 楼二楼，是 Phaneendra Puppala 先生的办公室。开放时间：周一至周四 08:00–12:00、13:00–17:00；周五 08:00–13:00。"
+      }
+    },
+    {
+      "id": "library_quiet",
+      "place": "library_quiet",
+      "patterns": [
+        "discussion room",
+        "group study",
+        "ห้องประชุมกลุ่ม",
+        "ห้องอ่านหนังสือ"
+      ],
+      "answers": {
+        "en": "The group discussion rooms are on the 3rd floor of the Library and keep the same hours as the Library: Monday to Thursday 08:00 to 20:00, Friday 08:00 to 12:00, Sunday 13:00 to 17:00.",
+        "th": "ห้องประชุมกลุ่มอยู่ชั้น 3 ของหอสมุด เปิดเวลาเดียวกับหอสมุด คือวันจันทร์ถึงพฤหัสบดี 08:00–20:00 วันศุกร์ 08:00–12:00 และวันอาทิตย์ 13:00–17:00",
+        "id": "Ruang diskusi kelompok ada di lantai 3 Perpustakaan dan mengikuti jam Perpustakaan: Senin sampai Kamis 08.00–20.00, Jumat 08.00–12.00, Minggu 13.00–17.00.",
+        "vi": "Phòng thảo luận nhóm ở tầng 3 Thư viện và mở cùng giờ với Thư viện: Thứ Hai đến Thứ Năm 08:00–20:00, Thứ Sáu 08:00–12:00, Chủ nhật 13:00–17:00.",
+        "zh": "小组讨论室在图书馆三楼，开放时间与图书馆相同：周一至周四 08:00–20:00，周五 08:00–12:00，周日 13:00–17:00。"
+      }
+    },
+    {
+      "id": "admissions",
+      "place": "admissions",
+      "patterns": [
+        "admissions",
+        "admission",
+        "enrol",
+        "enroll",
+        "รับสมัคร",
+        "สมัครเรียน"
+      ],
+      "answers": {
+        "en": "The Admissions Office is on the 1st floor of the Administration Building. Open Monday to Thursday 08:00 to 12:00 and 13:00 to 17:00; Friday 08:00 to 13:00.",
+        "th": "ฝ่ายรับสมัครอยู่ชั้น 1 อาคารบริหาร เปิดวันจันทร์ถึงพฤหัสบดี 08:00–12:00 และ 13:00–17:00 วันศุกร์ 08:00–13:00",
+        "id": "Kantor Penerimaan Mahasiswa ada di lantai 1 Gedung Administrasi. Buka Senin sampai Kamis 08.00–12.00 dan 13.00–17.00; Jumat 08.00–13.00.",
+        "vi": "Phòng Tuyển sinh ở tầng 1 Tòa nhà Hành chính. Mở cửa thứ Hai đến thứ Năm 08:00–12:00 và 13:00–17:00; thứ Sáu 08:00–13:00.",
+        "zh": "招生办公室在行政楼一楼。开放时间：周一至周四 08:00–12:00、13:00–17:00；周五 08:00–13:00。"
+      }
+    },
+    {
+      "id": "vp_office",
+      "place": "admin_dean",
+      "patterns": [
+        "vice president",
+        "vp office",
+        "president office",
+        "รองอธิการบดี"
+      ],
+      "answers": {
+        "en": "The Vice President's Office is on the 2nd floor of the Administration Building. Open Monday to Thursday 08:00 to 12:00 and 13:00 to 17:00; Friday 08:00 to 13:00.",
+        "th": "สำนักงานรองอธิการบดีอยู่ชั้น 2 อาคารบริหาร เปิดวันจันทร์ถึงพฤหัสบดี 08:00–12:00 และ 13:00–17:00 วันศุกร์ 08:00–13:00",
+        "id": "Kantor Wakil Rektor ada di lantai 2 Gedung Administrasi. Buka Senin sampai Kamis 08.00–12.00 dan 13.00–17.00; Jumat 08.00–13.00.",
+        "vi": "Văn phòng Phó Hiệu trưởng ở tầng 2 Tòa nhà Hành chính. Mở cửa thứ Hai đến thứ Năm 08:00–12:00 và 13:00–17:00; thứ Sáu 08:00–13:00.",
+        "zh": "副校长办公室在行政楼二楼。开放时间：周一至周四 08:00–12:00、13:00–17:00；周五 08:00–13:00。"
+      }
+    },
+    {
+      "id": "parcels",
+      "place": "post_room",
+      "patterns": [
+        "post room",
+        "mail room",
+        "parcel",
+        "package",
+        "ไปรษณีย์",
+        "พัสดุ",
+        "รับพัสดุ"
+      ],
+      "answers": {
+        "en": "The mail and parcel room is on the 1st floor of the Administration Building, open Monday to Friday 09:00 to 16:00. Bring your student card to collect a parcel.",
+        "th": "ห้องไปรษณีย์และพัสดุอยู่ชั้น 1 อาคารบริหาร เปิดวันจันทร์ถึงศุกร์ 09:00–16:00 รับพัสดุต้องแสดงบัตรนักศึกษา",
+        "id": "Ruang surat dan paket ada di lantai 1 Gedung Administrasi, buka Senin sampai Jumat 09.00–16.00. Bawa kartu mahasiswa untuk mengambil paket.",
+        "vi": "Phòng thư và bưu kiện ở tầng 1 Tòa nhà Hành chính, mở thứ Hai đến thứ Sáu 09:00–16:00. Mang thẻ sinh viên khi nhận bưu kiện.",
+        "zh": "邮件与包裹室在行政楼一楼，周一至周五 09:00–16:00 开放。领取包裹请带学生证。"
+      }
+    },
+    {
+      "id": "gym",
+      "place": "gym",
+      "patterns": [
+        "gym",
+        "gymnasium",
+        "fitness",
+        "basketball",
+        "โรงยิม",
+        "ฟิตเนส",
+        "บาส"
+      ],
+      "answers": {
+        "en": "The gym is inside the Student Center, west of the Administration Building. Its opening hours have not been confirmed yet, so please check at the Student Center counter.",
+        "th": "โรงยิมอยู่ในศูนย์กิจกรรมนักศึกษา ทางตะวันตกของอาคารบริหาร เวลาเปิดทำการยังไม่ยืนยัน กรุณาสอบถามที่เคาน์เตอร์ศูนย์กิจกรรมนักศึกษา",
+        "id": "Gym ada di dalam Pusat Mahasiswa, di sebelah barat Gedung Administrasi. Jam bukanya belum dikonfirmasi, silakan tanyakan di konter Pusat Mahasiswa.",
+        "vi": "Phòng gym nằm trong Trung tâm Sinh viên, phía tây Tòa nhà Hành chính. Giờ mở cửa chưa được xác nhận, vui lòng hỏi tại quầy Trung tâm Sinh viên.",
+        "zh": "健身房在学生中心内，位于行政楼西侧。开放时间尚未确认，请到学生中心柜台询问。"
+      }
+    },
+    {
+      "id": "sports_field",
+      "place": "sports_field",
+      "patterns": [
+        "sports field",
+        "football",
+        "soccer",
+        "สนามกีฬา",
+        "สนามฟุตบอล",
+        "วิ่ง"
+      ],
+      "answers": {
+        "en": "The sports field is behind the Student Center and is open daily from 06:00 to 20:00.",
+        "th": "สนามกีฬาอยู่หลังศูนย์กิจกรรมนักศึกษา เปิดทุกวัน 06:00–20:00",
+        "id": "Lapangan olahraga ada di belakang Pusat Mahasiswa dan buka setiap hari 06.00–20.00.",
+        "vi": "Sân thể thao ở phía sau Trung tâm Sinh viên và mở hằng ngày 06:00–20:00.",
+        "zh": "运动场在学生中心后面，每天 06:00–20:00 开放。"
+      }
+    },
+    {
+      "id": "auditorium",
+      "place": "auditorium",
+      "patterns": [
+        "auditorium",
+        "event hall",
+        "assembly hall",
+        "หอประชุม",
+        "ห้องประชุมใหญ่"
+      ],
+      "answers": {
+        "en": "The auditorium is on the ground floor of the Administration Building and is used by booking only, so ask the Administration counter if an event needs the room.",
+        "th": "หอประชุมอยู่ชั้น 1 อาคารบริหาร ใช้เฉพาะเมื่อมีการจอง กรุณาสอบถามที่เคาน์เตอร์อาคารบริหาร",
+        "id": "Auditorium ada di lantai dasar Gedung Administrasi dan hanya digunakan dengan pemesanan, silakan tanyakan di konter Administrasi.",
+        "vi": "Hội trường ở tầng trệt Tòa nhà Hành chính và chỉ dùng khi đặt trước, vui lòng hỏi tại quầy Hành chính.",
+        "zh": "礼堂在行政楼底层，仅接受预约使用，请到行政楼柜台询问。"
+      }
+    },
+    {
+      "id": "science_lab",
+      "place": "science_lab",
+      "patterns": [
+        "science lab",
+        "laboratory",
+        "chem lab",
+        "bio lab",
+        "แล็บวิทยาศาสตร์",
+        "ห้องทดลอง"
+      ],
+      "answers": {
+        "en": "The science laboratories are on the 1st floor of the Science Building, open Monday to Thursday 08:00 to 17:00. Lab access during class time is arranged by the lecturer.",
+        "th": "ห้องแล็บวิทยาศาสตร์อยู่ชั้น 1 อาคารวิทยาศาสตร์ เปิดวันจันทร์ถึงพฤหัสบดี 08:00–17:00 การเข้าใช้ระหว่างคาบเรียนให้ติดต่ออาจารย์ผู้สอน",
+        "id": "Laboratorium sains ada di lantai 1 Gedung Sains, buka Senin sampai Kamis 08.00–17.00. Akses saat kelas diatur oleh dosen.",
+        "vi": "Phòng thí nghiệm khoa học ở tầng 1 Tòa nhà Khoa học, mở thứ Hai đến thứ Năm 08:00–17:00. Việc vào phòng trong giờ học do giảng viên sắp xếp.",
+        "zh": "科学实验室在科学楼一楼，周一至周四 08:00–17:00 开放。上课期间的使用由任课教师安排。"
       }
     }
   ]
