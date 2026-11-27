@@ -396,12 +396,13 @@ export function createMap(canvas, campus) {
     const aspect = w / h;
     const vFov = (camera.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
-    const pad = 1.04;
+    const pad = 1.18;
     const neededV = (span * pad) / 2 / Math.tan(vFov / 2);
     const neededH = (span * pad) / 2 / Math.tan(hFov / 2);
-    // The whole campus must fill the frame. 1.18 of padding left a third of a
-    // 900px-tall desktop stage empty below the dormitory row, but pushing past
-    // the fit distance (0.9) clipped Solomon/Sarah and Church off the sides.
+    // The dormitory row sits off-centre to the west, so the fit distance based on
+    // the centre let Solomon and Sarah hang off the left edge. 1.18 was the last
+    // value where every block was inside the frame; the bottom gap it left is
+    // worth less than a clipped building.
     const dist = Math.max(neededV, neededH);
     camGoal.set(targetGoal.x + dist * 0.2, dist * 0.72, targetGoal.z + dist * 0.86);
     radius = Math.hypot(camGoal.x - targetGoal.x, camGoal.y - targetGoal.y, camGoal.z - targetGoal.z);
