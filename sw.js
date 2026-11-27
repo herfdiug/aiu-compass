@@ -5,7 +5,7 @@
 // hand, so a corrected answer or a fixed layout would not reach them. Now a
 // connected visitor always gets the current file, and the cache is only used
 // when the network is gone (which is the whole point of the offline pack).
-const CACHE = 'aiu-compass-v18';
+const CACHE = 'aiu-compass-v19';
 const ASSETS = [
   './',
   'index.html',
