@@ -1139,6 +1139,12 @@ function pickVoice(lang) {
   return sameBase.find((v) => v.localService) || sameBase[0] || null;
 }
 
+// Chrome fills the voice list asynchronously. Until the browser has reported at
+// least one voice, an empty list means "not ready yet", not "no speech here".
+function voicesReady() {
+  return Boolean(window.speechSynthesis) && speechSynthesis.getVoices().length > 0;
+}
+
 function stopSpeaking() {
   if (window.speechSynthesis) speechSynthesis.cancel();
 }
