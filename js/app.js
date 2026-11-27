@@ -282,6 +282,7 @@ function cacheEls() {
   el.offlineBar = $('#offlineBar');
   el.mapReset = $('#mapReset');
   el.langLabel = $('#langLabel');
+  el.langLabelText = $('#langLabelText');
   el.fromLabel = $('#fromLabel');
   el.fromSel = $('#fromSel');
   el.hintTitle = $('#hintTitle');
@@ -346,7 +347,7 @@ function setLang(code) {
 
 // Every static string on the page follows the selected language.
 function applyChrome() {
-  el.langLabel.textContent = t('langLabel');
+  el.langLabelText.textContent = t('langLabel');
   el.hintTitle.textContent = t('hintTitle');
   el.hintTry.textContent = t('hintTry');
   el.typed.placeholder = t('placeholder');
@@ -370,8 +371,8 @@ function applyChrome() {
   updateRouteNote();
 }
 
-function buildingLabel(b) {
-  const lang = shortLang(state.lang);
+function buildingLabel(b, langArg) {
+  const lang = langArg || shortLang(state.lang);
   if (lang === 'th') return b.th;
   if (lang !== 'en' && b.names && b.names[lang]) return b.names[lang];
   return b.en;
@@ -858,7 +859,22 @@ async function ask(question, opts) {
   // showed only the question, which looked frozen. The text after the question
   // keeps the question readable and says something is happening.
   el.transcript.textContent = question + ' … ' + t('searching');
-  const lang = shortLang(state.lang);
+  // Snapshot the language for this turn. Reading state.lang again after an await
+  // let a mid-flight switch render (and speak) the previous language's text under
+  // the new language's badge, which is the worst kind of wrong answer.
+  const turnLang = state.lang;
+  const lang = shortLang(turnLang);
+  // The UI strings must come from the same language as the body, not from
+  // whatever the page switched to while an answer was in flight.
+  const tt = (key) => (UI[lang] || UI.en)[key] || UI.en[key] || key;
+  // If the visitor changed language while this lookup was running, the result is
+  // in the old language. Throw it away and redo the turn in the new one, so a
+  // badge never sits above text in a different language.
+  const stale = () => state.lang !== turnLang;
+  const finish = () => {
+    state.busy = false;
+    if (stale()) ask(question, opts);
+  };
   let hit = resolve(question, state.index);
   let place = hit.place;
   // A symptom question ("I have a bad headache") names no place, so it fell
@@ -882,13 +898,13 @@ async function ask(question, opts) {
     // route drawn: the map would contradict the answer.
     if (state.map) state.map.clear();
     showAnswer({
-      lang: state.lang,
-      main: t('notFound'),
+      lang: turnLang,
+      main: tt('notFound'),
       secondary: null,
       place: null
     });
     el.transcript.textContent = question;
-    state.busy = false;
+    finish();
     return;
   }
 
@@ -896,7 +912,7 @@ async function ask(question, opts) {
   // A symptom query ("I have a bad headache") deserves advice first, not a
   // timetable: the same paragraph answered a person in pain with opening hours.
   const symptom = place.id === 'clinic' && SYMPTOM_RE.test(String(question));
-  const symptomLead = symptom ? t('symptomLead') + ' ' : '';
+  const symptomLead = symptom ? tt('symptomLead') + ' ' : '';
   const useNetwork = !state.offline && navigator.onLine !== false && Boolean(state.groqKey) && !faqEntry;
 
   if (useNetwork) {
@@ -904,7 +920,7 @@ async function ask(question, opts) {
       const json = await askGroq(question, place, lang);
       if (json) {
         showAnswer({
-          lang: state.lang,
+          lang: turnLang,
           main: json.answer,
           secondary: lang === 'en' ? null : (json.answer_en || localEn),
           secondaryLabel: lang === 'en' ? null : 'English',
@@ -913,7 +929,7 @@ async function ask(question, opts) {
         });
         if (opts && opts.speakIt === false) stopSpeaking();
         el.transcript.textContent = question;
-        state.busy = false;
+        finish();
         return;
       }
     } catch (err) {
@@ -930,7 +946,7 @@ async function ask(question, opts) {
   // instead of pretending the exact room is on record. The building text comes
   // from the building record, not from a facility filed under it (the Wi-Fi
   // entry used to be glued on here).
-  const roomCaveat = hit.unrecordedRoom ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) : '';
+  const roomCaveat = hit.unrecordedRoom ? tt('unrecordedRoom').replace('{code}', hit.unrecordedRoom) : '';
   let buildingLine = '';
   if (roomCaveat) {
     const bMeta = state.campus && state.campus.buildings.find((b) => b.id === place.building);
@@ -938,21 +954,21 @@ async function ask(question, opts) {
       const floors = Number(bMeta.floors) || 0;
       // Localized name only. Using bMeta.en here put an English sentence inside
       // an Indonesian or Chinese answer.
-      buildingLine = buildingLabel(bMeta);
-      if (floors > 0) buildingLine += ' · ' + floors + ' ' + t('floorsLabel');
+      buildingLine = buildingLabel(bMeta, lang);
+      if (floors > 0) buildingLine += ' · ' + floors + ' ' + tt('floorsLabel');
     }
   }
   showAnswer({
-    lang: state.lang,
+    lang: turnLang,
     main: roomCaveat ? roomCaveat + ' ' + buildingLine : textLocal,
-    secondary: lang === 'en' ? null : (roomCaveat ? t('unrecordedRoom').replace('{code}', hit.unrecordedRoom) + ' ' + buildingLine : textEn),
+    secondary: lang === 'en' ? null : (roomCaveat ? tt('unrecordedRoom').replace('{code}', hit.unrecordedRoom) + ' ' + buildingLine : textEn),
     secondaryLabel: lang === 'en' ? null : 'English',
     place,
     lead: symptomLead
   });
   if (opts && opts.speakIt === false) stopSpeaking();
   el.transcript.textContent = question;
-  state.busy = false;
+  finish();
 }
 
 async function askGroq(question, place, lang) {
@@ -1012,6 +1028,8 @@ function showAnswer({ lang, main, secondary, secondaryLabel, place, source, lead
   const body = (lead ? lead : '') + (main || '');
   state.lastAnswer = { main: body, lang };
   const langMeta = LANGS.find((l) => l.code === lang) || {};
+  // Notes under the card must use the same language as the card body.
+  const tt = (key) => (UI[shortLang(lang)] || UI.en)[key] || UI.en[key] || key;
   el.answerLang.textContent = langMeta.label || lang;
   // Only Latin gets the uppercase/letter-spaced treatment.
   el.answerLang.classList.toggle('latin', /^[A-Za-z]/.test(langMeta.label || ''));
@@ -1031,10 +1049,9 @@ function showAnswer({ lang, main, secondary, secondaryLabel, place, source, lead
   const globallyVerified = state.campus && state.campus.meta && state.campus.meta.hoursVerified === true;
   const hoursUnverified = Boolean(place && place.hours && !globallyVerified && place.hoursVerified !== true);
   el.answerNote.classList.toggle('show', Boolean(hoursUnverified));
-  el.answerNote.textContent = hoursUnverified ? t('hoursNote') : '';
+  el.answerNote.textContent = hoursUnverified ? tt('hoursNote') : '';
 
-  updateRouteNote();
-  // Scrolling the card under a sticky row is what hid the start of the answer.
+  updateRouteNote();  // Scrolling the card under a sticky row is what hid the start of the answer.
   // The panel scroll position is computed from live rects, not offsetTop: the
   // answer's offsetParent is the body, so offsetTop was measured against the
   // wrong origin and the card still parked under the bar.
@@ -1167,9 +1184,11 @@ function speak(text, lang, opts) {
     el.speakBtn.title = dead ? t('voiceMissing') : '';
   }
 
-  // Name the voice language in the UI so it is clear what is being spoken.
+  // Name the voice language in the UI so it is clear what is being spoken. The
+  // note belongs to the answer's language, not to whatever chip was clicked last.
+  const tt = (key) => (UI[shortLang(lang)] || UI.en)[key] || UI.en[key] || key;
   if (el.voiceNote && opts && opts.showWarning) {
-    el.voiceNote.textContent = missing ? t('voiceMissing') : '';
+    el.voiceNote.textContent = missing ? tt('voiceMissing') : '';
     el.voiceNote.classList.toggle('show', missing);
   }
 
