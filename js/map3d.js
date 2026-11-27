@@ -662,21 +662,17 @@ export function createMap(canvas, campus) {
       const pad = 6;
       const pw = plate.offsetWidth || 44;
       const ph = plate.offsetHeight || 18;
-      // The stage note bar sits on the bottom of the stage. A plate must clear it,
-      // or the label covers the disclaimer (and on a phone the two collide).
-      const noteEl = document.getElementById('stageNote');
-      const noteH = noteEl ? Math.ceil(noteEl.getBoundingClientRect().height) : 0;
       const px = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, sx));
       // A short stage (phone with the answer open) cannot fit every label on one
       // row, so a clashing plate is nudged to a neighbouring row before giving up.
       // The row step is the plate height plus a hair, so rows never touch.
       const step = ph + 3;
-      // On a very short stage (phone with the answer open) the usable band can be
-      // negative: rect.height - noteH may be less than one plate. Clamping with
-      // Math.min then produced a position below the stage, which is why a plate
-      // was clipped by overflow:hidden. Floor the band at one row.
+      // On a very short stage the usable band can be negative: the map may be
+      // shorter than one plate. Clamping with Math.min then produced a position
+      // below the canvas, which is why a plate was clipped by overflow:hidden.
+      // Floor the band at one row.
       const minY = pad + ph;
-      const maxY = Math.max(minY, rect.height - pad - noteH);
+      const maxY = Math.max(minY, rect.height - pad);
       let box = null;
       let py = 0;
       let fx = px;
