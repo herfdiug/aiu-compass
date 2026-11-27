@@ -1068,7 +1068,14 @@ function showPlace(place, opts) {
     const b = state.campus && state.campus.buildings.find((x) => x.id === place.building);
     return b ? buildingLabel(b) : '';
   })();
-  const uniq = [...new Set(inBuilding)].filter((n) => n.toLowerCase() !== bLabel.toLowerCase());
+  const uniq = [...new Set(inBuilding)].filter((n) => {
+    if (!n) return false;
+    const l = n.toLowerCase();
+    const b = bLabel.toLowerCase();
+    if (!b) return true;
+    // "Library service desk" under Library repeats the heading.
+    return !l.includes(b) && !b.includes(l);
+  });
   const alsoHere = uniq.length
     ? ' ' + t('alsoInBuilding') + ' ' + uniq.slice(0, 5).join(' · ')
     : '';
