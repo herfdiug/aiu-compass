@@ -841,8 +841,17 @@ async function ask(question, opts) {
   // keeps the question readable and says something is happening.
   el.transcript.textContent = question + ' … ' + t('searching');
   const lang = shortLang(state.lang);
-  const hit = resolve(question, state.index);
-  const place = hit.place;
+  let hit = resolve(question, state.index);
+  let place = hit.place;
+  // A symptom question ("I have a bad headache") names no place, so it fell
+  // straight to "not found" — the one query where the clinic is the right answer.
+  if (!place && SYMPTOM_RE.test(String(question))) {
+    const clinic = (state.campus.places || []).find((p) => p.id === 'clinic');
+    if (clinic) {
+      place = clinic;
+      hit = { place: clinic, id: clinic.id, confidence: 0.6, method: 'symptom', alternatives: [] };
+    }
+  }
   state.lastPlace = place;
 
   const local = place ? localAnswer(place, lang) : null;
@@ -1047,15 +1056,21 @@ function showPlace(place, opts) {
   const inBuilding = place.type === 'building'
     ? (state.campus.places || [])
       .filter((p) => p.building === place.building && p.id !== place.id && p.type !== 'facility')
-      .slice(0, 5)
       .map((p) => {
         const nm = lang !== 'id' ? p[p.type === 'room' ? 'room' : lang] : ((p.names && p.names.id) || p.room);
-        return (nm || p.room || '').split(',')[0];
+        return (nm || p.room || '').split(',')[0].trim();
       })
       .filter(Boolean)
     : [];
-  const alsoHere = inBuilding.length
-    ? ' ' + t('alsoInBuilding') + ' ' + inBuilding.join(' · ')
+  // A sibling whose name is the building itself (or a repeat of another row) adds
+  // nothing but noise: "Library. Also in this building: Library · Library".
+  const bLabel = (() => {
+    const b = state.campus && state.campus.buildings.find((x) => x.id === place.building);
+    return b ? buildingLabel(b) : '';
+  })();
+  const uniq = [...new Set(inBuilding)].filter((n) => n.toLowerCase() !== bLabel.toLowerCase());
+  const alsoHere = uniq.length
+    ? ' ' + t('alsoInBuilding') + ' ' + uniq.slice(0, 5).join(' · ')
     : '';
   showAnswer({
     lang: state.lang,
