@@ -174,7 +174,15 @@ export function resolve(input, index) {
   }
   if (hits.length) {
     hits.sort((a, b) => b.alias.length - a.alias.length);
-    const top = hits[0];
+    let top = hits[0];
+    // "…where do I pay my dormitory fee…" contains "dormitory", which is a longer
+    // alias than "dorm fee", so it answered with Solomon Hall. A fee question is
+    // about the counter that takes the money, not the building the fee is for.
+    const PAY_RE = /\b(fee|fees|tuition|cashier|dorm fee|dormitory fee|housing fee)\b|ค่าเทอม|ค่าหอ|ค่าเล่าเรียน|biaya|học phí|学费|缴费/i;
+    if (/^dorm_/.test(top.place.id) && PAY_RE.test(raw)) {
+      const fin = index.byId.get('finance');
+      if (fin) top = { place: fin, alias: top.alias };
+    }
     const second = hits.find((h) => h.place.id !== top.place.id);
     const margin = second ? top.alias.length - second.alias.length : top.alias.length;
     const confidence = margin >= 2 ? 0.94 : 0.72;

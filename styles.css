@@ -158,6 +158,9 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   padding: 2px 0;
   /* The select measured 23px tall on a phone, under the 44px tap-target floor. */
   min-height: 44px;
+  /* A flex item with no basis was squeezed to 20px on first paint, before the
+     option text laid out, so the current choice was unreadable. */
+  min-width: 96px;
   max-width: 190px;
   cursor: pointer;
 }
