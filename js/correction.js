@@ -183,6 +183,16 @@ export function resolve(input, index) {
       const fin = index.byId.get('finance');
       if (fin) top = { place: fin, alias: top.alias };
     }
+    // Two places in one sentence ("where is the clinic and is the library open"):
+    // among the near-equal matches, answer the place named first. A longer alias
+    // used to win, so the second-named place took over the answer and the map
+    // followed the resolver into a different building than the reader expected.
+    const rival = hits.find((h) => h.place.id !== top.place.id && top.alias.length - h.alias.length < 3);
+    if (rival) {
+      const posTop = c.indexOf(top.alias);
+      const posRival = c.indexOf(rival.alias);
+      if (posRival > -1 && posTop > -1 && posRival < posTop) top = rival;
+    }
     const second = hits.find((h) => h.place.id !== top.place.id);
     const margin = second ? top.alias.length - second.alias.length : top.alias.length;
     const confidence = margin >= 2 ? 0.94 : 0.72;
