@@ -396,14 +396,17 @@ export function createMap(canvas, campus) {
     const aspect = w / h;
     const vFov = (camera.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
-    const pad = 1.18;
+    const pad = 1.02;
     const neededV = (span * pad) / 2 / Math.tan(vFov / 2);
     const neededH = (span * pad) / 2 / Math.tan(hFov / 2);
     // The dormitory row sits off-centre to the west, so the fit distance based on
     // the centre let Solomon and Sarah hang off the left edge. 1.18 was the last
     // value where every block was inside the frame; the bottom gap it left is
     // worth less than a clipped building.
-    const dist = Math.max(neededV, neededH);
+    // A fit distance measured to the campus centre is not enough: the dormitory
+    // row is west of centre and the church east of it, so at the fit distance
+    // Solomon/Sarah hung off the left edge on a desktop stage. Push back 15%.
+    const dist = Math.max(neededV, neededH) * 1.15;
     camGoal.set(targetGoal.x + dist * 0.2, dist * 0.72, targetGoal.z + dist * 0.86);
     radius = Math.hypot(camGoal.x - targetGoal.x, camGoal.y - targetGoal.y, camGoal.z - targetGoal.z);
   }
