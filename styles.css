@@ -412,19 +412,14 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
   /* The suggestion row used to end 2px below the panel edge, so the last chip
      looked cut off. A slightly tighter panel makes the whole set fit. */
   #panel { gap: 12px; }
-  /* The map is short once an answer is open, and every pixel of it is a label
-     row. The control shrinks to just the place name so it stops eating rows;
-     the full "Starting from" wording returns as soon as the answer is closed.
-     The label is visually hidden rather than display:none, so the select keeps
-     its accessible name for screen readers. */
+  /* With an answer open the map is short, so the control shrinks. The label is
+     one short word on a phone instead of the full "Starting from" (which was
+     ellipsized to "STA…"), and it is never removed: a bare "Not set yet" select
+     with no label said nothing about what it was. */
   body.has-answer .origin label {
-    position: absolute;
-    width: 1px; height: 1px;
-    padding: 0; margin: -1px;
+    max-width: 72px;
     overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
+    text-overflow: ellipsis;
   }
   body.has-answer .origin { padding: 2px 8px; max-width: 150px; }
   body.has-answer .origin select { min-height: 44px; max-width: 132px; font-size: 12px; }
