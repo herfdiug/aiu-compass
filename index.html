@@ -11,7 +11,10 @@
 <body>
 
 <header>
-  <div class="brand"><h1>AIU Compass</h1></div>
+  <div class="brand">
+    <h1>AIU Compass</h1>
+    <span class="brandsub">Asia-Pacific International University</span>
+  </div>
   <div class="langbar">
     <span class="langlabel" id="langLabel">
       <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
@@ -40,6 +43,9 @@
   </section>
 
   <section id="panel">
+    <!-- Shown until the visitor picks a language. The chips change the whole
+         page, and on a first visit nothing said so. -->
+    <p class="langhint" id="langHint"></p>
     <!-- The walking hint used to float over the map, where it covered the
          dormitory blocks and their labels on a phone. It lives in the panel now:
          it is text about the route, so it belongs beside the answer. -->
