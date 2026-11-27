@@ -520,15 +520,17 @@ function setOrigin(buildingId, source, opts) {
 
 // Turn "Starting from" into something the visitor can act on: a distance and a
 // walking time next to the map, plus the dashed line itself.
-function updateRouteNote() {
+function updateRouteNote(langArg) {
   if (!el.routeNote) return;
+  const lang = shortLang(langArg || state.lang);
+  const tt = (key) => (UI[lang] || UI.en)[key] || UI.en[key] || key;
   const info = state.map && state.map.routeInfo ? state.map.routeInfo() : null;
   if (!info || !state.campus) {
     // Standing where you already are is not an error, and silently hiding the
     // line read as "the route broke". Say it instead.
     const dbg = state.map && state.map.debug ? state.map.debug() : null;
     if (dbg && dbg.originId && dbg.selectedId && dbg.originId === dbg.selectedId) {
-      el.routeNote.textContent = t('alreadyHere');
+      el.routeNote.textContent = tt('alreadyHere');
       el.routeNote.classList.add('show');
       return;
     }
@@ -542,8 +544,8 @@ function updateRouteNote() {
     el.routeNote.classList.remove('show');
     return;
   }
-  const fromName = buildingLabel(from);
-  el.routeNote.textContent = `${t('walk')} ${fromName} · ${t('walkApprox')} ${info.metres} ${t('meters')} · ${info.minutes} ${t('minutes')}`;
+  const fromName = buildingLabel(from, lang);
+  el.routeNote.textContent = `${tt('walk')} ${fromName} · ${tt('walkApprox')} ${info.metres} ${tt('meters')} · ${info.minutes} ${tt('minutes')}`;
   el.routeNote.classList.add('show');
 }
 
@@ -756,22 +758,19 @@ function shortLang(code) {
 }
 
 function faqHit(place, question) {
-  if (!state.faq) return null;
+  if (!state.faq || !place) return null;
   const q = question.toLowerCase();
-  // A pattern match must beat a place match. The Wi-Fi entry is filed under the
-  // IT Building, so place-first lookup answered "Where is the IT department?"
-  // with the helpdesk paragraph instead of the building.
+  // An entry may only answer for the place the resolver already picked. A global
+  // scan let "Where is the library and is the clinic open" highlight the Library
+  // while the clinic entry's text replaced the answer — the map and the card
+  // described two different buildings.
   for (const entry of state.faq.entries) {
+    if (entry.place !== place.id) continue;
     if (entry.patterns.some((p) => p && q.includes(p.toLowerCase()))) return entry;
   }
-  if (place) {
-    // Only the entry that IS this place. Filing a facility question under a
-    // building (Wi-Fi under the IT Building) must not let it hijack every
-    // question about that building.
-    const byPlace = state.faq.entries.find((e) => e.place === place.id && e.id === place.id);
-    if (byPlace) return byPlace;
-  }
-  return null;
+  // The resolved place's own entry, even with no pattern hit: the FAQ text is
+  // better written than the generated sentence.
+  return state.faq.entries.find((e) => e.place === place.id && e.id === place.id) || null;
 }
 
 function submitTyped() {
@@ -1051,7 +1050,7 @@ function showAnswer({ lang, main, secondary, secondaryLabel, place, source, lead
   el.answerNote.classList.toggle('show', Boolean(hoursUnverified));
   el.answerNote.textContent = hoursUnverified ? tt('hoursNote') : '';
 
-  updateRouteNote();  // Scrolling the card under a sticky row is what hid the start of the answer.
+  updateRouteNote(lang);  // Scrolling the card under a sticky row is what hid the start of the answer.
   // The panel scroll position is computed from live rects, not offsetTop: the
   // answer's offsetParent is the body, so offsetTop was measured against the
   // wrong origin and the card still parked under the bar.

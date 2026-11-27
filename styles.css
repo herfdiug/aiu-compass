@@ -125,25 +125,20 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   text-align: center;
 }
 
-/* Walking hint, shown only once the visitor has said where they start. */
+/* Walking hint. It is a line of text about the route, so it sits in the panel in
+   normal flow: as a floating chip on the map it covered the dormitory blocks. */
 .routeNote {
-  position: absolute;
-  left: 10px;
-  bottom: 30px;
-  max-width: calc(100% - 20px);
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(6, 40, 32, 0.92);
+  display: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(6, 40, 32, 0.9);
   border: 1px solid rgba(53, 224, 161, 0.55);
   color: #d8fff0;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 160ms ease, transform 160ms ease;
-  pointer-events: none;
+  line-height: 1.35;
 }
-.routeNote.show { opacity: 1; transform: none; }
+.routeNote.show { display: block; }
 
 .origin {
   position: absolute;
@@ -258,6 +253,10 @@ body.has-answer main { grid-template-rows: 34vh 1fr; }
   transition: color 120ms ease, border-color 120ms ease;
 }
 .mapPlate:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+/* Deliberately NOT enlarged to 44px on touch: fourteen plates share a 236px
+   map, so a 44px hit box per plate would overlap its neighbours and taps would
+   start answering the wrong building — the exact bug already fixed once. The
+   big 3D blocks remain the primary tap target; the plates name them. */
 .mapPlate.hot {
   color: #eafff6;
   border-color: rgba(53, 224, 161, 0.85);

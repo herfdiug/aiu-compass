@@ -621,14 +621,13 @@ export function createMap(canvas, campus) {
     // Keep every name plate pinned above its roof, and hide any that collide.
     const rect = canvas.getBoundingClientRect();
     const placed = [];
-    // The page draws controls over the map (the "Starting from" select and the
-    // walking hint). A label underneath them is unreadable, so those boxes are
-    // reserved space that no plate may enter.
+    // The page draws controls over the map. A label underneath them is
+    // unreadable, so the origin box is reserved space that no plate may enter.
+    // (The walking hint moved into the panel: it is no longer drawn over the map.)
     const reserved = [];
-    for (const sel of ['#originBox', '#routeNote']) {
+    for (const sel of ['#originBox', '#mapReset']) {
       const el = document.querySelector(sel);
       if (!el) continue;
-      if (sel === '#routeNote' && !el.classList.contains('show')) continue;
       const r = el.getBoundingClientRect();
       if (!r.width || !r.height) continue;
       reserved.push({

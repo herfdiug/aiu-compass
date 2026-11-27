@@ -35,12 +35,15 @@
         <path d="M3 12a9 9 0 1 0 2.6-6.4M3 12V6m0 6h6"/>
       </svg>
     </button>
-    <div class="routeNote" id="routeNote"></div>
     <div class="stageNote" id="stageNote"></div>
     <div class="offlineBar" id="offlineBar"></div>
   </section>
 
   <section id="panel">
+    <!-- The walking hint used to float over the map, where it covered the
+         dormitory blocks and their labels on a phone. It lives in the panel now:
+         it is text about the route, so it belongs beside the answer. -->
+    <div class="routeNote" id="routeNote"></div>
     <div class="micRow">
       <button class="mic" id="mic" aria-label="Tap to speak">
         <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true" fill="none" stroke="#04231a" stroke-width="2.1" stroke-linecap="round">
