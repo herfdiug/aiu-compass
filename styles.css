@@ -112,6 +112,13 @@ main { flex: 1; display: grid; grid-template-rows: 44vh 1fr; gap: 0; min-height:
    and both of its buttons fit without the visitor having to hunt for them. */
 body.has-answer main { grid-template-rows: 34vh 1fr; }
 
+/* A phone has four controls under the map (mic row, question line, input,
+   suggestions). At 44vh the map pushed the last suggestion row under the footer
+   on a cold load, which looked like content was missing. */
+@media (max-width: 859px) and (max-height: 900px) {
+  main { grid-template-rows: 38vh 1fr; }
+}
+
 /* ---------------------------------------------------------------- stage */
 /* The stage is a column: the map takes the space, the "not to scale" note gets
    its own strip underneath. The note used to be an overlay on the map, so it
