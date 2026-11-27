@@ -36,25 +36,59 @@ export function createMap(canvas, campus) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#071d2f');
-  scene.fog = new THREE.Fog('#071d2f', 900, 2100);
+  // A flat colour behind a 3D campus reads as a viewport, not a place. A vertical
+  // gradient costs one small canvas texture and makes the horizon legible.
+  scene.background = (() => {
+    const c = document.createElement('canvas');
+    c.width = 2;
+    c.height = 256;
+    const g = c.getContext('2d');
+    const grad = g.createLinearGradient(0, 0, 0, 256);
+    grad.addColorStop(0, '#0b2f4a');
+    grad.addColorStop(0.55, '#0a2337');
+    grad.addColorStop(1, '#071a28');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 2, 256);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  })();
+  scene.fog = new THREE.Fog('#0a2337', 1000, 2400);
 
   const camera = new THREE.PerspectiveCamera(46, 1, 1, 6000);
 
   // ------------------------------------------------------------------ ground
+  // A lawn, not a grid. The technical grid read as a CAD viewer; grass and a
+  // soft vignette make the blocks look like buildings on a campus.
   const groundGeo = new THREE.PlaneGeometry(2600, 2600, 1, 1);
-  const groundMat = new THREE.MeshStandardMaterial({ color: '#0a2438', roughness: 0.96, metalness: 0.02 });
+  const groundMat = new THREE.MeshStandardMaterial({ color: '#123b2c', roughness: 0.98, metalness: 0 });
   const ground = new THREE.Mesh(groundGeo, groundMat);
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -1;
   ground.receiveShadow = true;
   scene.add(ground);
 
-  const grid = new THREE.GridHelper(2600, 52, 0x1d5c7a, 0x12384f);
-  grid.material.opacity = 0.34;
-  grid.material.transparent = true;
-  grid.position.y = 0;
-  scene.add(grid);
+  // Faint radial darkening at the edges, so the eye stays on the campus.
+  {
+    const c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 256;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(128, 128, 40, 128, 128, 128);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.55)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 256, 256);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const vignette = new THREE.Mesh(
+      new THREE.PlaneGeometry(2600, 2600),
+      new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false })
+    );
+    vignette.rotation.x = -Math.PI / 2;
+    vignette.position.y = -0.6;
+    scene.add(vignette);
+  }
 
   // ------------------------------------------------------------------ lights
   scene.add(new THREE.HemisphereLight(0xa8dcff, 0x0a1c2c, 1.05));
@@ -113,13 +147,33 @@ export function createMap(canvas, campus) {
     }
 
     // Roof cap, slightly lighter, so the top plane reads clearly from above.
-    const roof = new THREE.Mesh(
-      new THREE.BoxGeometry(b.w * 1.02, 3, b.h * 1.02),
-      new THREE.MeshStandardMaterial({ color: base.clone().offsetHSL(0, -0.05, 0.16), roughness: 0.8 })
-    );
+    const roofMat = new THREE.MeshStandardMaterial({ color: base.clone().offsetHSL(0, -0.05, 0.16), roughness: 0.8 });
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(b.w * 1.02, 3, b.h * 1.02), roofMat);
     roof.position.y = height + 1.5;
     roof.castShadow = true;
     g.add(roof);
+
+    // A low parapet around the roof edge: a bare slab top reads as a cardboard
+    // box, a rim makes it read as a building with a roof.
+    {
+      const rimMat = new THREE.MeshStandardMaterial({ color: base.clone().offsetHSL(0, -0.1, 0.26), roughness: 0.75 });
+      const t = 2.4;
+      const rimH = 2.6;
+      const y = height + 3 + rimH / 2;
+      const parts = [
+        // [width, depth, x, z] - two long walls, two end walls.
+        [b.w * 1.02, t, 0, (b.h * 1.02) / 2 - t / 2],
+        [b.w * 1.02, t, 0, -(b.h * 1.02) / 2 + t / 2],
+        [t, b.h * 1.02, (b.w * 1.02) / 2 - t / 2, 0],
+        [t, b.h * 1.02, -(b.w * 1.02) / 2 + t / 2, 0]
+      ];
+      for (const [w, d, x, z] of parts) {
+        const m = new THREE.Mesh(new THREE.BoxGeometry(w, rimH, d), rimMat);
+        m.position.set(x, y, z);
+        m.castShadow = true;
+        g.add(m);
+      }
+    }
 
     scene.add(g);
     groupOf.set(b.id, { group: g, body, height, roof, wing: Boolean(b.wing) });
@@ -162,11 +216,25 @@ export function createMap(canvas, campus) {
     winMesh.instanceMatrix.needsUpdate = true;
     g.add(winMesh);
 
-    // A door on the side that faces the middle of campus.
+    // A door on the side that faces the middle of campus, with a canopy over it
+    // and a step: the door alone read as a dark rectangle on a box.
     const doorMat = new THREE.MeshStandardMaterial({ color: 0x0d2a3d, roughness: 0.5, metalness: 0.2 });
-    const door = new THREE.Mesh(new THREE.BoxGeometry(Math.min(22, b.w * 0.24), FLOOR_H * 0.72, 2), doorMat);
+    const doorW = Math.min(22, b.w * 0.24);
+    const door = new THREE.Mesh(new THREE.BoxGeometry(doorW, FLOOR_H * 0.72, 2), doorMat);
     door.position.set(0, FLOOR_H * 0.36, b.h / 2 + 0.4);
     g.add(door);
+    {
+      const canopyMat = new THREE.MeshStandardMaterial({ color: 0xdfeef7, roughness: 0.6, metalness: 0.05 });
+      const canopy = new THREE.Mesh(new THREE.BoxGeometry(doorW * 1.6, 2, 12), canopyMat);
+      canopy.position.set(0, FLOOR_H * 0.78, b.h / 2 + 6);
+      canopy.castShadow = true;
+      g.add(canopy);
+      const stepMat = new THREE.MeshStandardMaterial({ color: 0x39616f, roughness: 0.95 });
+      const step = new THREE.Mesh(new THREE.BoxGeometry(doorW * 1.5, 2, 10), stepMat);
+      step.position.set(0, 1, b.h / 2 + 7);
+      step.receiveShadow = true;
+      g.add(step);
+    }
 
     const plate = document.createElement('button');
     plate.type = 'button';
@@ -230,9 +298,9 @@ export function createMap(canvas, campus) {
   }
 
   // ------------------------------------------------------------------ pathways
-  // Walkways joining the building plots, drawn as thin slabs on the ground.
+  // Walkways joining the building plots, drawn as pale slabs on the lawn.
   {
-    const pathMat = new THREE.MeshStandardMaterial({ color: 0x123c52, roughness: 0.9, metalness: 0.05 });
+    const pathMat = new THREE.MeshStandardMaterial({ color: 0x2f5f6d, roughness: 0.92, metalness: 0.02 });
     const addPath = (x1, z1, x2, z2, width) => {
       const len = Math.hypot(x2 - x1, z2 - z1);
       const geo = new THREE.PlaneGeometry(width, len);
