@@ -396,10 +396,12 @@ export function createMap(canvas, campus) {
     const aspect = w / h;
     const vFov = (camera.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
-    const pad = 1.18;
+    const pad = 1.02;
     const neededV = (span * pad) / 2 / Math.tan(vFov / 2);
     const neededH = (span * pad) / 2 / Math.tan(hFov / 2);
-    const dist = Math.max(neededV, neededH);
+    // The whole campus must fill the frame. 1.18 of padding left a third of a
+    // 900px-tall desktop stage empty below the dormitory row.
+    const dist = Math.max(neededV, neededH) * 0.9;
     camGoal.set(targetGoal.x + dist * 0.2, dist * 0.72, targetGoal.z + dist * 0.86);
     radius = Math.hypot(camGoal.x - targetGoal.x, camGoal.y - targetGoal.y, camGoal.z - targetGoal.z);
   }
