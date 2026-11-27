@@ -334,13 +334,27 @@ export function createMap(canvas, campus) {
       .replace('AIU ', '');
   }
 
-  // Highlight ring on the ground under the selected building.
+  // Highlight ring on the ground under the selected building. It was created and
+  // never positioned, so the only selection cue was a slightly brighter block —
+  // hard to spot when fourteen boxes are on screen. It is now sized to the plot
+  // and driven from focus()/clear().
   const ringGeo = new THREE.RingGeometry(1, 1.14, 64);
-  const ringMat = new THREE.MeshBasicMaterial({ color: 0x35e0a1, transparent: true, opacity: 0.85, side: THREE.DoubleSide });
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x35e0a1, transparent: true, opacity: 0.9, side: THREE.DoubleSide });
   const ring = new THREE.Mesh(ringGeo, ringMat);
   ring.rotation.x = -Math.PI / 2;
   ring.visible = false;
+  ring.renderOrder = 2;
   scene.add(ring);
+
+  function placeRing(b) {
+    if (!b) { ring.visible = false; return; }
+    // A flat ring on the lawn, just clear of the walls, so it frames the plot
+    // instead of hiding under the building.
+    const r = Math.max(b.w, b.h) * 0.72;
+    ring.position.set(b.x, 0.6, -b.y);
+    ring.scale.set(r, r, r);
+    ring.visible = true;
+  }
 
   // Route line from the visitor's origin to the target.
   let routeLine = null;
@@ -634,6 +648,7 @@ export function createMap(canvas, campus) {
     const b = place && byBuilding.get(place.building);
     if (!b) { clear(); return; }
     selectedId = b.id;
+    placeRing(b);
     // Default framing keeps the whole campus in view and only leans toward the
     // target, because moving the camera onto a corner building pushed most name
     // plates off screen and the visitor lost the campus around the answer.
@@ -656,6 +671,7 @@ export function createMap(canvas, campus) {
 
   function reset() {
     selectedId = null;
+    placeRing(null);
     targetGoal.set(centerX, 0, centerZ);
     // Restore the *opening* framing. A fixed theta/phi/radius did not match what
     // fitCamera() computes for the current aspect ratio, so "reset" landed at a
@@ -667,6 +683,7 @@ export function createMap(canvas, campus) {
 
   function clear() {
     selectedId = null;
+    placeRing(null);
     drawRoute();
   }
 
@@ -685,6 +702,10 @@ export function createMap(canvas, campus) {
     target.lerp(targetGoal, k);
     camera.position.copy(camPos);
     camera.lookAt(target);
+
+    // A slow breathing pulse on the selection ring, so the highlighted building
+    // is findable at a glance among fourteen boxes without being a light show.
+    if (ring.visible) ringMat.opacity = 0.68 + Math.sin(now / 480) * 0.2;
 
     // Keep every name plate pinned above its roof, and hide any that collide.
     const rect = canvas.getBoundingClientRect();
@@ -710,7 +731,16 @@ export function createMap(canvas, campus) {
       if (b === selectedId) return 1;
       if (a === hoverId) return -1;
       if (b === hoverId) return 1;
-      return 0;
+      // When the stage is too short for all fourteen names, the ones that get
+      // dropped must be the least useful. A student looks for the clinic and the
+      // cafeteria far more often than for the dormitory rows, so those are last.
+      const rank = (id) => {
+        if (id === 'it' || id === 'library' || id === 'admin') return 0;
+        if (id === 'cafeteria' || id === 'clinic') return 1;
+        if (id === 'chapel' || id === 'gym' || id === 'science') return 2;
+        return 3; // dormitories
+      };
+      return rank(a) - rank(b);
     });
     for (const id of ordered) {
       const g = groupOf.get(id);
