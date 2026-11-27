@@ -634,6 +634,22 @@ function startListening() {
   el.transcript.textContent = t('listening');
 
   let finalText = '';
+  // Headless browsers (and some Android WebViews) never fire onend when there is
+  // no microphone, so the button stayed on "Listening…" forever. A watchdog stops
+  // it and says what happened.
+  const watchdog = window.setTimeout(() => {
+    if (!state.listening) return;
+    stopListening();
+    // If the engine never even fired onend, reset the UI by hand.
+    window.setTimeout(() => {
+      if (!state.listening) return;
+      state.listening = false;
+      el.mic.classList.remove('listening');
+      el.transcript.classList.remove('live');
+      if (!finalText.trim()) el.transcript.textContent = t('nothing');
+    }, 800);
+  }, 8000);
+  const clearWatchdog = () => window.clearTimeout(watchdog);
 
   recognition.onresult = (ev) => {
     let interim = '';
@@ -645,6 +661,7 @@ function startListening() {
     el.transcript.textContent = (finalText + ' ' + interim).trim() || t('listening');
   };
   recognition.onerror = (ev) => {
+    clearWatchdog();
     if (ev.error === 'aborted' || ev.error === 'no-speech') return;
     // "not-allowed" means the visitor (or the browser) refused the microphone.
     // Saying "this browser does not support voice" sent them to the wrong fix.
@@ -654,6 +671,7 @@ function startListening() {
       : t('micError') + ev.error + '. ' + t('micBlocked');
   };
   recognition.onend = () => {
+    clearWatchdog();
     state.listening = false;
     el.mic.classList.remove('listening');
     el.transcript.classList.remove('live');
