@@ -254,9 +254,10 @@ export function createMap(canvas, campus) {
 
   function shortName(b) {
     const lang = (typeof currentLang === 'function' && currentLang()) || 'en';
-    if (lang === 'th' && b.th) {
-      return String(b.th).replace('อาคาร', '').replace('หอพัก', '').trim() || b.id;
-    }
+    // Keep the Thai classifier. Stripping "อาคาร" from อาคารวิทยาศาสตร์ left
+    // "วิทยาศาสตร์", which reads as the school subject, not a building. A plate
+    // has to name a place, not a noun.
+    if (lang === 'th' && b.th) return String(b.th).trim() || b.id;
     if (lang !== 'en' && b.names && b.names[lang]) return b.names[lang];
     return String(b.en || b.id)
       .replace('Business and Information Technology Center', 'IT')
