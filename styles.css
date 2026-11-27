@@ -413,16 +413,17 @@ footer { padding: 10px 16px 16px; color: #6c8798; font-size: 11px; text-align: c
      looked cut off. A slightly tighter panel makes the whole set fit. */
   #panel { gap: 12px; }
   /* With an answer open the map is short, so the control shrinks. The label is
-     one short word on a phone instead of the full "Starting from" (which was
-     ellipsized to "STA…"), and it is never removed: a bare "Not set yet" select
-     with no label said nothing about what it was. */
+     one short word on a phone ("From", not "Starting from"), and it must never
+     be squeezed: as a bare flex item it shrank to 28px and rendered "FR…",
+     which says less than no label at all. */
   body.has-answer .origin label {
-    max-width: 72px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    flex: none;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
   }
-  body.has-answer .origin { padding: 2px 8px; max-width: 150px; }
-  body.has-answer .origin select { min-height: 44px; max-width: 132px; font-size: 12px; }
+  body.has-answer .origin { padding: 2px 8px; max-width: min(186px, calc(100% - 76px)); }
+  body.has-answer .origin select { min-height: 44px; min-width: 72px; max-width: 118px; font-size: 12px; }
   /* Only the suggestion chips step aside for an answer. The mic row stays:
      hiding it removed the voice follow-up entirely after the first question,
      which is the feature the demo is built around. */
