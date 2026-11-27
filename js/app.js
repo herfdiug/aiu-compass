@@ -18,6 +18,7 @@ const UI = {
   th: {
     langLabel: 'ภาษา',
     langHint: 'เลือกภาษา แล้วปุ่ม ชื่ออาคารบนแผนที่ และคำตอบจะเปลี่ยนตามภาษาที่เลือก',
+    langChanged: 'เปลี่ยนเป็นภาษาไทยแล้ว — ปุ่ม แผนที่ และคำตอบเปลี่ยนตามทั้งหมด',
     hintTitle: 'แตะแล้วพูด',
     hintTry: 'ลองพูดว่า “ห้อง IT208 อยู่ไหน”',
     placeholder: '…หรือพิมพ์คำถาม',
@@ -61,6 +62,7 @@ const UI = {
   en: {
     langLabel: 'Language',
     langHint: 'Pick a language: the buttons, the building names on the map and the answers all change with it.',
+    langChanged: 'Switched to English — the buttons, the map and the answers changed with it.',
     hintTitle: 'Tap and speak',
     hintTry: 'Try: “where is IT208” or “where is the toilet”',
     placeholder: '…or type your question',
@@ -104,6 +106,7 @@ const UI = {
   id: {
     langLabel: 'Bahasa',
     langHint: 'Pilih bahasa: tombol, nama gedung di peta dan jawaban ikut berubah.',
+    langChanged: 'Beralih ke Bahasa Indonesia — tombol, peta dan jawaban ikut berubah.',
     hintTitle: 'Ketuk dan bicara',
     hintTry: 'Coba: “di mana IT208” atau “di mana toilet”',
     placeholder: '…atau ketik pertanyaan Anda',
@@ -147,6 +150,7 @@ const UI = {
   vi: {
     langLabel: 'Ngôn ngữ',
     langHint: 'Chọn ngôn ngữ: nút bấm, tên tòa nhà trên bản đồ và câu trả lời đều đổi theo.',
+    langChanged: 'Đã chuyển sang Tiếng Việt — nút bấm, bản đồ và câu trả lời đều đổi theo.',
     hintTitle: 'Chạm và nói',
     hintTry: 'Thử: “IT208 ở đâu” hoặc “nhà vệ sinh ở đâu”',
     placeholder: '…hoặc gõ câu hỏi của bạn',
@@ -190,6 +194,7 @@ const UI = {
   zh: {
     langLabel: '语言',
     langHint: '选择语言后，按钮、地图上的楼名和答案都会跟着改变。',
+    langChanged: '已切换为中文 — 按钮、地图和答案都已更新。',
     hintTitle: '点击并说话',
     hintTry: '试试：“IT208 在哪里”或“洗手间在哪里”',
     placeholder: '…或输入你的问题',
@@ -336,12 +341,20 @@ function setLang(code) {
   const changed = state.lang !== code;
   state.lang = code;
   try { localStorage.setItem('aiu.lang', code); } catch { /* ignore */ }
-  if (el.langHint) el.langHint.hidden = true;
   document.documentElement.lang = shortLang(code);
   for (const c of document.querySelectorAll('.chip')) {
     c.setAttribute('aria-pressed', String(c.dataset.code === code));
   }
   applyChrome();
+  // Say what just happened, in the new language, right where the visitor
+  // clicked. The chips changed the whole page, but nothing at the top
+  // acknowledged the click, so they read as decoration.
+  if (changed && el.langHint) {
+    el.langHint.textContent = t('langChanged');
+    el.langHint.hidden = false;
+    window.clearTimeout(setLang._t);
+    setLang._t = window.setTimeout(() => { el.langHint.hidden = true; }, 4000);
+  }
   if (state.map && state.map.relabel) state.map.relabel();
   stopSpeaking();
   if (state.listening) startListening();
@@ -360,8 +373,9 @@ function setLang(code) {
 // Every static string on the page follows the selected language.
 function applyChrome() {
   el.langLabelText.textContent = t('langLabel');
-  // Hide the "these buttons change the whole page" line once a language has
-  // actually been chosen; before that it explains what the chips are for.
+  // The language line explains what the chips do on a first visit, and confirms
+  // the switch afterwards: clicking a chip changed the whole page but nothing at
+  // the top said so, which is why the chips read as decoration.
   if (el.langHint) {
     let chosen = '';
     try { chosen = localStorage.getItem('aiu.lang') || ''; } catch { /* private mode */ }

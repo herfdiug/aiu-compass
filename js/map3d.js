@@ -744,13 +744,12 @@ export function createMap(canvas, campus) {
       let box = null;
       let py = 0;
       let fx = px;
-      // Vertical rows first (a label stays over its own roof), then sideways, which
-      // is better than losing the name on a short phone stage.
-      const tries = [];
-      for (const dy of [0, -step, step, -2 * step, 2 * step, -3 * step, 3 * step, -4 * step, 4 * step, -5 * step, 5 * step]) tries.push([0, dy]);
-      for (const dy of [0, -step, step, -2 * step, 2 * step]) {
-        for (const dx of [pw * 0.6, -pw * 0.6, pw * 1.2, -pw * 1.2, pw * 1.9, -pw * 1.9]) tries.push([dx, dy]);
-      }
+      // Only one row of vertical slack, and no sideways shoving. A plate moved far
+      // from its own roof ends up over a different building and steals taps: on a
+      // 236px phone stage the "IT" plate landed 9px from the Administration block,
+      // so tapping Administration answered "IT Building". A name near its roof, or
+      // no name, beats a name in the wrong place.
+      const tries = [[0, 0], [0, -step], [0, step], [0, -2 * step]];
       for (const [dx, dy] of tries) {
         const tryX = Math.max(pad + pw / 2, Math.min(rect.width - pad - pw / 2, px + dx));
         const tryY = Math.max(minY, Math.min(maxY, sy + dy));
